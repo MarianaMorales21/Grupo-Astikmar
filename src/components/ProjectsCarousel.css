@@ -1,0 +1,19 @@
+@keyframes marqueeProjectsContinuous {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.projects-marquee-track {
+  animation: marqueeProjectsContinuous 32s linear infinite;
+  will-change: transform;
+}
+
+/* Al pausar el hover, la animación CSS se CONGELA exactamente en su posición subpíxel actual. 
+   Al quitar el hover, REANUDA hacia adelante sin saltar ni regresar jamás. */
+.projects-marquee-track.paused {
+  animation-play-state: paused !important;
+}

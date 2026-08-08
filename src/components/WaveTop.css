@@ -1,0 +1,25 @@
+@keyframes waveMoveLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes waveMoveRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.wave-track-front {
+  animation: waveMoveLeft 10s linear infinite;
+}
+
+.wave-track-back {
+  animation: waveMoveRight 16s linear infinite;
+}
