@@ -5,6 +5,10 @@ import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
 import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
+import MarinePropellerBlueprint from '../components/Icons/MarinePropellerBlueprint'
+import MarineRudderBlueprint from '../components/Icons/MarineRudderBlueprint'
+import MarineLiftingHookBlueprint from '../components/Icons/MarineLiftingHookBlueprint'
+import CompleteShipBlueprint from '../components/Icons/CompleteShipBlueprint'
 
 const valores = [
   {
@@ -229,26 +233,100 @@ export default function Nosotros() {
         ⊕ CERT_REF: AWS_D1.1 / LLOYD_REG
       </div>
 
-      {/* Bocetos de plano decorativos — solo sobre el HERO (fondo claro) */}
+      {/* ════════════════════════════════════════════════════════════════════════
+               TODOS LOS PLANOS Y DIBUJOS DE LA CARPETA ICONS CON MAYOR OPACIDAD (MÁS OSCUROS)
+               ════════════════════════════════════════════════════════════════════════ */}
+
+      {/* 1. SideProfileBlueprint - Esquina superior derecha */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: -20 }}
         whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.8, ease: 'out' }}
-        style={{ position: 'absolute', top: '5%', right: '10%', width: '310px', pointerEvents: 'none', zIndex: 0 }}
+        style={{
+          position: 'absolute',
+          top: '4%',
+          right: '-2%',
+          width: '310px',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
       >
-        <SideProfileBlueprint />
+        <CompleteShipBlueprint/>
       </motion.div>
 
+      {/* 2. FrontBlueprint - Esquina superior izquierda */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: -30 }}
         whileInView={{ opacity: 0.70, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
-        style={{ position: 'absolute', top: '6%', left: '3%', width: '270px', pointerEvents: 'none', zIndex: 0 }}
+        style={{
+          position: 'absolute',
+          top: '6%',
+          left: '-1%',
+          width: '270px',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
       >
         <FrontBlueprint />
       </motion.div>
+
+      {/* 3. ConceptBlueprint - Espacio medio izquierdo */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.9, ease: 'out', delay: 0.15 }}
+        style={{
+          position: 'absolute',
+          top: '42%',
+          left: '-2%',
+          width: '260px',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      >
+        <ConceptBlueprint />
+      </motion.div>
+
+      {/* 4. MarineEngineBlueprint - Espacio medio derecho */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: 30 }}
+        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.9, ease: 'out', delay: 0.2 }}
+        style={{
+          position: 'absolute',
+          top: '45%',
+          right: '-2%',
+          width: '330px',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      >
+        <MarineEngineBlueprint />
+      </motion.div>
+
+      {/* 5. ShipTanksBlueprint - Esquina inferior izquierda */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: 30 }}
+        whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
+        style={{
+          position: 'absolute',
+          bottom: '2%',
+          left: '2%',
+          width: '360px',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      >
+        <ShipTanksBlueprint />
+      </motion.div>
+
 
       {/* paddingTop deja libre el alto de la regla + el navbar flotante */}
       <div className="container-astikmar" style={{ paddingLeft: '52px', paddingTop: '132px', position: 'relative', zIndex: 1 }}>

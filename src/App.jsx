@@ -10,6 +10,8 @@ import ServiciosDetalle from './pages/ServiciosDetalle'
 import FlotaEquipos from './pages/FlotaEquipos'
 import ProyectosGaleria from './pages/ProyectosGaleria'
 import Contacto from './pages/Contacto'
+import InfoServicios from './pages/InfoServicios'
+import InfoProyecto from './pages/InfoProyectos'
 
 import './index.css'
 
@@ -28,10 +30,10 @@ function BlueprintParallax() {
       {/* Floating dimension lines - top */}
       <motion.div style={{ y: y1, position: 'absolute', top: 80, left: 0, right: 0, opacity: 0.12 }}>
         <svg width="100%" height="20" viewBox="0 0 1440 20" preserveAspectRatio="none">
-          <line x1="0" y1="10" x2="1440" y2="10" stroke="#1D2939" strokeWidth="0.8" strokeDasharray="8 6"/>
+          <line x1="0" y1="10" x2="1440" y2="10" stroke="#1D2939" strokeWidth="0.8" strokeDasharray="8 6" />
           {[144, 288, 432, 576, 720, 864, 1008, 1152, 1296].map(x => (
             <g key={x}>
-              <line x1={x} y1="4" x2={x} y2="16" stroke="#1D2939" strokeWidth="1"/>
+              <line x1={x} y1="4" x2={x} y2="16" stroke="#1D2939" strokeWidth="1" />
               <text x={x} y="3" fontSize="8" textAnchor="middle" fill="#1D2939" fontFamily="Rajdhani">
                 {x / 144 * 10}'
               </text>
@@ -43,10 +45,10 @@ function BlueprintParallax() {
       {/* Floating dimension lines - left vertical */}
       <motion.div style={{ y: y2, position: 'absolute', top: 80, left: 8, bottom: 0, width: '20px', opacity: 0.1 }}>
         <svg width="20" height="100%" viewBox="0 0 20 800" preserveAspectRatio="none">
-          <line x1="10" y1="0" x2="10" y2="800" stroke="#1D2939" strokeWidth="0.8" strokeDasharray="8 6"/>
+          <line x1="10" y1="0" x2="10" y2="800" stroke="#1D2939" strokeWidth="0.8" strokeDasharray="8 6" />
           {[100, 200, 300, 400, 500, 600, 700].map(y => (
             <g key={y}>
-              <line x1="4" y1={y} x2="16" y2={y} stroke="#1D2939" strokeWidth="1"/>
+              <line x1="4" y1={y} x2="16" y2={y} stroke="#1D2939" strokeWidth="1" />
               <text x="2" y={y + 3} fontSize="7" fill="#1D2939" fontFamily="Rajdhani">{y / 10}'</text>
             </g>
           ))}
@@ -75,7 +77,7 @@ function ScrollToTop() {
       title="Volver arriba"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-        <path d="M18 15l-6-6-6 6"/>
+        <path d="M18 15l-6-6-6 6" />
       </svg>
     </motion.button>
   )
@@ -84,6 +86,10 @@ function ScrollToTop() {
 export default function App() {
   const [currentPage, setCurrentPage] = useState('inicio')
   const [contactService, setContactService] = useState('')
+  // Servicio elegido en ServiciosDetalle; InfoServicios lo lee para mostrar su detalle.
+  const [selectedService, setSelectedService] = useState(null)
+  // Proyecto elegido en ProyectosGaleria; InfoProyecto lo lee para mostrar su detalle.
+  const [selectedProject, setSelectedProject] = useState(null)
 
   const renderPage = () => {
     switch (currentPage) {
@@ -92,11 +98,15 @@ export default function App() {
       case 'nosotros':
         return <Nosotros />
       case 'servicios':
-        return <ServiciosDetalle setCurrentPage={setCurrentPage} setContactService={setContactService} />
+        return <ServiciosDetalle setCurrentPage={setCurrentPage} setContactService={setContactService} setSelectedService={setSelectedService} />
+      case 'info-servicio':
+        return <InfoServicios service={selectedService} setCurrentPage={setCurrentPage} />
       case 'capacidad':
         return <FlotaEquipos />
       case 'proyectos':
-        return <ProyectosGaleria setCurrentPage={setCurrentPage} />
+        return <ProyectosGaleria setCurrentPage={setCurrentPage} setSelectedProject={setSelectedProject} />
+      case 'info-proyecto':
+        return <InfoProyecto project={selectedProject} setCurrentPage={setCurrentPage} />
       case 'contacto':
         return <Contacto contactService={contactService} setContactService={setContactService} />
       default:

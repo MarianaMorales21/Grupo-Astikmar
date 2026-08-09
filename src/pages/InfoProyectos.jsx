@@ -1,39 +1,13 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
-  ArrowRight, ChevronLeft, ChevronRight,
-  PenTool, Hammer, ClipboardCheck, ShieldCheck, UserCheck, Wrench,
-  CheckCircle2, Award,
+  ArrowRight, ChevronLeft, ChevronRight, MapPin, Calendar, Clock,
+  CheckCircle2, Ruler,
 } from 'lucide-react'
-import FrontBlueprint from '../components/Icons/FrontBlueprint'
 import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
-import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
-import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
 
-// Mapa de iconos: el dato de cada servicio guarda solo el nombre del icono (string),
-// aquí se resuelve al componente real. Así "incluye" puede venir de la data del servicio.
-const iconMap = {
-  PenTool: <PenTool size={20} className="text-orange-500" />,
-  Hammer: <Hammer size={20} className="text-orange-500" />,
-  ClipboardCheck: <ClipboardCheck size={20} className="text-orange-500" />,
-  ShieldCheck: <ShieldCheck size={20} className="text-orange-500" />,
-  UserCheck: <UserCheck size={20} className="text-orange-500" />,
-  Wrench: <Wrench size={20} className="text-orange-500" />,
-}
-
-// Fallback genérico, solo se usa si un servicio no trae su propio "incluye" definido.
-const defaultIncluye = [
-  { icon: 'PenTool', title: 'Diseño Conceptual y de Ingeniería', desc: 'Desarrollamos planos y modelos con ingeniería naval avanzada, optimizando funcionalidad y rendimiento.' },
-  { icon: 'Hammer', title: 'Ejecución Técnica Especializada', desc: 'Ejecutamos el trabajo con procesos certificados y personal altamente calificado.' },
-  { icon: 'ClipboardCheck', title: 'Pruebas y Puesta en Marcha', desc: 'Realizamos pruebas de control, calibración de sistemas y entrega operativa lista para su misión.' },
-  { icon: 'ShieldCheck', title: 'Cumplimiento Normativo', desc: 'Cumplimos con normativas nacionales e internacionales de seguridad y clasificación.' },
-  { icon: 'UserCheck', title: 'Asesoría y Acompañamiento', desc: 'Acompañamos al cliente en cada etapa del proyecto, desde la idea inicial hasta la entrega final.' },
-  { icon: 'Wrench', title: 'Garantía y Soporte Post Entrega', desc: 'Ofrecemos garantía en nuestros trabajos y soporte técnico continuo.' },
-]
-
-// Placeholder de imagen: caja con borde punteado y una X diagonal (estilo wireframe).
-// Reemplaza el contenido de este componente por un <img> cuando tengas la foto real.
+// Placeholder de imagen — reemplaza por <img src="..." /> cuando tengas la foto real.
 function ImagePlaceholder({ radius = '10px', style = {}, label }) {
   return (
     <div style={{
@@ -48,8 +22,7 @@ function ImagePlaceholder({ radius = '10px', style = {}, label }) {
       {label && (
         <span style={{
           position: 'absolute', bottom: '8px', left: '8px', right: '8px',
-          fontSize: '10px', fontWeight: 700, color: 'rgba(29,41,57,0.45)',
-          textAlign: 'center',
+          fontSize: '10px', fontWeight: 700, color: 'rgba(29,41,57,0.45)', textAlign: 'center',
         }}>
           {label}
         </span>
@@ -71,39 +44,32 @@ function SectionTitleLeft({ children }) {
 
 const GALLERY_PAGE_SIZE = 4
 
-export default function InfoServicios({ service, setCurrentPage }) {
+// setCurrentPage: navegación; project: objeto específico elevado desde ProyectosGaleria.
+export default function InfoProyecto({ project, setCurrentPage }) {
   const [galleryPage, setGalleryPage] = useState(0)
 
-  // Fallback por si se navega aquí sin un servicio seleccionado.
-  if (!service) {
+  // Fallback por si se navega aquí sin un proyecto seleccionado.
+  if (!project) {
     return (
       <div className="blueprint-bg min-h-screen pb-16" style={{ paddingTop: '132px', textAlign: 'center' }}>
-        <p style={{ color: '#6b7280' }}>No se seleccionó ningún servicio.</p>
-        <button onClick={() => setCurrentPage('servicios')} className="btn-solicitar border-0" style={{ marginTop: '16px' }}>
-          Volver a Servicios
+        <p style={{ color: '#6b7280' }}>No se seleccionó ningún proyecto.</p>
+        <button onClick={() => setCurrentPage('proyectos')} className="btn-solicitar border-0" style={{ marginTop: '16px' }}>
+          Volver a Proyectos
         </button>
       </div>
     )
   }
 
-  // Galería específica del servicio. Si el servicio no trae la suya, se arma un fallback
-  // basado en su propio título en vez de un texto genérico fijo.
-  const gallery = service.gallery && service.gallery.length > 0
-    ? service.gallery
-    : [service.title, `Ejecución de ${service.title}`, 'Equipo especializado', 'Resultado final']
+  const detail = project.detail || {}
+  const gallery = detail.gallery && detail.gallery.length > 0
+    ? detail.gallery
+    : [project.title, `Ejecución — ${project.title}`, 'Equipo especializado', 'Resultado final']
 
   const totalPages = Math.max(1, Math.ceil(gallery.length / GALLERY_PAGE_SIZE))
   const visibleGallery = gallery.slice(galleryPage * GALLERY_PAGE_SIZE, galleryPage * GALLERY_PAGE_SIZE + GALLERY_PAGE_SIZE)
 
-  const destacadas = service.details && service.details.length > 0
-    ? service.details
-    : ['Estructuras y procesos de alta resistencia', 'Sistemas eficientes y de bajo consumo', 'Diseño optimizado para seguridad y operación', 'Equipos integrados según requerimiento del cliente', 'Acabados de alta calidad y protección anticorrosiva']
-
-  // "Nuestro servicio incluye" ahora viene de la data de cada servicio.
-  // Si el servicio no define el suyo, cae en el genérico de arriba.
-  const incluye = service.incluye && service.incluye.length > 0
-    ? service.incluye
-    : defaultIncluye
+  const scope = detail.scope && detail.scope.length > 0 ? detail.scope : []
+  const specs = detail.specs && detail.specs.length > 0 ? detail.specs : []
 
   return (
     <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative' }}>
@@ -140,24 +106,6 @@ export default function InfoServicios({ service, setCurrentPage }) {
 
       {/* Bocetos de plano decorativos, muy sutiles */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: -20 }}
-        whileInView={{ opacity: 0.5, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: '4%', right: '-2%', width: '280px', pointerEvents: 'none', zIndex: 0 }}
-      >
-        <SideProfileBlueprint />
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.5, scale: 1, x: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.85, delay: 0.1 }}
-        style={{ position: 'absolute', top: '55%', left: '-2%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
-      >
-        <ConceptBlueprint />
-      </motion.div>
-      <motion.div
         initial={{ opacity: 0, scale: 0.85, x: 30 }}
         whileInView={{ opacity: 0.5, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
@@ -166,30 +114,38 @@ export default function InfoServicios({ service, setCurrentPage }) {
       >
         <MarineEngineBlueprint />
       </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.5, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.85, delay: 0.1 }}
+        style={{ position: 'absolute', top: '50%', left: '-2%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <ConceptBlueprint />
+      </motion.div>
 
-      {/* paddingTop deja libre el alto de la regla + el navbar flotante */}
       <div className="container-astikmar" style={{ paddingLeft: '52px', paddingTop: '132px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px' }}>
           <button onClick={() => setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
           <span style={{ margin: '0 6px' }}>›</span>
-          <button onClick={() => setCurrentPage('servicios')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Servicios</button>
+          <button onClick={() => setCurrentPage('proyectos')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Proyectos</button>
           <span style={{ margin: '0 6px' }}>›</span>
-          <span style={{ color: '#F97316', fontWeight: 600 }}>{service.title}</span>
+          <span style={{ color: '#F97316', fontWeight: 600 }}>{project.title}</span>
         </p>
 
-        {/* ══════════ HERO: título + imagen + boceto lateral ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 440px) 1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }}>
+        {/* ══════════ HERO ══════════ */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 440px) 1fr', gap: '40px', alignItems: 'center', marginBottom: '40px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h1 style={{ fontSize: '38px', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
-              {service.title}
+            <span style={{ fontSize: '11px', fontWeight: 700, color: '#F97316', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              {project.category}
+            </span>
+            <h1 style={{ fontSize: '34px', fontWeight: 900, color: '#1D2939', lineHeight: 1.15, letterSpacing: '-0.01em', marginTop: '6px' }}>
+              {project.title}
             </h1>
-            <p style={{ fontSize: '18px', fontWeight: 600, color: '#334e68', marginTop: '8px' }}>
-              Soluciones <span style={{ color: '#F97316', fontStyle: 'italic' }}>a la medida</span>, construidas para durar
-            </p>
             <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
-              {service.desc}
+              {detail.fullDescription || project.desc}
             </p>
           </motion.div>
 
@@ -197,54 +153,62 @@ export default function InfoServicios({ service, setCurrentPage }) {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: '16px', height: '260px' }}
+            style={{ height: '260px' }}
           >
-            <ImagePlaceholder label="Foto del servicio en ejecución" />
-            <ImagePlaceholder label="Boceto / plano de referencia" />
+            <ImagePlaceholder label="Foto del proyecto" />
           </motion.div>
         </div>
 
-        {/* ══════════ NUESTRO SERVICIO INCLUYE ══════════ */}
+        {/* ══════════ METADATOS RÁPIDOS ══════════ */}
+        <div style={{
+          display: 'flex', gap: '32px', flexWrap: 'wrap', padding: '18px 24px',
+          border: '1px solid rgba(29,41,57,0.1)', borderRadius: '12px', marginBottom: '48px',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <MapPin size={16} className="text-orange-500" />
+            <span style={{ fontSize: '13px', color: '#374151' }}>{project.location}</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Clock size={16} className="text-orange-500" />
+            <span style={{ fontSize: '13px', color: '#374151' }}>Duración: {project.duration}</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Calendar size={16} className="text-orange-500" />
+            <span style={{ fontSize: '13px', color: '#374151' }}>Año: {project.year}</span>
+          </div>
+        </div>
+
+        {/* ══════════ FICHA TÉCNICA (campos específicos del proyecto) ══════════ */}
         <div style={{ marginBottom: '48px' }}>
-          <SectionTitleLeft>Nuestro Servicio Incluye</SectionTitleLeft>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '28px 24px' }}>
-            {incluye.map((item, i) => (
+          <SectionTitleLeft>Ficha Técnica del Proyecto</SectionTitleLeft>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '28px 24px' }}>
+            {project.fields.map((f, i) => (
               <motion.div
-                key={item.title}
+                key={f.label}
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}
               >
-                <div style={{
-                  width: '40px', height: '40px', borderRadius: '10px', flexShrink: 0,
-                  background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.18)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  {iconMap[item.icon]}
-                </div>
-                <div>
-                  <h4 style={{ fontSize: '13.5px', fontWeight: 800, color: '#1D2939', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.01em' }}>
-                    {item.title}
-                  </h4>
-                  <p style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.6 }}>
-                    {item.desc}
-                  </p>
-                </div>
+                <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#1D2939', marginBottom: '4px' }}>
+                  {f.label}
+                </h4>
+                <p style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.6 }}>
+                  {f.value}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* ══════════ GALERÍA (carrusel) + CARACTERÍSTICAS DESTACADAS ══════════ */}
+        {/* ══════════ GALERÍA + ALCANCE DE TRABAJO ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '40px', marginBottom: '56px', alignItems: 'start' }}>
 
-          {/* Carrusel */}
+          {/* Carrusel de galería */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
               <span style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#334e68', whiteSpace: 'nowrap' }}>
-                {service.galleryTitle || `Galería de ${service.title}`}
+                Galería del Proyecto
               </span>
               <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
               <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
@@ -290,11 +254,11 @@ export default function InfoServicios({ service, setCurrentPage }) {
             )}
           </div>
 
-          {/* Características destacadas + sello de calidad */}
+          {/* Alcance de trabajo + especificaciones */}
           <div>
-            <SectionTitleLeft>Características Destacadas</SectionTitleLeft>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
-              {destacadas.map((d, i) => (
+            <SectionTitleLeft>Alcance de Trabajo</SectionTitleLeft>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
+              {(scope.length > 0 ? scope : ['Diagnóstico técnico inicial', 'Ejecución especializada bajo supervisión', 'Pruebas y verificación final']).map((s, i) => (
                 <motion.li
                   key={i}
                   initial={{ opacity: 0, x: 10 }}
@@ -304,24 +268,34 @@ export default function InfoServicios({ service, setCurrentPage }) {
                   style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '13.5px', color: '#374151' }}
                 >
                   <CheckCircle2 size={16} color="#F97316" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  {d}
+                  {s}
                 </motion.li>
               ))}
             </ul>
 
-            <div style={{ border: '1px solid rgba(29,41,57,0.1)', borderRadius: '12px', padding: '20px' }}>
-              <div style={{
-                width: '40px', height: '40px', borderRadius: '50%',
-                background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px',
-              }}>
-                <Award size={20} className="text-orange-500" />
+            {specs.length > 0 && (
+              <div style={{ border: '1px solid rgba(29,41,57,0.1)', borderRadius: '12px', padding: '20px' }}>
+                <div style={{
+                  width: '40px', height: '40px', borderRadius: '50%',
+                  background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px',
+                }}>
+                  <Ruler size={20} className="text-orange-500" />
+                </div>
+                <h5 style={{ fontSize: '14px', fontWeight: 800, color: '#1D2939', marginBottom: '10px' }}>Especificaciones técnicas</h5>
+                <ul style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {specs.map((s, i) => (
+                    <li key={i} style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.6 }}>• {s}</li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => setCurrentPage('contacto')}
+                  style={{ background: 'none', border: 0, cursor: 'pointer', color: '#F97316', fontSize: '12.5px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '4px', padding: 0, marginTop: '14px' }}
+                >
+                  Consultar un proyecto similar <ArrowRight size={12} />
+                </button>
               </div>
-              <h5 style={{ fontSize: '14px', fontWeight: 800, color: '#1D2939', marginBottom: '6px' }}>Calidad certificada</h5>
-              <p style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.6, marginBottom: '10px' }}>
-                Garantizamos nuestros trabajos bajo los más altos estándares de calidad y seguridad.
-              </p>
-            </div>
+            )}
           </div>
         </div>
 
