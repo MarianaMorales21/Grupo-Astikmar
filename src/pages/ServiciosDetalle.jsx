@@ -234,6 +234,8 @@ const allServices = [
 const categories = ['Todos', 'Técnico', 'Mantenimiento', 'Logística', 'Inspección', 'Combustible', 'Emergencia']
 
 // Placeholder de imagen/ilustración por servicio — reemplaza por la foto real cuando la tengas.
+// Ahora incluye una etiqueta técnica "IMG·REF" en la esquina, coherente con el resto
+// del lenguaje de plano (referencias, sellos, marcas de corte).
 function ServiceImagePlaceholder({ size = 96 }) {
   return (
     <div style={{
@@ -251,6 +253,13 @@ function ServiceImagePlaceholder({ size = 96 }) {
         <line x1="0" y1="0" x2="100%" y2="100%" stroke="rgba(29,41,57,0.14)" strokeWidth="1" />
         <line x1="100%" y1="0" x2="0" y2="100%" stroke="rgba(29,41,57,0.14)" strokeWidth="1" />
       </svg>
+      <span style={{
+        position: 'absolute', bottom: 4, left: 0, right: 0,
+        textAlign: 'center', fontSize: '7px', letterSpacing: '0.1em',
+        color: 'rgba(29,41,57,0.3)', fontFamily: 'monospace',
+      }}>
+        IMG·REF
+      </span>
     </div>
   )
 }
@@ -259,6 +268,19 @@ function ServiceImagePlaceholder({ size = 96 }) {
 export default function ServiciosDetalle({ setCurrentPage, setSelectedService }) {
   const [search, setSearch] = useState('')
   const [activeCat, setActiveCat] = useState('Todos')
+  const [cursorPos, setCursorPos] = useState(null)
+
+  // Lector de coordenadas tipo CAD: sigue el mouse mostrando X/Y,
+  // como si el usuario estuviera trabajando sobre un plano real.
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    setCursorPos({
+      x: Math.round(e.clientX - rect.left),
+      y: Math.round(e.clientY - rect.top),
+      screenX: e.clientX,
+      screenY: e.clientY,
+    })
+  }
 
   const filtered = allServices.filter(svc => {
     const matchesSearch = svc.title.toLowerCase().includes(search.toLowerCase()) || svc.desc.toLowerCase().includes(search.toLowerCase())
@@ -275,7 +297,60 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
   }
 
   return (
-    <div className="blueprint-bg min-h-screen pb-16">
+    <div
+      className="blueprint-bg min-h-screen pb-16"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setCursorPos(null)}
+      style={{ position: 'relative' }}
+    >
+      {/* Lector de coordenadas tipo CAD — sigue el cursor con un pequeño
+          crosshair y las coordenadas X/Y, como en un software de diseño naval.
+          fixed + screenX/Y para que no se desfase con el scroll de la página. */}
+      <AnimatePresence>
+        {cursorPos && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            style={{
+              position: 'fixed',
+              left: cursorPos.screenX + 14,
+              top: cursorPos.screenY + 14,
+              pointerEvents: 'none',
+              zIndex: 50,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+            }}
+          >
+            <svg width="10" height="10" style={{ opacity: 0.55 }}>
+              <line x1="5" y1="0" x2="5" y2="10" stroke="#F97316" strokeWidth="1" />
+              <line x1="0" y1="5" x2="10" y2="5" stroke="#F97316" strokeWidth="1" />
+            </svg>
+            <span style={{
+              fontFamily: 'monospace', fontSize: '10px', fontWeight: 600,
+              color: 'rgba(29,41,57,0.55)', letterSpacing: '0.02em',
+              background: 'rgba(242,244,247,0.85)', padding: '1px 5px',
+              whiteSpace: 'nowrap',
+            }}>
+              X:{String(cursorPos.x).padStart(4, '0')} Y:{String(cursorPos.y).padStart(4, '0')}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Foco accesible coherente con el acento naranja del sistema.
+          Vive aquí para que el componente sea autocontenido; si ya tienes
+          un stylesheet global, mueve este bloque allí. */}
+      <style>{`
+        .calc-input:focus-visible,
+        .astikmar-focusable:focus-visible {
+          outline: 1.5px solid #F97316;
+          outline-offset: 2px;
+        }
+      `}</style>
+
       {/* Regla pegada al borde superior real de la página */}
       <div className="blueprint-ruler-top">
         {["-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'"].map(m => (
@@ -417,7 +492,7 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
             <input
               type="text"
               placeholder="Buscar servicio por nombre o palabra clave..."
-              className="calc-input"
+              className="calc-input astikmar-focusable"
               value={search}
               onChange={e => setSearch(e.target.value)}
               style={{ paddingLeft: '40px' }}
@@ -425,15 +500,19 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
             <Search size={16} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
           </div>
 
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {/* Filtros: underline en vez de contorno completo — mismo peso visual
+              que las reglas y líneas finas del resto del layout. */}
+          <div style={{ display: 'flex', gap: '18px', flexWrap: 'wrap' }}>
             {categories.map(cat => (
               <button
                 key={cat}
+                className="astikmar-focusable"
                 onClick={() => setActiveCat(cat)}
                 style={{
-                  padding: '8px 16px', borderRadius: '8px',
-                  border: `1.5px solid ${activeCat === cat ? '#F97316' : 'rgba(29,41,57,0.1)'}`,
-                  background: activeCat === cat ? 'rgba(249,115,22,0.06)' : 'transparent',
+                  padding: '8px 2px',
+                  border: 'none',
+                  borderBottom: `1.5px solid ${activeCat === cat ? '#F97316' : 'transparent'}`,
+                  background: 'transparent',
                   color: activeCat === cat ? '#F97316' : '#4b5563',
                   fontSize: '12.5px', fontWeight: 600, cursor: 'pointer',
                   transition: 'all 0.2s ease',
@@ -457,7 +536,7 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.35, delay: (i % 6) * 0.04 }}
                 layout
-                whileHover={{ x: 3 }}
+                whileHover={{ x: 2 }}
                 onClick={() => handleOpenService(svc)}
                 style={{
                   display: 'flex',
@@ -465,20 +544,33 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
                   alignItems: 'flex-start',
                   padding: '26px 0',
                   borderTop: '1px solid rgba(29,41,57,0.08)',
+                  position: 'relative',
                   cursor: 'pointer',
                 }}
               >
+                {/* Marca de corte de plano en el extremo del divisor superior */}
+                <span style={{
+                  position: 'absolute', top: '-1px', left: 0,
+                  width: '6px', height: '6px',
+                  borderLeft: '1px solid rgba(249,115,22,0.45)',
+                  borderTop: '1px solid rgba(249,115,22,0.45)',
+                  pointerEvents: 'none',
+                }} />
+
                 <div style={{ position: 'relative', flexShrink: 0 }}>
                   <ServiceImagePlaceholder size={92} />
+                  {/* Badge tipo sello de referencia técnica en vez de círculo sólido */}
                   <span style={{
-                    position: 'absolute', top: '-8px', left: '-8px',
-                    width: '24px', height: '24px', borderRadius: '50%',
-                    background: '#F97316', color: 'white',
-                    fontSize: '11px', fontWeight: 800,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    border: '2px solid #F2F4F7',
+                    position: 'absolute', top: '-6px', left: '-6px',
+                    padding: '2px 5px',
+                    background: '#F2F4F7',
+                    border: '1px solid #F97316',
+                    color: '#F97316',
+                    fontSize: '9px', fontWeight: 700,
+                    fontFamily: 'monospace', letterSpacing: '0.05em',
+                    whiteSpace: 'nowrap',
                   }}>
-                    {i + 1}
+                    N°{String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
 
@@ -491,6 +583,13 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
                   </span>
                   <h3 style={{ fontSize: '17px', fontWeight: 800, color: '#1D2939', margin: '4px 0 6px', textTransform: 'uppercase', letterSpacing: '0.01em' }}>
                     {svc.title}
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      style={{ marginLeft: 8, fontSize: 11, color: '#F97316', fontFamily: 'monospace', fontWeight: 400 }}
+                    >
+                      ⊕
+                    </motion.span>
                   </h3>
                   <p style={{
                     fontSize: '13px', color: '#6b7280', lineHeight: 1.6,
@@ -499,7 +598,7 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
                     {svc.desc}
                   </p>
                   <button
-                    className="card-more border-0 bg-transparent cursor-pointer"
+                    className="card-more border-0 bg-transparent cursor-pointer astikmar-focusable"
                     style={{ marginTop: '10px' }}
                     onClick={(e) => { e.stopPropagation(); handleOpenService(svc) }}
                   >
@@ -511,11 +610,16 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
           </AnimatePresence>
         </div>
 
-        {/* Empty state */}
+        {/* Empty state — mismo vocabulario técnico (referencias, sellos) que el resto de la página */}
         {filtered.length === 0 && (
           <div style={{ textAlign: 'center', padding: '60px 24px', border: '1.5px dashed rgba(29,41,57,0.15)', borderRadius: '12px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1D2939' }}>No se encontraron servicios</h3>
-            <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>Intente buscar con otra palabra clave o limpie los filtros.</p>
+            <p style={{
+              fontFamily: 'monospace', fontSize: '11px', letterSpacing: '0.05em',
+              color: 'rgba(29,41,57,0.4)', marginTop: '8px',
+            }}>
+              ∅ NO_MATCH — AJUSTE PARÁMETROS DE BÚSQUEDA
+            </p>
           </div>
         )}
       </div>
