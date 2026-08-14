@@ -272,16 +272,6 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
 
   // Lector de coordenadas tipo CAD: sigue el mouse mostrando X/Y,
   // como si el usuario estuviera trabajando sobre un plano real.
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    setCursorPos({
-      x: Math.round(e.clientX - rect.left),
-      y: Math.round(e.clientY - rect.top),
-      screenX: e.clientX,
-      screenY: e.clientY,
-    })
-  }
-
   const filtered = allServices.filter(svc => {
     const matchesSearch = svc.title.toLowerCase().includes(search.toLowerCase()) || svc.desc.toLowerCase().includes(search.toLowerCase())
     const matchesCat = activeCat === 'Todos' || svc.category === activeCat
@@ -299,46 +289,8 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
   return (
     <div
       className="blueprint-bg min-h-screen pb-16"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setCursorPos(null)}
       style={{ position: 'relative' }}
     >
-      {/* Lector de coordenadas tipo CAD — sigue el cursor con un pequeño
-          crosshair y las coordenadas X/Y, como en un software de diseño naval.
-          fixed + screenX/Y para que no se desfase con el scroll de la página. */}
-      <AnimatePresence>
-        {cursorPos && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            style={{
-              position: 'fixed',
-              left: cursorPos.screenX + 14,
-              top: cursorPos.screenY + 14,
-              pointerEvents: 'none',
-              zIndex: 50,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-            }}
-          >
-            <svg width="10" height="10" style={{ opacity: 0.55 }}>
-              <line x1="5" y1="0" x2="5" y2="10" stroke="#F97316" strokeWidth="1" />
-              <line x1="0" y1="5" x2="10" y2="5" stroke="#F97316" strokeWidth="1" />
-            </svg>
-            <span style={{
-              fontFamily: 'monospace', fontSize: '10px', fontWeight: 600,
-              color: 'rgba(29,41,57,0.55)', letterSpacing: '0.02em',
-              background: 'rgba(242,244,247,0.85)', padding: '1px 5px',
-              whiteSpace: 'nowrap',
-            }}>
-              X:{String(cursorPos.x).padStart(4, '0')} Y:{String(cursorPos.y).padStart(4, '0')}
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Foco accesible coherente con el acento naranja del sistema.
           Vive aquí para que el componente sea autocontenido; si ya tienes
@@ -454,68 +406,71 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
         <ShipTanksBlueprint />
       </motion.div>
 
-      {/* paddingTop deja libre el alto de la regla + el navbar flotante */}
-      <div className="container-astikmar" style={{ paddingLeft: '52px', paddingTop: '132px' }}>
+      {/* paddingTop unificado para alineación visual exacta */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
-        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '10px' }}>
-          Inicio <span style={{ margin: '0 4px' }}>›</span> <span style={{ color: '#F97316', fontWeight: 600 }}>Servicios</span>
+        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <button onClick={() => setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
+          <span>›</span>
+          <span style={{ color: '#F97316', fontWeight: 600 }}>Servicios</span>
         </p>
 
         {/* Header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'end', marginBottom: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px 32px', alignItems: 'end', marginBottom: '40px' }}>
           <div>
-            <h2
+            <h1
               style={{
                 fontSize: 'clamp(28px, 4vw, 42px)',
                 fontWeight: 900,
                 color: '#101c2c',
                 letterSpacing: '-0.02em',
                 lineHeight: 1.1,
+                fontFamily: 'var(--font-heading)',
               }}
             >
               Nuestros{' '}
               <span style={{ color: '#F97316', fontStyle: 'italic' }}>Servicios</span>{' '}
-            </h2>
-            <p style={{ fontSize: '20px', fontWeight: 600, color: '#334e68', marginTop: '4px' }}>
+            </h1>
+            <p style={{ fontSize: 'clamp(16px, 2.2vw, 20px)', fontWeight: 600, color: '#334e68', marginTop: '4px' }}>
               Soluciones marítimas <span style={{ color: '#F97316', fontStyle: 'italic' }}>integrales</span>
             </p>
           </div>
-          <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75 }}>
+          <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75 }}>
             Acompañamos a nuestros clientes en cada etapa del ciclo de vida de su embarcación, con equipo especializado, tecnología avanzada y altos estándares de calidad.
           </p>
         </div>
 
         {/* Filters and Search Bar */}
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap' }}>
-          <div style={{ position: 'relative', flex: '1 1 300px' }}>
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap' }}>
+          <div style={{ position: 'relative', flex: '1 1 280px' }}>
             <input
               type="text"
               placeholder="Buscar servicio por nombre o palabra clave..."
               className="calc-input astikmar-focusable"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              style={{ paddingLeft: '40px' }}
+              style={{ paddingLeft: '40px', width: '100%' }}
             />
             <Search size={16} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
           </div>
 
-          {/* Filtros: underline en vez de contorno completo — mismo peso visual
-              que las reglas y líneas finas del resto del layout. */}
-          <div style={{ display: 'flex', gap: '18px', flexWrap: 'wrap' }}>
+          {/* Filtros */}
+          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
             {categories.map(cat => (
               <button
                 key={cat}
                 className="astikmar-focusable"
                 onClick={() => setActiveCat(cat)}
                 style={{
-                  padding: '8px 2px',
+                  padding: '8px 4px',
                   border: 'none',
-                  borderBottom: `1.5px solid ${activeCat === cat ? '#F97316' : 'transparent'}`,
+                  borderBottom: `2px solid ${activeCat === cat ? '#F97316' : 'transparent'}`,
                   background: 'transparent',
                   color: activeCat === cat ? '#F97316' : '#4b5563',
-                  fontSize: '12.5px', fontWeight: 600, cursor: 'pointer',
+                  fontSize: '13px', fontWeight: activeCat === cat ? 700 : 600, cursor: 'pointer',
                   transition: 'all 0.2s ease',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {cat}
@@ -524,9 +479,8 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
           </div>
         </div>
 
-        {/* Lista de servicios — sin panel/carta, filas planas separadas por línea divisoria.
-            Al hacer clic navega a la pantalla InfoServicios con el detalle completo. */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', columnGap: '48px' }}>
+        {/* Lista de servicios — Grid Responsivo */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '16px 36px' }}>
           <AnimatePresence mode="popLayout">
             {filtered.map((svc, i) => (
               <motion.div

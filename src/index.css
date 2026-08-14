@@ -3,6 +3,7 @@
    ============================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
 
 /* Tailwind v4 */
 @import "tailwindcss";
@@ -11,6 +12,7 @@
    CSS CUSTOM PROPERTIES
    ============================================= */
 :root {
+  /* Paleta original */
   --navy-900: #1D2939;
   --navy-800: #243b53;
   --navy-700: #334e68;
@@ -18,8 +20,23 @@
   --orange-600: #ea580c;
   --steel: #F2F4F7;
   --white: #ffffff;
+
+  /* Paleta extendida — marinos oscuros + cian neón */
+  --navy-dark: #0b1d3a;
+  --navy-mid: #0e2a47;
+  --cyan-neon: #00f0ff;
+  --cyan-glow: rgba(0, 240, 255, 0.35);
+  --cyan-border: rgba(0, 240, 255, 0.45);
+  --cyan-bg: rgba(0, 240, 255, 0.07);
+
+  /* Tipografía */
+  --font-heading: 'Chakra Petch', 'Rajdhani', sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+
+  /* Sombras */
   --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.08);
   --shadow-neumorphic: 8px 8px 16px rgba(0, 0, 0, 0.08), -8px -8px 16px rgba(255, 255, 255, 0.9);
+  --shadow-cyan: 0 0 18px rgba(0, 240, 255, 0.3);
 }
 
 /* =============================================
@@ -35,15 +52,21 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* Previene scroll horizontal en mobile */
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   background-color: var(--steel);
   color: var(--navy-900);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings globales — Chakra Petch */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 /* =============================================
@@ -1145,8 +1168,155 @@ body {
   }
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+/* =============================================
+   SECTION BADGE — Componente visual unificado
+   ============================================= */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px 6px 12px;
+  background: var(--cyan-bg);
+  border: 1px solid var(--cyan-border);
+  border-radius: 100px;
+  font-family: var(--font-heading);
+  font-size: clamp(9px, 1.2vw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cyan-neon);
+  margin-bottom: 16px;
+}
+
+.section-badge .badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan-neon);
+  box-shadow: 0 0 8px var(--cyan-glow), 0 0 16px var(--cyan-glow);
+  animation: badgePulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Badge variante oscura (sobre fondos navy) */
+.section-badge--dark {
+  background: rgba(0, 240, 255, 0.06);
+  border-color: rgba(0, 240, 255, 0.3);
+  color: var(--cyan-neon);
+}
+
+/* Badge variante clara (sobre fondos steel/white) */
+.section-badge--light {
+  background: rgba(0, 240, 255, 0.05);
+  border-color: rgba(0, 240, 255, 0.35);
+  color: #0099cc;
+}
+
+.section-badge--light .badge-dot {
+  background: #00b8d4;
+  box-shadow: 0 0 8px rgba(0, 184, 212, 0.5);
+}
+
+/* =============================================
+   FLOATING ICONS OVERLAY
+   ============================================= */
+.floating-icons-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-icon-item {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* =============================================
+   WAVE SEAMLESS — Sin líneas fantasma
+   ============================================= */
+.wave-seamless-container {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  font-size: 0;
+  margin-bottom: -1px;
+}
+
+.wave-seamless-container svg {
+  display: block;
+  width: 100%;
+  vertical-align: bottom;
+  margin-bottom: -1px;
+}
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes floatGlow {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.15));
+  }
+  33% {
+    transform: translateY(-10px) rotate(0.5deg);
+    filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.25));
+  }
+  66% {
+    transform: translateY(-5px) rotate(-0.5deg);
+    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.18));
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.15));
+  }
+}
+
+@keyframes floatGlowAlt {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.18));
+  }
+  50% {
+    transform: translateY(8px) rotate(-0.8deg);
+    filter: drop-shadow(0 0 14px rgba(0, 240, 255, 0.28));
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.18));
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Breakpoints mejorados
+   ============================================= */
+
+/* 4K / Large desktop */
+@media (min-width: 2200px) {
+  .container-astikmar {
+    max-width: 1800px;
+  }
+
+  .hero-title {
+    font-size: clamp(52px, 3.5vw, 72px);
+  }
+
+  .floating-icons-overlay .floating-icon-item {
+    opacity: 0.60;
+  }
+}
+
+/* Desktop */
+@media (max-width: 1280px) {
   .side-panel {
     right: -5px;
   }
@@ -1156,6 +1326,22 @@ body {
   }
 }
 
+/* Tablet landscape */
+@media (max-width: 1024px) {
+  .side-panel {
+    right: -5px;
+  }
+
+  .hero-body {
+    max-width: 100%;
+  }
+
+  .floating-icon-item {
+    opacity: 0.50 !important;
+  }
+}
+
+/* Tablet portrait */
 @media (max-width: 768px) {
   .nav-link {
     display: none;
@@ -1168,5 +1354,38 @@ body {
   .metric-item {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .floating-icon-item {
+    opacity: 0.45 !important;
+  }
+
+  /* Reducir tamaño de iconos flotantes en tablet */
+  .floating-icon-item > div {
+    transform: scale(0.75);
+    transform-origin: center center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .section-badge {
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    padding: 5px 12px 5px 10px;
+  }
+
+  .floating-icon-item {
+    opacity: 0.40 !important;
+  }
+
+  /* Iconos adaptados en mobile para complementar el diseño sin obstruir */
+  .floating-icon-item > div {
+    transform: scale(0.60);
+    transform-origin: center center;
+  }
+
+  .container-astikmar {
+    padding: 0 16px;
   }
 }

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Wrench, ShieldCheck, FileSearch, Anchor, Zap, Layers } from 'lucide-react'
 import WaveTop from './WaveTop'
+import SectionBadge from './SectionBadge'
 
 // ── Datos de servicios ───────────────────────────────────────────────────────
 const services = [
@@ -56,7 +57,22 @@ const services = [
 ]
 
 const GAP = 24       // px de separación entre tarjetas
-const VISIBLE = 3    // tarjetas visibles al mismo tiempo
+
+// Número de tarjetas visibles según ancho de viewport
+function useVisibleCards() {
+  const [visible, setVisible] = useState(3)
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth < 600) setVisible(1)
+      else if (window.innerWidth < 1024) setVisible(2)
+      else setVisible(3)
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
+  return visible
+}
 
 // ── Componente tarjeta ───────────────────────────────────────────────────────
 function ServiceCard({ svc, setCurrentPage }) {
@@ -241,12 +257,13 @@ function ServiceCard({ svc, setCurrentPage }) {
 
 // ── Componente principal ─────────────────────────────────────────────────────
 export default function ServicesSection({ setCurrentPage }) {
+  const VISIBLE = useVisibleCards()
   const [current, setCurrent] = useState(0)
   const [cardWidth, setCardWidth] = useState(0)
   const viewportRef = useRef(null)
   const trackRef = useRef(null)
 
-  const maxIndex = services.length - VISIBLE
+  const maxIndex = Math.max(0, services.length - VISIBLE)
 
   // Calcula el ancho de una tarjeta en píxeles al montar y al redimensionar
   const computeCardWidth = useCallback(() => {
@@ -254,13 +271,19 @@ export default function ServicesSection({ setCurrentPage }) {
     const totalGap = (VISIBLE - 1) * GAP
     const w = (viewportRef.current.offsetWidth - totalGap) / VISIBLE
     setCardWidth(w)
-  }, [])
+  }, [VISIBLE])
 
   useEffect(() => {
     computeCardWidth()
     window.addEventListener('resize', computeCardWidth)
     return () => window.removeEventListener('resize', computeCardWidth)
   }, [computeCardWidth])
+
+  useEffect(() => {
+    if (current > maxIndex) {
+      setCurrent(maxIndex)
+    }
+  }, [maxIndex, current])
 
   const prev = () => setCurrent((c) => Math.max(0, c - 1))
   const next = () => setCurrent((c) => Math.min(maxIndex, c + 1))
@@ -281,12 +304,12 @@ export default function ServicesSection({ setCurrentPage }) {
         paddingBottom: '80px',
       }}
     >
-      {/* ── Ola superior: fill=#0f172a (color de esta sección), bgColor=#F2F4F7 (color de la sección anterior/hero) ── */}
+      {/* ── Ola superior: fill=#0f172a corta directamente el fondo blueprint del Hero ── */}
       <WaveTop
         fill="#0f172a"
-        bgColor="#F2F4F7"
-        height={90}
-        style={{ marginTop: '-2px' }}
+        bgColor="transparent"
+        height={95}
+        style={{ marginTop: '-48px', position: 'relative', zIndex: 10 }}
       />
 
       {/* Decoración de fondo: cuadrícula punteada */}
@@ -336,15 +359,20 @@ export default function ServicesSection({ setCurrentPage }) {
           transition={{ duration: 0.55 }}
           style={{ textAlign: 'center', marginBottom: '52px' }}
         >
+          {/* Badge unificado cian neón */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+            <SectionBadge variant="dark">Soluciones Marítimas</SectionBadge>
+          </div>
 
           <h2
             style={{
-              fontSize: 'clamp(28px, 4vw, 42px)',
+              fontSize: 'clamp(24px, 4vw, 42px)',
               fontWeight: 900,
               color: '#ffffff',
               letterSpacing: '-0.02em',
               lineHeight: 1.1,
               marginBottom: '12px',
+              fontFamily: 'var(--font-heading)',
             }}
           >
             Nuestros{' '}
@@ -354,11 +382,12 @@ export default function ServicesSection({ setCurrentPage }) {
 
           <p
             style={{
-              fontSize: '15px',
+              fontSize: 'clamp(13px, 1.6vw, 15px)',
               color: 'rgba(255,255,255,0.5)',
               maxWidth: '520px',
               margin: '0 auto',
               lineHeight: 1.65,
+              fontFamily: 'var(--font-body)',
             }}
           >
             Ingeniería, reparación y mantenimiento naval con estándares internacionales ISO 9001.

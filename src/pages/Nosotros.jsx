@@ -9,6 +9,7 @@ import MarinePropellerBlueprint from '../components/Icons/MarinePropellerBluepri
 import MarineRudderBlueprint from '../components/Icons/MarineRudderBlueprint'
 import MarineLiftingHookBlueprint from '../components/Icons/MarineLiftingHookBlueprint'
 import CompleteShipBlueprint from '../components/Icons/CompleteShipBlueprint'
+import SectionBadge from '../components/SectionBadge'
 
 const valores = [
   {
@@ -129,7 +130,7 @@ function SectionTitleLeft({ children, light = false }) {
   )
 }
 
-// Fila de un miembro del equipo — sin carta/caja, solo foto + texto + línea divisoria
+// Fila de un miembro del equipo — responsivo
 function TeamRow({ member, index }) {
   return (
     <motion.div
@@ -139,14 +140,14 @@ function TeamRow({ member, index }) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
       style={{
         display: 'grid',
-        gridTemplateColumns: '140px 1fr',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))',
         gap: '20px',
         alignItems: 'start',
         padding: '24px 0',
         borderBottom: '1px dashed rgba(29,41,57,0.16)',
       }}
     >
-      <div style={{ width: '140px', height: '175px', borderRadius: '10px', overflow: 'hidden', background: '#0f172a', flexShrink: 0 }}>
+      <div style={{ width: '100%', maxWidth: '140px', aspectRatio: '4/5', borderRadius: '10px', overflow: 'hidden', background: '#0f172a', flexShrink: 0 }}>
         <img
           src={member.image}
           alt={member.name}
@@ -183,7 +184,7 @@ function TeamRow({ member, index }) {
   )
 }
 
-export default function Nosotros() {
+export default function Nosotros({ setCurrentPage }) {
   return (
     <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative' }}>
       {/* Regla pegada al borde superior real de la página */}
@@ -233,11 +234,7 @@ export default function Nosotros() {
         ⊕ CERT_REF: AWS_D1.1 / LLOYD_REG
       </div>
 
-      {/* ════════════════════════════════════════════════════════════════════════
-               TODOS LOS PLANOS Y DIBUJOS DE LA CARPETA ICONS CON MAYOR OPACIDAD (MÁS OSCUROS)
-               ════════════════════════════════════════════════════════════════════════ */}
-
-      {/* 1. SideProfileBlueprint - Esquina superior derecha */}
+      {/* 1. SideProfileBlueprint */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: -20 }}
         whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
@@ -255,7 +252,7 @@ export default function Nosotros() {
         <CompleteShipBlueprint/>
       </motion.div>
 
-      {/* 2. FrontBlueprint - Esquina superior izquierda */}
+      {/* 2. FrontBlueprint */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: -30 }}
         whileInView={{ opacity: 0.70, scale: 1, x: 0 }}
@@ -273,7 +270,7 @@ export default function Nosotros() {
         <FrontBlueprint />
       </motion.div>
 
-      {/* 3. ConceptBlueprint - Espacio medio izquierdo */}
+      {/* 3. ConceptBlueprint */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: -30 }}
         whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
@@ -291,7 +288,7 @@ export default function Nosotros() {
         <ConceptBlueprint />
       </motion.div>
 
-      {/* 4. MarineEngineBlueprint - Espacio medio derecho */}
+      {/* 4. MarineEngineBlueprint */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: 30 }}
         whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
@@ -309,7 +306,7 @@ export default function Nosotros() {
         <MarineEngineBlueprint />
       </motion.div>
 
-      {/* 5. ShipTanksBlueprint - Esquina inferior izquierda */}
+      {/* 5. ShipTanksBlueprint */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: 30 }}
         whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
@@ -327,37 +324,44 @@ export default function Nosotros() {
         <ShipTanksBlueprint />
       </motion.div>
 
-
-      {/* paddingTop deja libre el alto de la regla + el navbar flotante */}
-      <div className="container-astikmar" style={{ paddingLeft: '52px', paddingTop: '132px', position: 'relative', zIndex: 1 }}>
+      {/* paddingTop unificado con el resto de páginas */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
         {/* ══════════ HERO: título + imagen grande ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 460px) 1fr', gap: '40px', alignItems: 'center', marginBottom: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '64px' }}>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '10px' }}>
-              Inicio <span style={{ margin: '0 4px' }}>›</span> <span style={{ color: '#F97316', fontWeight: 600 }}>Nosotros</span>
+            {/* Breadcrumb unificado */}
+            <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <button onClick={() => setCurrentPage?.('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
+              <span>›</span>
+              <span style={{ color: '#F97316', fontWeight: 600 }}>Nosotros</span>
             </p>
-            <h2
+
+            <div style={{ marginBottom: '12px' }}>
+              <SectionBadge variant="light">Sobre Nosotros</SectionBadge>
+            </div>
+
+            <h1
               style={{
                 fontSize: 'clamp(28px, 4vw, 42px)',
                 fontWeight: 900,
                 color: '#101c2c',
                 letterSpacing: '-0.02em',
                 lineHeight: 1.1,
+                fontFamily: 'var(--font-heading)',
               }}
             >
               Quienes{' '}
               <span style={{ color: '#F97316', fontStyle: 'italic' }}>Somos</span>{' '}
-
-            </h2>
+            </h1>
             <p style={{ fontSize: '19px', fontWeight: 600, color: '#334e68', marginTop: '8px' }}>
               Construyendo <span style={{ color: '#F97316', fontStyle: 'italic' }}>confianza</span>, impulsando el mar.
             </p>
-            <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
+            <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
               Somos una empresa dominicana especializada en soluciones marítimas integrales. Combinamos experiencia, tecnología y compromiso para acompañar a nuestros clientes en cada etapa del ciclo de vida de su embarcación.
             </p>
           </motion.div>
@@ -366,15 +370,18 @@ export default function Nosotros() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            style={{ height: '340px' }}
+            style={{ minHeight: '260px' }}
           >
             <ImagePlaceholder />
           </motion.div>
         </div>
       </div>
 
-      {/* ══════════ NUESTRO COMPROMISO — sección propia, va ANTES de Valores ══════════ */}
-      <div className="container-astikmar" style={{ paddingLeft: '52px', position: 'relative', zIndex: 1, marginTop: '20px' }}>
+      {/* ══════════ NUESTRO COMPROMISO ══════════ */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1, marginTop: '20px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <SectionBadge variant="light">Sostenibilidad & Excelencia</SectionBadge>
+        </div>
         <h2
           style={{
             fontSize: 'clamp(28px, 4vw, 42px)',
@@ -382,13 +389,14 @@ export default function Nosotros() {
             color: '#101c2c',
             letterSpacing: '-0.02em',
             lineHeight: 1.1,
+            marginBottom: '20px',
+            fontFamily: 'var(--font-heading)',
           }}
         >
           Nuestro{' '}
           <span style={{ color: '#F97316', fontStyle: 'italic' }}>Compromiso</span>{' '}
-
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(260px, 420px) 1fr', gap: '48px', alignItems: 'center', marginBottom: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '32px 48px', alignItems: 'center', marginBottom: '64px' }}>
           <motion.p
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -399,7 +407,7 @@ export default function Nosotros() {
             En Grupo Astikmar, estamos comprometidos con el desarrollo sostenible del sector marítimo, implementando prácticas responsables que generan valor para nuestros clientes, colaboradores y la comunidad.
           </motion.p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px' }}>
             {compromisos.map((c, i) => (
               <motion.div
                 key={c.title}
@@ -429,10 +437,7 @@ export default function Nosotros() {
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════════════════════
-          NUESTROS VALORES — panel de ancho completo, tono navy oscuro.
-          Aquí es donde va el fondo oscuro (antes estaba en Equipo Humano).
-          ══════════════════════════════════════════════════════════════ */}
+      {/* ══════════ NUESTROS VALORES ══════════ */}
       <section
         style={{
           position: 'relative',
@@ -446,7 +451,7 @@ export default function Nosotros() {
           overflow: 'hidden',
         }}
       >
-        {/* cuadrícula de plano, sutil, sobre el panel oscuro */}
+        {/* cuadrícula de plano */}
         <div
           aria-hidden="true"
           style={{
@@ -480,6 +485,9 @@ export default function Nosotros() {
         </motion.div>
 
         <div style={{ maxWidth: '1140px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div style={{ marginBottom: '12px' }}>
+            <SectionBadge variant="dark">Principios Fundamentales</SectionBadge>
+          </div>
           <h2
             style={{
               fontSize: 'clamp(28px, 4vw, 42px)',
@@ -487,16 +495,16 @@ export default function Nosotros() {
               color: '#ffffff',
               letterSpacing: '-0.02em',
               lineHeight: 1.1,
-              marginBottom: '50px',
+              marginBottom: '40px',
+              fontFamily: 'var(--font-heading)',
             }}
           >
             Nuestros{' '}
             <span style={{ color: '#F97316', fontStyle: 'italic' }}>Valores</span>{' '}
-
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 1fr) 1.6fr', gap: '40px', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '40px', alignItems: 'start' }}>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px 20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '24px 20px' }}>
               {valores.map((val, i) => (
                 <motion.div
                   key={val.title}
@@ -523,7 +531,7 @@ export default function Nosotros() {
               ))}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', height: '260px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 120px), 1fr))', gap: '16px', minHeight: '200px' }}>
               {[0, 1, 2].map(i => (
                 <motion.div
                   key={i}
@@ -540,10 +548,10 @@ export default function Nosotros() {
         </div>
       </section>
 
-      {/* ══════════ EQUIPO HUMANO — lista simple, sin cartas, en dos columnas ══════════ */}
-      <div className="container-astikmar" style={{ paddingLeft: '52px', position: 'relative', zIndex: 1, marginTop: '20px' }}>
+      {/* ══════════ EQUIPO HUMANO ══════════ */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1, marginTop: '20px' }}>
         <div style={{ position: 'relative', marginBottom: '40px' }}>
-          {/* Concept sketch decorativo, discreto, sobre fondo claro */}
+          {/* Concept sketch decorativo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.85, x: -30 }}
             whileInView={{ opacity: 0.35, scale: 1, x: 0 }}
@@ -562,6 +570,9 @@ export default function Nosotros() {
               transition={{ duration: 0.6 }}
               style={{ marginBottom: '30px' }}
             >
+              <div style={{ marginBottom: '10px' }}>
+                <SectionBadge variant="light">Especialistas Certificados</SectionBadge>
+              </div>
 
               <h2
                 style={{
@@ -571,11 +582,11 @@ export default function Nosotros() {
                   letterSpacing: '-0.02em',
                   lineHeight: 1.1,
                   marginBottom: '15px',
+                  fontFamily: 'var(--font-heading)',
                 }}
               >
                 Nuestro{' '}
                 <span style={{ color: '#F97316', fontStyle: 'italic' }}>Equipo Humano</span>{' '}
-
               </h2>
 
               <p style={{ fontSize: '14px', color: '#6b7280', maxWidth: '580px', lineHeight: 1.65 }}>
@@ -583,7 +594,7 @@ export default function Nosotros() {
               </p>
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px 48px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '8px 48px' }}>
               {teamMembers.map((member, index) => (
                 <TeamRow key={member.id} member={member} index={index} />
               ))}

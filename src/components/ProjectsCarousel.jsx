@@ -334,7 +334,7 @@ export default function ProjectsCarousel({ setCurrentPage }) {
             <div
               key={`${project.id}-${idx}`}
               style={{
-                width: '380px',
+                width: 'clamp(280px, 85vw, 360px)',
                 flexShrink: 0,
               }}
             >

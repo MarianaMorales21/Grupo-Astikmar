@@ -5,6 +5,7 @@ import {
   TrendingUp, Layers, Anchor, Droplet, Video, Users, Award, Briefcase,
 } from 'lucide-react'
 import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
+import SectionBadge from '../components/SectionBadge'
 
 // Mapa de iconos: cada campo de proyecto guarda el nombre del icono (string),
 // aquí se resuelve al componente real — así cada proyecto puede traer sus propios campos.
@@ -323,18 +324,22 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
       </motion.div>
 
 
-      <div className="container-astikmar" style={{ paddingLeft: '52px', paddingTop: '132px' }}>
+      {/* paddingTop unificado para alineación visual exacta */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
-        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '18px' }}>
+        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
-          <span style={{ margin: '0 6px' }}>›</span>
+          <span>›</span>
           <span style={{ color: '#F97316', fontWeight: 600 }}>Proyectos</span>
         </p>
 
         {/* ══════════ HERO ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'start', marginBottom: '40px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '24px 32px', alignItems: 'start', marginBottom: '40px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+            <div style={{ marginBottom: '12px' }}>
+              <SectionBadge variant="light">Portafolio & Trayectoria</SectionBadge>
+            </div>
             <h1
               style={{
                 fontSize: 'clamp(28px, 4vw, 42px)',
@@ -342,30 +347,31 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
                 color: '#101c2c',
                 letterSpacing: '-0.02em',
                 lineHeight: 1.1,
+                fontFamily: 'var(--font-heading)',
               }}
             >
               Nuestros{' '}
               <span style={{ color: '#F97316', fontStyle: 'italic' }}>Proyectos</span>{' '}
             </h1>
-            <p style={{ fontSize: '20px', fontWeight: 600, color: '#334e68', marginTop: '4px' }}>
+            <p style={{ fontSize: 'clamp(16px, 2.2vw, 20px)', fontWeight: 600, color: '#334e68', marginTop: '4px' }}>
               Ingeniería, experiencia y compromiso<br />
               en <span style={{ color: '#F97316', fontStyle: 'italic' }}>cada proyecto.</span>
             </p>
           </motion.div>
-          <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, marginTop: '6px' }}>
+          <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '6px' }}>
             Hemos participado en proyectos marítimos de gran envergadura, entregando soluciones personalizadas que cumplen con los más altos estándares de calidad, seguridad y eficiencia.
           </p>
         </div>
 
         {/* ══════════ TABS ══════════ */}
-        <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap', borderBottom: '1px solid rgba(29,41,57,0.1)', marginBottom: '8px' }}>
+        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', borderBottom: '1px solid rgba(29,41,57,0.1)', marginBottom: '16px' }}>
           {tabs.map(tab => (
             <button
               key={tab}
               onClick={() => setActiveCat(tab)}
               style={{
                 background: 'none', border: 0, cursor: 'pointer',
-                padding: '0 0 12px 0', fontSize: '13.5px',
+                padding: '0 0 12px 0', fontSize: '13px',
                 fontWeight: activeCat === tab ? 700 : 600,
                 color: activeCat === tab ? '#F97316' : '#4b5563',
                 borderBottom: activeCat === tab ? '2px solid #F97316' : '2px solid transparent',
@@ -390,12 +396,12 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
                 transition={{ duration: 0.35 }}
                 layout
                 style={{
-                  display: 'grid', gridTemplateColumns: '360px 1fr auto', gap: '32px',
+                  display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px 32px',
                   alignItems: 'start', padding: '32px 0', borderTop: '1px solid rgba(29,41,57,0.08)',
                 }}
               >
                 {/* Imagen */}
-                <div style={{ height: '220px', borderRadius: '10px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', minHeight: '200px', maxHeight: '240px', borderRadius: '10px', overflow: 'hidden' }}>
                   <ImagePlaceholder style={{ borderRadius: '10px' }} />
                 </div>
 
@@ -404,14 +410,14 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
                   <span style={{ fontSize: '10.5px', fontWeight: 700, color: '#F97316', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     {proj.category}
                   </span>
-                  <h3 style={{ fontSize: '21px', fontWeight: 800, color: '#1D2939', margin: '6px 0 8px' }}>
+                  <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#1D2939', margin: '6px 0 8px' }}>
                     {proj.title}
                   </h3>
                   <p style={{ fontSize: '13.5px', color: '#4b5563', lineHeight: 1.65, marginBottom: '18px', maxWidth: '620px' }}>
                     {proj.desc}
                   </p>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px 32px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))', gap: '14px 24px', marginBottom: '16px' }}>
                     {proj.fields.map((f, i) => (
                       <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                         <div style={{ marginTop: '2px', flexShrink: 0 }}>{fieldIconMap[f.icon]}</div>
@@ -422,16 +428,10 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
                       </div>
                     ))}
                   </div>
-                </div>
 
-                {/* Link + separador */}
-                <div style={{
-                  borderLeft: '1px solid rgba(29,41,57,0.08)', paddingLeft: '24px',
-                  height: '100%', display: 'flex', alignItems: 'flex-start',
-                }}>
                   <button
                     className="card-more border-0 bg-transparent cursor-pointer"
-                    style={{ marginTop: '10px' }}
+                    style={{ marginTop: '6px' }}
                     onClick={(e) => { e.stopPropagation(); handleOpenProject(proj) }}
                   >
                     Ver más <ArrowRight size={12} />

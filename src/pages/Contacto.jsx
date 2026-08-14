@@ -4,6 +4,7 @@ import {
   Phone, Mail, MapPin, Clock, Send, MessageSquare, User, Building, Wrench,
   ShieldCheck, UserCheck, Cpu, Award, Upload, Calendar,
 } from 'lucide-react'
+import SectionBadge from '../components/SectionBadge'
 
 const interestServices = [
   'Reparación Naval',
@@ -61,7 +62,7 @@ function Field({ label, required, icon: Icon, children }) {
   )
 }
 
-export default function Contacto({ contactService, setContactService }) {
+export default function Contacto({ contactService, setContactService, setCurrentPage }) {
   const [nombre, setNombre] = useState('')
   const [empresa, setEmpresa] = useState('')
   const [telefono, setTelefono] = useState('')
@@ -137,12 +138,14 @@ export default function Contacto({ contactService, setContactService }) {
         ))}
       </div>
 
-      {/* paddingTop deja libre el alto de la regla + el navbar flotante, igual que el resto de páginas */}
-      <div className="container-astikmar" style={{ paddingLeft: '52px', paddingRight: '90px', paddingTop: '132px', position: 'relative', zIndex: 1 }}>
+      {/* paddingTop unificado para alineación visual exacta */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
-        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px' }}>
-          Inicio <span style={{ margin: '0 6px' }}>›</span> <span style={{ color: '#F97316', fontWeight: 600 }}>Solicitar servicio</span>
+        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <button onClick={() => setCurrentPage?.('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
+          <span>›</span>
+          <span style={{ color: '#F97316', fontWeight: 600 }}>Solicitar servicio</span>
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(420px, 1.2fr) 1fr', gap: '48px', alignItems: 'start' }}>
@@ -150,7 +153,10 @@ export default function Contacto({ contactService, setContactService }) {
           {/* ══════════ COLUMNA IZQUIERDA ══════════ */}
           <div>
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-              <h1 style={{ fontSize: '38px', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
+              <div style={{ marginBottom: '12px' }}>
+                <SectionBadge variant="light">Atención & Asesoría</SectionBadge>
+              </div>
+              <h1 style={{ fontSize: 'clamp(28px, 4vw, 38px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em', fontFamily: 'var(--font-heading)' }}>
                 Solicita nuestro servicio
               </h1>
               <p style={{ fontSize: '19px', fontWeight: 600, color: '#334e68', marginTop: '6px' }}>
@@ -166,7 +172,7 @@ export default function Contacto({ contactService, setContactService }) {
             {/* Información de contacto + ¿Por qué elegirnos? */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '36px' }}>
               <div>
-                <SectionTitleLeft>Información de Contacto</SectionTitleLeft>
+                <SectionBadge variant="light" withDivider>Información de Contacto</SectionBadge>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {contactInfo.map((item, i) => (
                     <motion.div
@@ -199,7 +205,7 @@ export default function Contacto({ contactService, setContactService }) {
               </div>
 
               <div>
-                <SectionTitleLeft>¿Por Qué Elegirnos?</SectionTitleLeft>
+                <SectionBadge variant="light" withDivider>¿Por Qué Elegirnos?</SectionBadge>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {whyUs.map((item, i) => (
                     <motion.div

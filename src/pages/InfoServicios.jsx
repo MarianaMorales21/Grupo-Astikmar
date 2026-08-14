@@ -10,6 +10,7 @@ import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
 import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
+import SectionBadge from '../components/SectionBadge'
 
 // Mapa de iconos: el dato de cada servicio guarda solo el nombre del icono (string),
 // aquí se resuelve al componente real. Así "incluye" puede venir de la data del servicio.
@@ -167,22 +168,25 @@ export default function InfoServicios({ service, setCurrentPage }) {
         <MarineEngineBlueprint />
       </motion.div>
 
-      {/* paddingTop deja libre el alto de la regla + el navbar flotante */}
-      <div className="container-astikmar" style={{ paddingLeft: '52px', paddingTop: '132px', position: 'relative', zIndex: 1 }}>
+      {/* paddingTop unificado para alineación visual exacta */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
-        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px' }}>
+        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
-          <span style={{ margin: '0 6px' }}>›</span>
+          <span>›</span>
           <button onClick={() => setCurrentPage('servicios')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Servicios</button>
-          <span style={{ margin: '0 6px' }}>›</span>
+          <span>›</span>
           <span style={{ color: '#F97316', fontWeight: 600 }}>{service.title}</span>
         </p>
 
         {/* ══════════ HERO: título + imagen + boceto lateral ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 440px) 1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '48px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h1 style={{ fontSize: '38px', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
+            <div style={{ marginBottom: '12px' }}>
+              <SectionBadge variant="light">{service.category || 'Servicio Especializado'}</SectionBadge>
+            </div>
+            <h1 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em', fontFamily: 'var(--font-heading)' }}>
               {service.title}
             </h1>
             <p style={{ fontSize: '18px', fontWeight: 600, color: '#334e68', marginTop: '8px' }}>
@@ -197,7 +201,7 @@ export default function InfoServicios({ service, setCurrentPage }) {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: '16px', height: '260px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px', minHeight: '220px' }}
           >
             <ImagePlaceholder label="Foto del servicio en ejecución" />
             <ImagePlaceholder label="Boceto / plano de referencia" />
@@ -206,8 +210,8 @@ export default function InfoServicios({ service, setCurrentPage }) {
 
         {/* ══════════ NUESTRO SERVICIO INCLUYE ══════════ */}
         <div style={{ marginBottom: '48px' }}>
-          <SectionTitleLeft>Nuestro Servicio Incluye</SectionTitleLeft>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '28px 24px' }}>
+          <SectionBadge variant="light" withDivider>Nuestro Servicio Incluye</SectionBadge>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
             {incluye.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -225,7 +229,7 @@ export default function InfoServicios({ service, setCurrentPage }) {
                   {iconMap[item.icon]}
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '13.5px', fontWeight: 800, color: '#1D2939', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.01em' }}>
+                  <h4 style={{ fontSize: '13.5px', fontWeight: 800, color: '#1D2939', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.01em', fontFamily: 'var(--font-heading)' }}>
                     {item.title}
                   </h4>
                   <p style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.6 }}>
@@ -237,16 +241,18 @@ export default function InfoServicios({ service, setCurrentPage }) {
           </div>
         </div>
 
-        {/* ══════════ GALERÍA (carrusel) + CARACTERÍSTICAS DESTACADAS ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '40px', marginBottom: '56px', alignItems: 'start' }}>
+        {/* ══════════ GALERÍA + CARACTERÍSTICAS DESTACADAS ══════════ */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '40px', marginBottom: '56px', alignItems: 'start' }}>
 
           {/* Carrusel */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#334e68', whiteSpace: 'nowrap' }}>
-                {service.galleryTitle || `Galería de ${service.title}`}
-              </span>
-              <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
+                <SectionBadge variant="light">
+                  {service.galleryTitle || `Tipos de Embarcaciones que Reparamos`}
+                </SectionBadge>
+                <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
+              </div>
               <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
                 <button
                   onClick={() => setGalleryPage(p => (p - 1 + totalPages) % totalPages)}
@@ -263,7 +269,7 @@ export default function InfoServicios({ service, setCurrentPage }) {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${visibleGallery.length}, 1fr)`, gap: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '16px' }}>
               {visibleGallery.map((label, i) => (
                 <motion.div key={label + i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
                   <div style={{ height: '130px', marginBottom: '8px' }}>
@@ -292,7 +298,7 @@ export default function InfoServicios({ service, setCurrentPage }) {
 
           {/* Características destacadas + sello de calidad */}
           <div>
-            <SectionTitleLeft>Características Destacadas</SectionTitleLeft>
+            <SectionBadge variant="light" withDivider>Características Destacadas</SectionBadge>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
               {destacadas.map((d, i) => (
                 <motion.li

@@ -10,6 +10,7 @@ import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
 import MarinePropellerBlueprint from '../components/Icons/MarinePropellerBlueprint'
 import MarineLiftingHookBlueprint from '../components/Icons/MarineLiftingHookBlueprint'
 import CompleteShipBlueprint from '../components/Icons/CompleteShipBlueprint'
+import SectionBadge from '../components/SectionBadge'
 
 const equipments = [
   {
@@ -70,16 +71,11 @@ function ImagePlaceholder({ radius = '10px', light = false, style = {} }) {
   )
 }
 
-// light=true → variante para usar sobre fondo navy (líneas y texto claros en vez de oscuros)
+// light=true → variante para usar sobre fondo navy (sin uso externo, se mantiene por compatibilidad)
 function SectionTitleCenter({ children, light = false }) {
-  const lineColor = light ? 'rgba(255,255,255,0.22)' : 'rgba(29,41,57,0.2)'
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }}>
-      <span style={{ flex: 1, height: '1px', background: `linear-gradient(90deg, transparent, ${lineColor})` }} />
-      <span style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: light ? 'rgba(255,255,255,0.85)' : '#334e68', whiteSpace: 'nowrap' }}>
-        {children}
-      </span>
-      <span style={{ flex: 1, height: '1px', background: `linear-gradient(90deg, ${lineColor}, transparent)` }} />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '32px' }}>
+      {children}
     </div>
   )
 }
@@ -198,23 +194,26 @@ export default function FlotaEquipos({ setCurrentPage }) {
         <FrontBlueprint />
       </motion.div>
 
-      {/* paddingTop deja libre el alto de la regla + el navbar flotante — igual que el resto de páginas de detalle */}
-      <div className="container-astikmar" style={{ paddingLeft: '52px', paddingRight: '90px', paddingTop: '132px', position: 'relative', zIndex: 1 }}>
+      {/* paddingTop unificado para alineación visual exacta */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
-        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px' }}>
+        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage && setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
-          <span style={{ margin: '0 6px' }}>›</span>
+          <span>›</span>
           <span style={{ color: '#F97316', fontWeight: 600 }}>Capacidad técnica</span>
         </p>
 
         {/* ══════════ HERO ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 460px) 1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '48px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px' }}>
+            <div style={{ marginBottom: '12px' }}>
+              <SectionBadge variant="light">Infraestructura Propia</SectionBadge>
+            </div>
+            <h1 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px', fontFamily: 'var(--font-heading)' }}>
               Capacidad <span style={{ color: '#F97316', fontStyle: 'italic' }}>Técnica</span>
-            </h2>
-            <p style={{ fontSize: '20px', fontWeight: 700, color: '#334e68', marginTop: '4px' }}>
+            </h1>
+            <p style={{ fontSize: 'clamp(17px, 2.5vw, 20px)', fontWeight: 700, color: '#334e68', marginTop: '4px' }}>
               Flota y equipos de <span style={{ color: '#F97316' }}>nivel profesional</span>
             </p>
             <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
@@ -226,7 +225,7 @@ export default function FlotaEquipos({ setCurrentPage }) {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ height: '280px', position: 'relative' }}
+            style={{ minHeight: '260px', position: 'relative' }}
           >
             <ImagePlaceholder />
             <div style={{ position: 'absolute', top: '4%', right: '2%', width: '200px', opacity: 0.7, pointerEvents: 'none' }}>
@@ -280,12 +279,17 @@ export default function FlotaEquipos({ setCurrentPage }) {
         </motion.div>
 
         <div style={{ maxWidth: '1140px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          {/* Badge estandarizado */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
+            <SectionBadge variant="dark">Capacidad Técnica</SectionBadge>
+          </div>
           <SectionTitleCenter light>
-            <span style={{ color: 'white' }}>Nuestros</span>{' '}
-            <span style={{ color: '#F97316', fontStyle: 'italic' }}>Equipos Destacados</span>
+            <span style={{ color: 'white', fontSize: 'clamp(22px, 3.5vw, 34px)', fontWeight: 900, fontFamily: 'var(--font-heading)', letterSpacing: '-0.02em' }}>
+              Nuestros <span style={{ color: '#F97316', fontStyle: 'italic' }}>Equipos Destacados</span>
+            </span>
           </SectionTitleCenter>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '24px' }}>
             {equipments.map((eq, i) => (
               <EquipmentCard key={eq.num} eq={eq} index={i} />
             ))}
@@ -303,7 +307,7 @@ export default function FlotaEquipos({ setCurrentPage }) {
           borderTop: '1px solid rgba(29,41,57,0.06)',
         }}
       >
-        {/* Misma cuadrícula que el resto del sitio, pero en tono oscuro para fondo claro */}
+        {/* Misma cuadrícula que el resto del sitio */}
         <div
           aria-hidden="true"
           style={{
@@ -334,15 +338,18 @@ export default function FlotaEquipos({ setCurrentPage }) {
         </motion.div>
 
         <div style={{ maxWidth: '1140px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px' }}>
+          <div style={{ marginBottom: '10px' }}>
+            <SectionBadge variant="light">Metodología & Estándares</SectionBadge>
+          </div>
+          <h2 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px', fontFamily: 'var(--font-heading)' }}>
             Nuestro <span style={{ color: '#F97316', fontStyle: 'italic' }}>Enfoque Operativo</span>
           </h2>
           <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, maxWidth: '760px', marginBottom: '44px' }}>
             Contamos con herramienta y maquinaria propia de nivel profesional para ejecutar cada una de nuestras líneas de servicio sin depender de subcontratistas. Esto nos permite un estricto control de calidad y plazos de entrega inmejorables.
           </p>
 
-          {/* Stats — versión clara: íconos en círculo naranja sólido, texto navy */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', borderTop: '1px solid rgba(29,41,57,0.1)', paddingTop: '32px' }}>
+          {/* Stats — responsivo */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '20px', borderTop: '1px solid rgba(29,41,57,0.1)', paddingTop: '32px' }}>
             {stats.map((s, i) => (
               <motion.div
                 key={s.label}

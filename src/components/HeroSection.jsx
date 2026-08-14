@@ -9,9 +9,7 @@ import ShipTanksBlueprint from './Icons/ShipTanksBlueprint'
 /* ============================================================
    Capas de profundidad (z-index) de todo el hero:
    1  → sketches de plano (Concept/Front/SideProfile/ShipTanks):
-        van AL FONDO, pegados a las 4 esquinas. No importa que el
-        texto, el barco o los nodos queden encima — solo tienen
-        que asomar y notarse en la esquina.
+        van AL FONDO, pegados a las 4 esquinas.
    3  → imagen del barco (cutaway)
    4  → ServiceNodes (los círculos numerados sobre el barco)
    5  → texto, botón, contenedor general
@@ -27,17 +25,19 @@ export default function HeroSection({ setCurrentPage }) {
         position: 'relative',
         overflow: 'hidden',
         paddingTop: '28px',
-        paddingBottom: '30px',
+        /* Sin paddingBottom ni marginBottom para que la ola de Servicios se una sin costura */
+        paddingBottom: 0,
+        marginBottom: 0,
       }}
     >
-      {/* ── TOP RULER (queda como fondo del plano; el navbar flota por encima) ── */}
+      {/* ── TOP RULER ── */}
       <div className="blueprint-ruler-top">
         {["-30'", "-20'", "-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'"].map((m, idx) => (
           <span key={idx}>{m}</span>
         ))}
       </div>
 
-      {/* ── LEFT VERTICAL RULER ── */}
+      {/* ── LEFT VERTICAL RULER — oculto en móvil vía CSS ── */}
       <div style={{
         position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
         background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
@@ -51,7 +51,7 @@ export default function HeroSection({ setCurrentPage }) {
         ))}
       </div>
 
-      {/* ── RIGHT VERTICAL RULER ── */}
+      {/* ── RIGHT VERTICAL RULER — oculto en móvil vía CSS ── */}
       <div style={{
         position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
         background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
@@ -70,23 +70,29 @@ export default function HeroSection({ setCurrentPage }) {
         width: '100%',
         maxWidth: '1440px',
         margin: '0 auto',
-        paddingLeft: 'clamp(32px, 5vw, 80px)',
-        paddingRight: 'clamp(32px, 5vw, 80px)',
-        paddingTop: '96px', // deja libre el alto del navbar flotante para que no tape las piezas del barco
+        paddingLeft: 'clamp(16px, 5vw, 80px)',
+        paddingRight: 'clamp(16px, 5vw, 80px)',
+        paddingTop: 'clamp(60px, 8vw, 96px)',
+        paddingBottom: 'clamp(20px, 4vw, 40px)',
         position: 'relative',
         zIndex: 5,
       }}>
+        {/*
+          Grid: 2 columnas en tablet/desktop, 1 columna en mobile.
+          minmax(0,1fr) evita desbordamiento en pantallas < 400px.
+        */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(340px, 420px) 1fr',
-          gap: 'clamp(32px, 5vw, 72px)',
+          gridTemplateColumns: 'clamp(260px, 38%, 420px) 1fr',
+          gap: 'clamp(24px, 5vw, 72px)',
           alignItems: 'center',
-        }}>
-
-          {/* ══════════════ COL 1: TEXTO — con sus 2 esquinas de plano AL FONDO ══════════════ */}
+        }}
+          className="hero-grid"
+        >
+          {/* ══════════════ COL 1: TEXTO ══════════════ */}
           <div style={{ position: 'relative' }}>
 
-            {/* ConceptBlueprint — esquina superior izquierda de la columna, AL FONDO */}
+            {/* ConceptBlueprint — esquina superior izquierda, AL FONDO */}
             <div
               aria-hidden="true"
               style={{
@@ -102,7 +108,7 @@ export default function HeroSection({ setCurrentPage }) {
               <ConceptBlueprint />
             </div>
 
-            {/* FrontBlueprint — esquina inferior izquierda de la columna, AL FONDO */}
+            {/* FrontBlueprint — esquina inferior izquierda, AL FONDO */}
             <div
               aria-hidden="true"
               style={{
@@ -118,7 +124,7 @@ export default function HeroSection({ setCurrentPage }) {
               <FrontBlueprint />
             </div>
 
-            {/* Texto — por encima de los dos sketches de fondo */}
+            {/* Texto — por encima de los sketches */}
             <motion.div
               initial={{ opacity: 0, x: -25 }}
               animate={{ opacity: 1, x: 0 }}
@@ -126,12 +132,12 @@ export default function HeroSection({ setCurrentPage }) {
               style={{ position: 'relative', zIndex: 5 }}
             >
               <h1 style={{
-                fontSize: '42px',
+                fontSize: 'clamp(28px, 4.5vw, 52px)',
                 fontWeight: 900,
                 color: '#1D2939',
-                lineHeight: 1.1,
+                lineHeight: 1.08,
                 letterSpacing: '-0.02em',
-                fontFamily: 'Inter, sans-serif'
+                fontFamily: 'var(--font-heading)',
               }}>
                 Soluciones<br />
                 marítimas<br />
@@ -139,21 +145,23 @@ export default function HeroSection({ setCurrentPage }) {
               </h1>
 
               <p style={{
-                fontSize: '18px',
+                fontSize: 'clamp(14px, 2vw, 18px)',
                 fontWeight: 600,
                 color: '#334e68',
                 marginTop: '14px',
-                lineHeight: 1.35
+                lineHeight: 1.35,
+                fontFamily: 'var(--font-body)',
               }}>
                 con la experiencia y el equipo<br />que su embarcación necesita.
               </p>
 
               <p style={{
-                fontSize: '13px',
+                fontSize: 'clamp(12px, 1.4vw, 13.5px)',
                 color: '#4b5563',
                 marginTop: '16px',
                 lineHeight: 1.7,
-                maxWidth: '400px'
+                maxWidth: '400px',
+                fontFamily: 'var(--font-body)',
               }}>
                 Grupo Astikmar S.R.L. es una empresa dominicana especializada en servicios marítimos integrales. Contamos con personal técnico calificado —ingenieros, inspectores, capitanes, marineros, soldadores y pintores— y con tecnología y equipo de nivel profesional para atender cada etapa del ciclo de vida de una embarcación.
               </p>
@@ -167,16 +175,17 @@ export default function HeroSection({ setCurrentPage }) {
                   marginTop: '22px',
                   background: 'linear-gradient(135deg, #F97316 0%, #ea580c 100%)',
                   color: 'white',
-                  padding: '13px 26px',
+                  padding: 'clamp(10px, 1.5vw, 13px) clamp(18px, 2.5vw, 26px)',
                   borderRadius: '24px',
-                  fontSize: '14px',
+                  fontSize: 'clamp(12px, 1.4vw, 14px)',
                   fontWeight: 700,
+                  fontFamily: 'var(--font-body)',
                   boxShadow: '0 4px 16px rgba(249,115,22,0.35)',
                   border: 'none',
                   cursor: 'pointer',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '10px'
+                  gap: '10px',
                 }}
               >
                 Ver todos los 12 servicios <ArrowRight size={16} />
@@ -184,7 +193,7 @@ export default function HeroSection({ setCurrentPage }) {
             </motion.div>
           </div>
 
-          {/* ══════════════ COL 2: BARCO + NODOS + SKETCHES AL FONDO EN LAS ESQUINAS ══════════════ */}
+          {/* ══════════════ COL 2: BARCO + NODOS ══════════════ */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -193,9 +202,9 @@ export default function HeroSection({ setCurrentPage }) {
               position: 'relative',
               width: '100%',
               maxWidth: '760px',
-              marginLeft: 'auto',   // el barco "flota" hacia la derecha de su columna
+              marginLeft: 'auto',
               marginRight: '0',
-              aspectRatio: '16 / 9', // ajusta esto a la proporción real de ship-cutaway.png
+              aspectRatio: '16 / 9',
             }}
           >
             {/* SideProfileBlueprint — esquina superior derecha, AL FONDO */}
@@ -207,8 +216,8 @@ export default function HeroSection({ setCurrentPage }) {
                 position: 'absolute',
                 top: '-30%',
                 right: '-35%',
-                width: '250px',
-                height: '220px',
+                width: 'clamp(150px, 20vw, 250px)',
+                height: 'clamp(130px, 18vw, 220px)',
                 zIndex: 4,
                 pointerEvents: 'none',
               }}
@@ -225,8 +234,8 @@ export default function HeroSection({ setCurrentPage }) {
                 position: 'absolute',
                 bottom: '20%',
                 right: '-35%',
-                width: '280px',
-                height: '100px',
+                width: 'clamp(170px, 22vw, 280px)',
+                height: 'clamp(60px, 8vw, 100px)',
                 zIndex: 4,
                 pointerEvents: 'none',
               }}
@@ -234,7 +243,7 @@ export default function HeroSection({ setCurrentPage }) {
               <ShipTanksBlueprint />
             </motion.div>
 
-            {/* PLACEHOLDER: reemplaza src cuando tengas la imagen final del corte del buque */}
+            {/* Imagen del buque */}
             <img
               src=""
               alt="Buque Astikmar Horizontal Cutaway Blueprint"
@@ -250,7 +259,7 @@ export default function HeroSection({ setCurrentPage }) {
               }}
             />
 
-            {/* Nodos numerados — por encima de todo, en primer plano */}
+            {/* Nodos numerados — primer plano */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 10 }}>
               <ServiceNodes />
             </div>
@@ -258,6 +267,25 @@ export default function HeroSection({ setCurrentPage }) {
 
         </div>
       </div>
+
+      {/*
+        Estilo responsive inline: en pantallas < 768px la grid pasa a 1 columna.
+        Se inyecta como <style> JSX para evitar modificar index.css con selectores
+        muy específicos de este componente.
+      */}
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }

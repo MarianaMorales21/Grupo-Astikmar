@@ -2,6 +2,8 @@ import { useState, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import FloatingIcons from './components/FloatingIcons'
+import CadCursor from './components/CadCursor'
 
 // Pages
 import Home from './pages/Home'
@@ -96,7 +98,7 @@ export default function App() {
       case 'inicio':
         return <Home setCurrentPage={setCurrentPage} />
       case 'nosotros':
-        return <Nosotros />
+        return <Nosotros setCurrentPage={setCurrentPage} />
       case 'servicios':
         return <ServiciosDetalle setCurrentPage={setCurrentPage} setContactService={setContactService} setSelectedService={setSelectedService} />
       case 'info-servicio':
@@ -108,7 +110,7 @@ export default function App() {
       case 'info-proyecto':
         return <InfoProyecto project={selectedProject} setCurrentPage={setCurrentPage} />
       case 'contacto':
-        return <Contacto contactService={contactService} setContactService={setContactService} />
+        return <Contacto contactService={contactService} setContactService={setContactService} setCurrentPage={setCurrentPage} />
       default:
         return <Home setCurrentPage={setCurrentPage} />
     }
@@ -116,6 +118,10 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
+      {/* Cursor interactivo CAD con coordenadas X/Y en tiempo real */}
+      <CadCursor />
+      {/* Iconos flotantes blueprint — capa de fondo global, position:fixed */}
+      <FloatingIcons />
       <BlueprintParallax />
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />

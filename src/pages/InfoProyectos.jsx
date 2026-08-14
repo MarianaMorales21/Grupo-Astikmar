@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
+import SectionBadge from '../components/SectionBadge'
 
 // Placeholder de imagen — reemplaza por <img src="..." /> cuando tengas la foto real.
 function ImagePlaceholder({ radius = '10px', style = {}, label }) {
@@ -124,24 +125,25 @@ export default function InfoProyecto({ project, setCurrentPage }) {
         <ConceptBlueprint />
       </motion.div>
 
-      <div className="container-astikmar" style={{ paddingLeft: '52px', paddingTop: '132px', position: 'relative', zIndex: 1 }}>
+      {/* paddingTop unificado para alineación visual exacta */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
-        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px' }}>
+        <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
-          <span style={{ margin: '0 6px' }}>›</span>
+          <span>›</span>
           <button onClick={() => setCurrentPage('proyectos')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Proyectos</button>
-          <span style={{ margin: '0 6px' }}>›</span>
+          <span>›</span>
           <span style={{ color: '#F97316', fontWeight: 600 }}>{project.title}</span>
         </p>
 
         {/* ══════════ HERO ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 440px) 1fr', gap: '40px', alignItems: 'center', marginBottom: '40px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '40px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#F97316', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              {project.category}
-            </span>
-            <h1 style={{ fontSize: '34px', fontWeight: 900, color: '#1D2939', lineHeight: 1.15, letterSpacing: '-0.01em', marginTop: '6px' }}>
+            <div style={{ marginBottom: '12px' }}>
+              <SectionBadge variant="light">{project.category || 'Proyecto Destacado'}</SectionBadge>
+            </div>
+            <h1 style={{ fontSize: 'clamp(26px, 3.8vw, 36px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.15, letterSpacing: '-0.01em', marginTop: '6px', fontFamily: 'var(--font-heading)' }}>
               {project.title}
             </h1>
             <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
@@ -153,7 +155,7 @@ export default function InfoProyecto({ project, setCurrentPage }) {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ height: '260px' }}
+            style={{ minHeight: '220px' }}
           >
             <ImagePlaceholder label="Foto del proyecto" />
           </motion.div>
@@ -161,7 +163,7 @@ export default function InfoProyecto({ project, setCurrentPage }) {
 
         {/* ══════════ METADATOS RÁPIDOS ══════════ */}
         <div style={{
-          display: 'flex', gap: '32px', flexWrap: 'wrap', padding: '18px 24px',
+          display: 'flex', gap: '20px 32px', flexWrap: 'wrap', padding: '18px 24px',
           border: '1px solid rgba(29,41,57,0.1)', borderRadius: '12px', marginBottom: '48px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -178,10 +180,10 @@ export default function InfoProyecto({ project, setCurrentPage }) {
           </div>
         </div>
 
-        {/* ══════════ FICHA TÉCNICA (campos específicos del proyecto) ══════════ */}
+        {/* ══════════ FICHA TÉCNICA ══════════ */}
         <div style={{ marginBottom: '48px' }}>
-          <SectionTitleLeft>Ficha Técnica del Proyecto</SectionTitleLeft>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '28px 24px' }}>
+          <SectionBadge variant="light" withDivider>Ficha Técnica del Proyecto</SectionBadge>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '24px' }}>
             {project.fields.map((f, i) => (
               <motion.div
                 key={f.label}
@@ -202,15 +204,15 @@ export default function InfoProyecto({ project, setCurrentPage }) {
         </div>
 
         {/* ══════════ GALERÍA + ALCANCE DE TRABAJO ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '40px', marginBottom: '56px', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '40px', marginBottom: '56px', alignItems: 'start' }}>
 
           {/* Carrusel de galería */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#334e68', whiteSpace: 'nowrap' }}>
-                Galería del Proyecto
-              </span>
-              <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
+                <SectionBadge variant="light">Galería del Proyecto</SectionBadge>
+                <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
+              </div>
               <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
                 <button
                   onClick={() => setGalleryPage(p => (p - 1 + totalPages) % totalPages)}
@@ -227,7 +229,7 @@ export default function InfoProyecto({ project, setCurrentPage }) {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${visibleGallery.length}, 1fr)`, gap: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '16px' }}>
               {visibleGallery.map((label, i) => (
                 <motion.div key={label + i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
                   <div style={{ height: '130px', marginBottom: '8px' }}>
@@ -256,7 +258,7 @@ export default function InfoProyecto({ project, setCurrentPage }) {
 
           {/* Alcance de trabajo + especificaciones */}
           <div>
-            <SectionTitleLeft>Alcance de Trabajo</SectionTitleLeft>
+            <SectionBadge variant="light" withDivider>Alcance de Trabajo</SectionBadge>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
               {(scope.length > 0 ? scope : ['Diagnóstico técnico inicial', 'Ejecución especializada bajo supervisión', 'Pruebas y verificación final']).map((s, i) => (
                 <motion.li
