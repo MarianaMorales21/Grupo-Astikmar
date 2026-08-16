@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -30,7 +30,7 @@ function BlueprintParallax() {
       }}
     >
       {/* Floating dimension lines - top */}
-      <motion.div style={{ y: y1, position: 'absolute', top: 80, left: 0, right: 0, opacity: 0.12 }}>
+      <motion.div style={{ y: y1, position: 'absolute', top: 80, left: 0, right: 0, opacity: 0.12, willChange: 'transform' }}>
         <svg width="100%" height="20" viewBox="0 0 1440 20" preserveAspectRatio="none">
           <line x1="0" y1="10" x2="1440" y2="10" stroke="#1D2939" strokeWidth="0.8" strokeDasharray="8 6" />
           {[144, 288, 432, 576, 720, 864, 1008, 1152, 1296].map(x => (
@@ -45,7 +45,7 @@ function BlueprintParallax() {
       </motion.div>
 
       {/* Floating dimension lines - left vertical */}
-      <motion.div style={{ y: y2, position: 'absolute', top: 80, left: 8, bottom: 0, width: '20px', opacity: 0.1 }}>
+      <motion.div style={{ y: y2, position: 'absolute', top: 80, left: 8, bottom: 0, width: '20px', opacity: 0.1, willChange: 'transform' }}>
         <svg width="20" height="100%" viewBox="0 0 20 800" preserveAspectRatio="none">
           <line x1="10" y1="0" x2="10" y2="800" stroke="#1D2939" strokeWidth="0.8" strokeDasharray="8 6" />
           {[100, 200, 300, 400, 500, 600, 700].map(y => (
@@ -93,6 +93,11 @@ export default function App() {
   // Proyecto elegido en ProyectosGaleria; InfoProyecto lo lee para mostrar su detalle.
   const [selectedProject, setSelectedProject] = useState(null)
 
+  // Resetea el scroll arriba al instante al cambiar de página para evitar que parezca pegado
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [currentPage])
+
   const renderPage = () => {
     switch (currentPage) {
       case 'inicio':
@@ -129,10 +134,10 @@ export default function App() {
           <AnimatePresence mode="wait">
             <motion.div
               key={currentPage}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
             >
               {renderPage()}
             </motion.div>

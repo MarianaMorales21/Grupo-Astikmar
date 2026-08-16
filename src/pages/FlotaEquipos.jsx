@@ -207,9 +207,6 @@ export default function FlotaEquipos({ setCurrentPage }) {
         {/* ══════════ HERO ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '48px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <div style={{ marginBottom: '12px' }}>
-              <SectionBadge variant="light">Infraestructura Propia</SectionBadge>
-            </div>
             <h1 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px', fontFamily: 'var(--font-heading)' }}>
               Capacidad <span style={{ color: '#F97316', fontStyle: 'italic' }}>Técnica</span>
             </h1>
@@ -254,10 +251,55 @@ export default function FlotaEquipos({ setCurrentPage }) {
           aria-hidden="true"
           style={{
             position: 'absolute', inset: 0,
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.065) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.065) 1px, transparent 1px)',
             backgroundSize: '28px 28px', pointerEvents: 'none',
           }}
         />
+
+        {/* ── REGLAS LATERALES Y COORDENADAS CAD ── */}
+        {/* Regla vertical izquierda */}
+        <div style={{
+          position: 'absolute', left: 0, top: 0, bottom: 0, width: '26px',
+          background: 'rgba(255,255,255,0.02)', borderRight: '1px solid rgba(255,255,255,0.08)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 2, padding: '20px 0', pointerEvents: 'none',
+        }}>
+          {["60'", "50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
+            <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.35)', fontFamily: 'Rajdhani, monospace', fontWeight: 600 }}>
+              {m}
+            </span>
+          ))}
+        </div>
+
+        {/* Regla vertical derecha */}
+        <div style={{
+          position: 'absolute', right: 0, top: 0, bottom: 0, width: '26px',
+          background: 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.08)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 2, padding: '20px 0', pointerEvents: 'none',
+        }}>
+          {["60'", "50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
+            <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.35)', fontFamily: 'Rajdhani, monospace', fontWeight: 600 }}>
+              {m}
+            </span>
+          ))}
+        </div>
+
+        {/* Marcas de esquina / Orillos técnicos CAD desde el borde superior */}
+        <div style={{ position: 'absolute', top: '20px', left: '36px', fontSize: '10.5px', fontWeight: 800, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', zIndex: 2, pointerEvents: 'none' }}>
+          + SEC-03 [EQUIPOS_TECNICOS_DESTACADOS]
+        </div>
+        <div style={{ position: 'absolute', top: '20px', right: '36px', fontSize: '10.5px', fontWeight: 800, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', zIndex: 2, pointerEvents: 'none' }}>
+          CAD-GRID: 1440x900 +
+        </div>
+
+        {/* Inscripciones de coordenadas sutiles dispersas */}
+        <div style={{ position: 'absolute', top: '28%', right: '3%', fontSize: '10.5px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(255,255,255,0.3)', pointerEvents: 'none', zIndex: 2 }}>
+          ⊕ COORD_REF: LAT 10.48° N / LON 66.90° W
+        </div>
+        <div style={{ position: 'absolute', bottom: '15%', left: '3%', fontSize: '10.5px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(255,255,255,0.3)', pointerEvents: 'none', zIndex: 2 }}>
+          ⊕ ISO_9001:2015 / LLOYD_REGISTERED
+        </div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.85, x: 30 }}
@@ -280,9 +322,6 @@ export default function FlotaEquipos({ setCurrentPage }) {
 
         <div style={{ maxWidth: '1140px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           {/* Badge estandarizado */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
-            <SectionBadge variant="dark">Capacidad Técnica</SectionBadge>
-          </div>
           <SectionTitleCenter light>
             <span style={{ color: 'white', fontSize: 'clamp(22px, 3.5vw, 34px)', fontWeight: 900, fontFamily: 'var(--font-heading)', letterSpacing: '-0.02em' }}>
               Nuestros <span style={{ color: '#F97316', fontStyle: 'italic' }}>Equipos Destacados</span>
@@ -338,9 +377,6 @@ export default function FlotaEquipos({ setCurrentPage }) {
         </motion.div>
 
         <div style={{ maxWidth: '1140px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ marginBottom: '10px' }}>
-            <SectionBadge variant="light">Metodología & Estándares</SectionBadge>
-          </div>
           <h2 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px', fontFamily: 'var(--font-heading)' }}>
             Nuestro <span style={{ color: '#F97316', fontStyle: 'italic' }}>Enfoque Operativo</span>
           </h2>

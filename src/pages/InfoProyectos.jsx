@@ -6,6 +6,9 @@ import {
 } from 'lucide-react'
 import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
+import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
+import FrontBlueprint from '../components/Icons/FrontBlueprint'
+import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import SectionBadge from '../components/SectionBadge'
 
 // Placeholder de imagen — reemplaza por <img src="..." /> cuando tengas la foto real.
@@ -105,10 +108,37 @@ export default function InfoProyecto({ project, setCurrentPage }) {
         ))}
       </div>
 
-      {/* Bocetos de plano decorativos, muy sutiles */}
+      {/* Bocetos de plano decorativos */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: -20 }}
+        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.8, ease: 'out' }}
+        style={{ position: 'absolute', top: '3%', right: '1%', width: '310px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <SideProfileBlueprint />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
+        style={{ position: 'absolute', top: '5%', left: '1%', width: '270px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <FrontBlueprint />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.6, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.85, delay: 0.1 }}
+        style={{ position: 'absolute', top: '45%', left: '-2%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <ConceptBlueprint />
+      </motion.div>
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: 30 }}
-        whileInView={{ opacity: 0.5, scale: 1, x: 0 }}
+        whileInView={{ opacity: 0.6, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.9, delay: 0.15 }}
         style={{ position: 'absolute', bottom: '4%', right: '-2%', width: '300px', pointerEvents: 'none', zIndex: 0 }}
@@ -116,13 +146,13 @@ export default function InfoProyecto({ project, setCurrentPage }) {
         <MarineEngineBlueprint />
       </motion.div>
       <motion.div
-        initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.5, scale: 1, x: 0 }}
+        initial={{ opacity: 0, scale: 0.85, y: 30 }}
+        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.85, delay: 0.1 }}
-        style={{ position: 'absolute', top: '50%', left: '-2%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
+        transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
+        style={{ position: 'absolute', bottom: '2%', left: '1%', width: '340px', pointerEvents: 'none', zIndex: 0 }}
       >
-        <ConceptBlueprint />
+        <ShipTanksBlueprint />
       </motion.div>
 
       {/* paddingTop unificado para alineación visual exacta */}
@@ -140,12 +170,40 @@ export default function InfoProyecto({ project, setCurrentPage }) {
         {/* ══════════ HERO ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '40px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <div style={{ marginBottom: '12px' }}>
-              <SectionBadge variant="light">{project.category || 'Proyecto Destacado'}</SectionBadge>
-            </div>
-            <h1 style={{ fontSize: 'clamp(26px, 3.8vw, 36px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.15, letterSpacing: '-0.01em', marginTop: '6px', fontFamily: 'var(--font-heading)' }}>
-              {project.title}
-            </h1>
+            {(() => {
+              const text = project.title || '';
+              const words = text.trim().split(' ');
+              const midIndex = Math.ceil(words.length / 2);
+
+              const firstHalf = words.slice(0, midIndex).join(' ');
+              const secondHalf = words.slice(midIndex).join(' ');
+
+              return (
+                <h1
+                  style={{
+                    fontSize: 'clamp(26px, 3.8vw, 36px)',
+                    fontWeight: 900,
+                    color: '#1D2939', // Primera mitad en tono oscuro
+                    lineHeight: 1.15,
+                    letterSpacing: '-0.01em',
+                    marginTop: '6px',
+                    fontFamily: 'var(--font-heading)',
+                  }}
+                >
+                  {firstHalf}{' '}
+                  {secondHalf && (
+                    <span
+                      style={{
+                        color: '#F97316', // Segunda mitad en naranja
+                        fontStyle: 'italic',
+                      }}
+                    >
+                      {secondHalf}
+                    </span>
+                  )}
+                </h1>
+              );
+            })()}
             <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
               {detail.fullDescription || project.desc}
             </p>
@@ -182,7 +240,46 @@ export default function InfoProyecto({ project, setCurrentPage }) {
 
         {/* ══════════ FICHA TÉCNICA ══════════ */}
         <div style={{ marginBottom: '48px' }}>
-          <SectionBadge variant="light" withDivider>Ficha Técnica del Proyecto</SectionBadge>
+          <div>
+            {(() => {
+              const text = project.category || 'Proyecto Destacado';
+              const words = text.trim().split(' ');
+              const midIndex = Math.ceil(words.length / 2);
+
+              const firstHalf = words.slice(0, midIndex).join(' ');
+              const secondHalf = words.slice(midIndex).join(' ');
+
+              return (
+                <h6
+                  style={{
+                    fontSize: 'clamp(12px, 1.5vw, 16px)',
+                    fontWeight: 900,
+                    color: '#000000', // Primera mitad en negro
+                    letterSpacing: '0.08em',
+                    lineHeight: 1.2,
+                    marginBottom: '8px',
+                    fontFamily: 'var(--font-heading)',
+                    textTransform: 'uppercase',
+                    WebkitFontSmoothing: 'antialiased',
+                    WebkitTextStroke: '0.3px #000000',
+                  }}
+                >
+                  {firstHalf}{' '}
+                  {secondHalf && (
+                    <span
+                      style={{
+                        color: '#F97316', // Segunda mitad en naranja
+                        fontStyle: 'italic',
+                        WebkitTextStroke: '0.3px #F97316',
+                      }}
+                    >
+                      {secondHalf}
+                    </span>
+                  )}
+                </h6>
+              );
+            })()}
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '24px' }}>
             {project.fields.map((f, i) => (
               <motion.div
@@ -210,7 +307,25 @@ export default function InfoProyecto({ project, setCurrentPage }) {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
-                <SectionBadge variant="light">Galería del Proyecto</SectionBadge>
+                <h6
+                  style={{
+                    fontSize: 'clamp(12px, 1.5vw, 16px)',
+                    fontWeight: 900,                      // Grosor máximo (Black/ExtraBold)
+                    color: '#000000',
+                    letterSpacing: '0.08em',              // Un poco más de separación para que no se peguen las letras gruesas
+                    lineHeight: 1.2,
+                    marginBottom: '8px',
+                    fontFamily: 'var(--font-heading)',
+                    textTransform: 'uppercase',
+                    WebkitFontSmoothing: 'antialiased',   // Suavizado para renderizado ultra nítido
+                    WebkitTextStroke: '0.3px #000000',    // Truco técnico para añadir un extra de grosor visual
+                  }}
+                >
+                  Galeria{' '}
+                  <span style={{ color: '#F97316', fontStyle: 'italic', WebkitTextStroke: '0.3px #F97316' }}>
+                    del Proyecto
+                  </span>{' '}
+                </h6>
                 <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
               </div>
               <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
@@ -258,7 +373,25 @@ export default function InfoProyecto({ project, setCurrentPage }) {
 
           {/* Alcance de trabajo + especificaciones */}
           <div>
-            <SectionBadge variant="light" withDivider>Alcance de Trabajo</SectionBadge>
+            <h6
+              style={{
+                fontSize: 'clamp(12px, 1.5vw, 16px)',
+                fontWeight: 900,                      // Grosor máximo (Black/ExtraBold)
+                color: '#000000',
+                letterSpacing: '0.08em',              // Un poco más de separación para que no se peguen las letras gruesas
+                lineHeight: 1.2,
+                marginBottom: '8px',
+                fontFamily: 'var(--font-heading)',
+                textTransform: 'uppercase',
+                WebkitFontSmoothing: 'antialiased',   // Suavizado para renderizado ultra nítido
+                WebkitTextStroke: '0.3px #000000',    // Truco técnico para añadir un extra de grosor visual
+              }}
+            >
+              Alcance{' '}
+              <span style={{ color: '#F97316', fontStyle: 'italic', WebkitTextStroke: '0.3px #F97316' }}>
+                de Trabajo
+              </span>{' '}
+            </h6>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
               {(scope.length > 0 ? scope : ['Diagnóstico técnico inicial', 'Ejecución especializada bajo supervisión', 'Pruebas y verificación final']).map((s, i) => (
                 <motion.li

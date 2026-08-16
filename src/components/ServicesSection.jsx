@@ -3,6 +3,10 @@ import { motion } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Wrench, ShieldCheck, FileSearch, Anchor, Zap, Layers } from 'lucide-react'
 import WaveTop from './WaveTop'
 import SectionBadge from './SectionBadge'
+import MarineEngineBlueprint from './Icons/MarineEngineBlueprint'
+import SideProfileBlueprint from './Icons/SideprofileBlueprint'
+import ConceptBlueprint from './Icons/ConceptBlueprint'
+import ShipTanksBlueprint from './Icons/ShipTanksBlueprint'
 
 // ── Datos de servicios ───────────────────────────────────────────────────────
 const services = [
@@ -312,16 +316,17 @@ export default function ServicesSection({ setCurrentPage }) {
         style={{ marginTop: '-48px', position: 'relative', zIndex: 10 }}
       />
 
-      {/* Decoración de fondo: cuadrícula punteada */}
+      {/* Decoración de fondo: cuadrícula de plano (cuadritos estilo Nosotros) — zIndex 12 para iniciar desde el borde superior real */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: 'radial-gradient(circle, rgba(249,115,22,0.06) 1px, transparent 1px)',
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.065) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.065) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
           pointerEvents: 'none',
-          zIndex: 0,
+          zIndex: 12,
         }}
       />
 
@@ -340,6 +345,72 @@ export default function ServicesSection({ setCurrentPage }) {
           zIndex: 0,
         }}
       />
+
+      {/* ── REGLAS LATERALES Y COORDENADAS CAD TIPO NOSOTROS ── */}
+      {/* Regla vertical izquierda */}
+      <div style={{
+        position: 'absolute', left: 0, top: 0, bottom: 0, width: '26px',
+        background: 'rgba(255,255,255,0.02)', borderRight: '1px solid rgba(255,255,255,0.08)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+        zIndex: 15, padding: '20px 0', pointerEvents: 'none',
+      }}>
+        {["60'", "50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
+          <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.35)', fontFamily: 'Rajdhani, monospace', fontWeight: 600 }}>
+            {m}
+          </span>
+        ))}
+      </div>
+
+      {/* Regla vertical derecha */}
+      <div style={{
+        position: 'absolute', right: 0, top: 0, bottom: 0, width: '26px',
+        background: 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.08)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+        zIndex: 15, padding: '20px 0', pointerEvents: 'none',
+      }}>
+        {["60'", "50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
+          <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.35)', fontFamily: 'Rajdhani, monospace', fontWeight: 600 }}>
+            {m}
+          </span>
+        ))}
+      </div>
+
+      {/* Marcas de esquina / Orillos técnicos CAD desde el borde superior */}
+      <div style={{ position: 'absolute', top: '20px', left: '36px', fontSize: '10.5px', fontWeight: 800, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', zIndex: 15, pointerEvents: 'none' }}>
+        + SEC-01 [SERVICIOS_PRINCIPALES_NAVALES]
+      </div>
+      <div style={{ position: 'absolute', top: '20px', right: '36px', fontSize: '10.5px', fontWeight: 800, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', zIndex: 15, pointerEvents: 'none' }}>
+        CAD-GRID: 1440x900 +
+      </div>
+
+      {/* Inscripciones de coordenadas sutiles dispersas */}
+      <div style={{ position: 'absolute', top: '28%', right: '3%', fontSize: '10.5px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(255,255,255,0.3)', pointerEvents: 'none', zIndex: 2 }}>
+        ⊕ COORD_REF: LAT 10.48° N / LON 66.90° W
+      </div>
+      <div style={{ position: 'absolute', bottom: '15%', left: '3%', fontSize: '10.5px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(255,255,255,0.3)', pointerEvents: 'none', zIndex: 2 }}>
+        ⊕ ISO_9001:2015 / LLOYD_REGISTERED
+      </div>
+
+      {/* Planos técnicos flotantes de fondo */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: 30 }}
+        whileInView={{ opacity: 0.18, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.9, ease: 'out' }}
+        style={{ position: 'absolute', top: '10%', right: '-2%', width: '320px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <MarineEngineBlueprint />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.16, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.85, ease: 'out' }}
+        style={{ position: 'absolute', bottom: '12%', left: '-2%', width: '340px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <ShipTanksBlueprint />
+      </motion.div>
 
       {/* Contenido */}
       <div
@@ -360,9 +431,6 @@ export default function ServicesSection({ setCurrentPage }) {
           style={{ textAlign: 'center', marginBottom: '52px' }}
         >
           {/* Badge unificado cian neón */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-            <SectionBadge variant="dark">Soluciones Marítimas</SectionBadge>
-          </div>
 
           <h2
             style={{

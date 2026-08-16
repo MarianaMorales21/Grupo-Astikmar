@@ -130,24 +130,27 @@ function SectionTitleLeft({ children, light = false }) {
   )
 }
 
-// Fila de un miembro del equipo — responsivo
+// Fila de un miembro del equipo — responsivo y compacto lado a lado
 function TeamRow({ member, index }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))',
+        display: 'flex',
+        flexDirection: 'row',
         gap: '20px',
-        alignItems: 'start',
-        padding: '24px 0',
-        borderBottom: '1px dashed rgba(29,41,57,0.16)',
+        alignItems: 'flex-start',
+        padding: '20px',
+        background: 'transparent',
+        borderRadius: '16px',
+        border: '1px solid rgba(29, 41, 57, 0.16)',
+        boxShadow: 'none',
       }}
     >
-      <div style={{ width: '100%', maxWidth: '140px', aspectRatio: '4/5', borderRadius: '10px', overflow: 'hidden', background: '#0f172a', flexShrink: 0 }}>
+      <div style={{ width: '130px', height: '150px', borderRadius: '10px', overflow: 'hidden', background: '#0f172a', flexShrink: 0 }}>
         <img
           src={member.image}
           alt={member.name}
@@ -155,26 +158,26 @@ function TeamRow({ member, index }) {
         />
       </div>
 
-      <div>
-        <h3 style={{ fontSize: '21px', fontWeight: 800, color: '#1D2939', marginBottom: '3px', lineHeight: 1.2 }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <h3 style={{ fontSize: '19px', fontWeight: 800, color: '#1D2939', marginBottom: '2px', lineHeight: 1.2 }}>
           {member.name}
         </h3>
 
-        <p style={{ fontSize: '13.5px', fontWeight: 700, color: '#F97316', marginBottom: '10px' }}>
+        <p style={{ fontSize: '13px', fontWeight: 700, color: '#F97316', marginBottom: '8px' }}>
           {member.role}
         </p>
 
-        <p style={{ fontSize: '13.5px', color: '#4b5563', lineHeight: 1.65, marginBottom: '14px', maxWidth: '620px' }}>
+        <p style={{ fontSize: '13px', color: '#4b5563', lineHeight: 1.5, marginBottom: '12px' }}>
           {member.desc}
         </p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 20px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 14px' }}>
           {member.skills.map((skill, idx) => (
             <span key={idx} style={{
-              fontSize: '12px', color: '#334155', display: 'inline-flex',
-              alignItems: 'center', gap: '6px', fontWeight: 500,
+              fontSize: '11.5px', color: '#334155', display: 'inline-flex',
+              alignItems: 'center', gap: '5px', fontWeight: 600,
             }}>
-              <CheckCircle2 size={13} color="#F97316" />
+              <CheckCircle2 size={12} color="#F97316" />
               {skill}
             </span>
           ))}
@@ -341,9 +344,7 @@ export default function Nosotros({ setCurrentPage }) {
               <span style={{ color: '#F97316', fontWeight: 600 }}>Nosotros</span>
             </p>
 
-            <div style={{ marginBottom: '12px' }}>
-              <SectionBadge variant="light">Sobre Nosotros</SectionBadge>
-            </div>
+
 
             <h1
               style={{
@@ -379,33 +380,32 @@ export default function Nosotros({ setCurrentPage }) {
 
       {/* ══════════ NUESTRO COMPROMISO ══════════ */}
       <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1, marginTop: '20px' }}>
-        <div style={{ marginBottom: '10px' }}>
-          <SectionBadge variant="light">Sostenibilidad & Excelencia</SectionBadge>
-        </div>
-        <h2
-          style={{
-            fontSize: 'clamp(28px, 4vw, 42px)',
-            fontWeight: 900,
-            color: '#101c2c',
-            letterSpacing: '-0.02em',
-            lineHeight: 1.1,
-            marginBottom: '20px',
-            fontFamily: 'var(--font-heading)',
-          }}
-        >
-          Nuestro{' '}
-          <span style={{ color: '#F97316', fontStyle: 'italic' }}>Compromiso</span>{' '}
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '32px 48px', alignItems: 'center', marginBottom: '64px' }}>
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5 }}
-            style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75 }}
-          >
-            En Grupo Astikmar, estamos comprometidos con el desarrollo sostenible del sector marítimo, implementando prácticas responsables que generan valor para nuestros clientes, colaboradores y la comunidad.
-          </motion.p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '24px 48px', alignItems: 'start', marginBottom: '56px' }}>
+          <div>
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 4vw, 42px)',
+                fontWeight: 900,
+                color: '#101c2c',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.1,
+                marginBottom: '12px',
+                fontFamily: 'var(--font-heading)',
+              }}
+            >
+              Nuestro{' '}
+              <span style={{ color: '#F97316', fontStyle: 'italic' }}>Compromiso</span>{' '}
+            </h2>
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5 }}
+              style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, marginTop: '0' }}
+            >
+              En Grupo Astikmar, estamos comprometidos con el desarrollo sostenible del sector marítimo, implementando prácticas responsables que generan valor para nuestros clientes, colaboradores y la comunidad.
+            </motion.p>
+          </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px' }}>
             {compromisos.map((c, i) => (
@@ -458,11 +458,56 @@ export default function Nosotros({ setCurrentPage }) {
             position: 'absolute',
             inset: 0,
             backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+              'linear-gradient(rgba(255,255,255,0.065) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.065) 1px, transparent 1px)',
             backgroundSize: '28px 28px',
             pointerEvents: 'none',
           }}
         />
+
+        {/* ── REGLAS LATERALES Y COORDENADAS CAD ── */}
+        {/* Regla vertical izquierda */}
+        <div style={{
+          position: 'absolute', left: 0, top: 0, bottom: 0, width: '26px',
+          background: 'rgba(255,255,255,0.02)', borderRight: '1px solid rgba(255,255,255,0.08)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 2, padding: '20px 0', pointerEvents: 'none',
+        }}>
+          {["60'", "50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
+            <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.35)', fontFamily: 'Rajdhani, monospace', fontWeight: 600 }}>
+              {m}
+            </span>
+          ))}
+        </div>
+
+        {/* Regla vertical derecha */}
+        <div style={{
+          position: 'absolute', right: 0, top: 0, bottom: 0, width: '26px',
+          background: 'rgba(255,255,255,0.02)', borderLeft: '1px solid rgba(255,255,255,0.08)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 2, padding: '20px 0', pointerEvents: 'none',
+        }}>
+          {["60'", "50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
+            <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.35)', fontFamily: 'Rajdhani, monospace', fontWeight: 600 }}>
+              {m}
+            </span>
+          ))}
+        </div>
+
+        {/* Marcas de esquina / Orillos técnicos CAD */}
+        <div style={{ position: 'absolute', top: '20px', left: '36px', fontSize: '10.5px', fontWeight: 800, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', zIndex: 2, pointerEvents: 'none' }}>
+          + SEC-02 [PRINCIPIOS_Y_VALORES_NAVALES]
+        </div>
+        <div style={{ position: 'absolute', top: '20px', right: '36px', fontSize: '10.5px', fontWeight: 800, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', zIndex: 2, pointerEvents: 'none' }}>
+          CAD-GRID: 1440x900 +
+        </div>
+
+        {/* Inscripciones de coordenadas sutiles dispersas */}
+        <div style={{ position: 'absolute', top: '28%', right: '3%', fontSize: '10.5px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(255,255,255,0.3)', pointerEvents: 'none', zIndex: 2 }}>
+          ⊕ COORD_REF: LAT 10.48° N / LON 66.90° W
+        </div>
+        <div style={{ position: 'absolute', bottom: '15%', left: '3%', fontSize: '10.5px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(255,255,255,0.3)', pointerEvents: 'none', zIndex: 2 }}>
+          ⊕ ISO_9001:2015 / LLOYD_REGISTERED
+        </div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.85, x: 30 }}
@@ -485,9 +530,6 @@ export default function Nosotros({ setCurrentPage }) {
         </motion.div>
 
         <div style={{ maxWidth: '1140px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ marginBottom: '12px' }}>
-            <SectionBadge variant="dark">Principios Fundamentales</SectionBadge>
-          </div>
           <h2
             style={{
               fontSize: 'clamp(28px, 4vw, 42px)',
@@ -570,9 +612,6 @@ export default function Nosotros({ setCurrentPage }) {
               transition={{ duration: 0.6 }}
               style={{ marginBottom: '30px' }}
             >
-              <div style={{ marginBottom: '10px' }}>
-                <SectionBadge variant="light">Especialistas Certificados</SectionBadge>
-              </div>
 
               <h2
                 style={{
@@ -594,7 +633,7 @@ export default function Nosotros({ setCurrentPage }) {
               </p>
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '8px 48px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 450px), 1fr))', gap: '20px' }}>
               {teamMembers.map((member, index) => (
                 <TeamRow key={member.id} member={member} index={index} />
               ))}

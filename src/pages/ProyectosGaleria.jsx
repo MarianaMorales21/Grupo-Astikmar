@@ -5,6 +5,13 @@ import {
   TrendingUp, Layers, Anchor, Droplet, Video, Users, Award, Briefcase,
 } from 'lucide-react'
 import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
+import FrontBlueprint from '../components/Icons/FrontBlueprint'
+import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
+import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
+import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
+import MarinePropellerBlueprint from '../components/Icons/MarinePropellerBlueprint'
+import MarineRudderBlueprint from '../components/Icons/MarineRudderBlueprint'
+import MarineLiftingHookBlueprint from '../components/Icons/MarineLiftingHookBlueprint'
 import SectionBadge from '../components/SectionBadge'
 
 // Mapa de iconos: cada campo de proyecto guarda el nombre del icono (string),
@@ -306,21 +313,59 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
         ))}
       </div>
 
-      {/* Boceto de plano decorativo, esquina superior derecha */}
+      {/* 1. SideProfileBlueprint - Esquina superior derecha */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: -20 }}
-        whileInView={{ opacity: 0.55, scale: 1, y: 0 }}
+        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: '2%', right: '6%', width: '300px', pointerEvents: 'none', zIndex: 0 }}
+        transition={{ duration: 0.8, ease: 'out' }}
+        style={{ position: 'absolute', top: '3%', right: '1%', width: '310px', pointerEvents: 'none', zIndex: 0 }}
       >
         <SideProfileBlueprint />
-        <p style={{
-          fontFamily: 'cursive', fontSize: '13px', color: 'rgba(29,41,57,0.4)',
-          textAlign: 'right', marginTop: '-10px', fontStyle: 'italic',
-        }}>
-          Concepto preliminar
-        </p>
+      </motion.div>
+
+      {/* 2. FrontBlueprint - Esquina superior izquierda */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
+        style={{ position: 'absolute', top: '5%', left: '1%', width: '270px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <FrontBlueprint />
+      </motion.div>
+
+      {/* 3. ConceptBlueprint - Espacio medio izquierdo */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.60, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.9, ease: 'out', delay: 0.15 }}
+        style={{ position: 'absolute', top: '38%', left: '0%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <ConceptBlueprint />
+      </motion.div>
+
+      {/* 4. MarineEngineBlueprint - Espacio medio derecho */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: 30 }}
+        whileInView={{ opacity: 0.60, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.9, ease: 'out', delay: 0.2 }}
+        style={{ position: 'absolute', top: '42%', right: '0%', width: '320px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <MarineEngineBlueprint />
+      </motion.div>
+
+      {/* 5. ShipTanksBlueprint - Esquina inferior izquierda */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: 30 }}
+        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
+        style={{ position: 'absolute', bottom: '2%', left: '1%', width: '350px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <ShipTanksBlueprint />
       </motion.div>
 
 
@@ -337,9 +382,6 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
         {/* ══════════ HERO ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '24px 32px', alignItems: 'start', marginBottom: '40px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <div style={{ marginBottom: '12px' }}>
-              <SectionBadge variant="light">Portafolio & Trayectoria</SectionBadge>
-            </div>
             <h1
               style={{
                 fontSize: 'clamp(28px, 4vw, 42px)',

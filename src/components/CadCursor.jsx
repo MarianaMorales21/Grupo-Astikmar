@@ -1,91 +1,91 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useRef, useEffect } from 'react'
 
 /**
- * CadCursor — Cursor global personalizado interactivo con coordenadas CAD en tiempo real.
- * Se muestra en todas las pantallas y páginas de la web para dispositivos con puntero (mouse).
+ * CadCursor — Cursor global personalizado discreto y fluido con coordenadas CAD en tiempo real.
+ * Usa manipulación directa del DOM (translate3d) para 60-120 FPS sin re-renders de React.
  */
 export default function CadCursor() {
-  const [pos, setPos] = useState(null)
-  const [isPointerDevice, setIsPointerDevice] = useState(false)
+  const containerRef = useRef(null)
+  const textRef = useRef(null)
 
   useEffect(() => {
-    // Detectar si el dispositivo tiene cursor/mouse (evita mostrarlo en móviles touch)
     const mediaQuery = window.matchMedia('(pointer: fine)')
-    setIsPointerDevice(mediaQuery.matches)
+    if (!mediaQuery.matches) return
 
-    const handleMediaChange = (e) => setIsPointerDevice(e.matches)
-    mediaQuery.addEventListener('change', handleMediaChange)
-
-    let animationFrameId = null
+    let rafId = null
 
     const handleMouseMove = (e) => {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId)
-      animationFrameId = requestAnimationFrame(() => {
-        setPos({
-          x: Math.round(e.clientX),
-          y: Math.round(e.clientY),
-        })
+      const x = Math.round(e.clientX)
+      const y = Math.round(e.clientY)
+
+      if (rafId) cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(() => {
+        if (containerRef.current) {
+          containerRef.current.style.transform = `translate3d(${x + 12}px, ${y + 12}px, 0)`
+          containerRef.current.style.opacity = '1'
+        }
+        if (textRef.current) {
+          textRef.current.textContent = `X:${String(x).padStart(4, '0')} Y:${String(y).padStart(4, '0')}`
+        }
       })
     }
 
     const handleMouseLeave = () => {
-      setPos(null)
+      if (containerRef.current) {
+        containerRef.current.style.opacity = '0'
+      }
     }
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     document.addEventListener('mouseleave', handleMouseLeave)
 
     return () => {
-      mediaQuery.removeEventListener('change', handleMediaChange)
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseleave', handleMouseLeave)
-      if (animationFrameId) cancelAnimationFrame(animationFrameId)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 
-  if (!isPointerDevice || !pos) return null
-
   return (
     <div
+      ref={containerRef}
       style={{
         position: 'fixed',
-        left: pos.x + 14,
-        top: pos.y + 14,
+        top: 0,
+        left: 0,
         pointerEvents: 'none',
         zIndex: 999999,
         display: 'flex',
         alignItems: 'center',
-        gap: '6px',
+        gap: '5px',
         userSelect: 'none',
+        opacity: 0,
+        willChange: 'transform, opacity',
+        transition: 'opacity 0.25s ease',
       }}
     >
-      {/* Mira/Crosshair CAD */}
-      <svg width="14" height="14" viewBox="0 0 14 14" style={{ flexShrink: 0, filter: 'drop-shadow(0 0 4px rgba(0,240,255,0.7))' }}>
-        <line x1="7" y1="0" x2="7" y2="14" stroke="#00f0ff" strokeWidth="1.2" />
-        <line x1="0" y1="7" x2="14" y2="7" stroke="#00f0ff" strokeWidth="1.2" />
-        <circle cx="7" cy="7" r="3.5" fill="none" stroke="#F97316" strokeWidth="1" />
+      {/* Mira/Crosshair discreta */}
+      <svg width="12" height="12" viewBox="0 0 12 12" style={{ flexShrink: 0, opacity: 0.65 }}>
+        <line x1="6" y1="0" x2="6" y2="12" stroke="#64748b" strokeWidth="0.8" />
+        <line x1="0" y1="6" x2="12" y2="6" stroke="#64748b" strokeWidth="0.8" />
+        <circle cx="6" cy="6" r="2.5" fill="none" stroke="#F97316" strokeWidth="0.8" />
       </svg>
 
-      {/* Caja de Coordenadas X/Y */}
+      {/* Coordenadas discretas con fondo transparente */}
       <span
+        ref={textRef}
         style={{
           fontFamily: "'Chakra Petch', 'Rajdhani', monospace",
-          fontSize: '10.5px',
-          fontWeight: 700,
-          color: '#00f0ff',
-          letterSpacing: '0.06em',
-          background: 'rgba(11, 29, 58, 0.90)',
-          padding: '2px 7px',
-          borderRadius: '4px',
-          border: '1px solid rgba(0, 240, 255, 0.45)',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.35), 0 0 8px rgba(0,240,255,0.25)',
+          fontSize: '9.5px',
+          fontWeight: 600,
+          color: 'rgba(71, 85, 105, 0.75)',
+          letterSpacing: '0.05em',
+          background: 'transparent',
+          padding: '1px 4px',
           whiteSpace: 'nowrap',
-          backdropFilter: 'blur(4px)',
+          textShadow: '0 1px 2px rgba(255,255,255,0.85)',
         }}
-      >
-        X:{String(pos.x).padStart(4, '0')} Y:{String(pos.y).padStart(4, '0')}
-      </span>
+      />
     </div>
   )
 }

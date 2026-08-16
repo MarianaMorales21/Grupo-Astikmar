@@ -5,6 +5,11 @@ import {
   ShieldCheck, UserCheck, Cpu, Award, Upload, Calendar,
 } from 'lucide-react'
 import SectionBadge from '../components/SectionBadge'
+import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
+import FrontBlueprint from '../components/Icons/FrontBlueprint'
+import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
+import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
+import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 
 const interestServices = [
   'Reparación Naval',
@@ -138,6 +143,53 @@ export default function Contacto({ contactService, setContactService, setCurrent
         ))}
       </div>
 
+      {/* Bocetos de plano decorativos de fondo */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: -20 }}
+        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.8, ease: 'out' }}
+        style={{ position: 'absolute', top: '3%', right: '1%', width: '310px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <SideProfileBlueprint />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
+        style={{ position: 'absolute', top: '5%', left: '1%', width: '270px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <FrontBlueprint />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: -30 }}
+        whileInView={{ opacity: 0.6, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.85, delay: 0.1 }}
+        style={{ position: 'absolute', top: '45%', left: '-2%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <ConceptBlueprint />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, x: 30 }}
+        whileInView={{ opacity: 0.6, scale: 1, x: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.9, delay: 0.15 }}
+        style={{ position: 'absolute', bottom: '4%', right: '-2%', width: '300px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <MarineEngineBlueprint />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: 30 }}
+        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
+        style={{ position: 'absolute', bottom: '2%', left: '1%', width: '340px', pointerEvents: 'none', zIndex: 0 }}
+      >
+        <ShipTanksBlueprint />
+      </motion.div>
+
       {/* paddingTop unificado para alineación visual exacta */}
       <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
 
@@ -153,11 +205,8 @@ export default function Contacto({ contactService, setContactService, setCurrent
           {/* ══════════ COLUMNA IZQUIERDA ══════════ */}
           <div>
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-              <div style={{ marginBottom: '12px' }}>
-                <SectionBadge variant="light">Atención & Asesoría</SectionBadge>
-              </div>
               <h1 style={{ fontSize: 'clamp(28px, 4vw, 38px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em', fontFamily: 'var(--font-heading)' }}>
-                Solicita nuestro servicio
+                Solicita nuestro <span style={{ color: '#F97316', fontStyle: 'italic' }}>servicio</span>
               </h1>
               <p style={{ fontSize: '19px', fontWeight: 600, color: '#334e68', marginTop: '6px' }}>
                 Estamos listos para <span style={{ color: '#F97316', fontStyle: 'italic' }}>ayudarte</span>
@@ -172,7 +221,27 @@ export default function Contacto({ contactService, setContactService, setCurrent
             {/* Información de contacto + ¿Por qué elegirnos? */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '36px' }}>
               <div>
-                <SectionBadge variant="light" withDivider>Información de Contacto</SectionBadge>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                  <h6
+                    style={{
+                      fontSize: 'clamp(12px, 1.5vw, 15px)',
+                      fontWeight: 900,
+                      color: '#000000',
+                      letterSpacing: '0.08em',
+                      lineHeight: 1.2,
+                      fontFamily: 'var(--font-heading)',
+                      textTransform: 'uppercase',
+                      WebkitFontSmoothing: 'antialiased',
+                      WebkitTextStroke: '0.3px #000000',
+                    }}
+                  >
+                    Información{' '}
+                    <span style={{ color: '#F97316', fontStyle: 'italic', WebkitTextStroke: '0.3px #F97316' }}>
+                      de Contacto
+                    </span>
+                  </h6>
+                  <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
+                </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {contactInfo.map((item, i) => (
                     <motion.div
@@ -205,7 +274,27 @@ export default function Contacto({ contactService, setContactService, setCurrent
               </div>
 
               <div>
-                <SectionBadge variant="light" withDivider>¿Por Qué Elegirnos?</SectionBadge>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                  <h6
+                    style={{
+                      fontSize: 'clamp(12px, 1.5vw, 15px)',
+                      fontWeight: 900,
+                      color: '#000000',
+                      letterSpacing: '0.08em',
+                      lineHeight: 1.2,
+                      fontFamily: 'var(--font-heading)',
+                      textTransform: 'uppercase',
+                      WebkitFontSmoothing: 'antialiased',
+                      WebkitTextStroke: '0.3px #000000',
+                    }}
+                  >
+                    ¿Por Qué{' '}
+                    <span style={{ color: '#F97316', fontStyle: 'italic', WebkitTextStroke: '0.3px #F97316' }}>
+                      Elegirnos?
+                    </span>
+                  </h6>
+                  <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
+                </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {whyUs.map((item, i) => (
                     <motion.div

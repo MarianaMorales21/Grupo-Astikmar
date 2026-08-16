@@ -266,10 +266,10 @@ export default function EquipoHumano({ isSection = false }) {
                 flex: '1 1 320px',          // 👈 3 columnas por fila (ajusta según ancho del contenedor)
                 minWidth: '300px',
                 maxWidth: 'calc(33.333% - 19px)',  // 👈 fuerza máximo 3 por fila
-                background: '#ffffff',
+                background: 'transparent',
                 borderRadius: '20px',
-                border: '1px solid #eaecf0',
-                boxShadow: '0 10px 30px rgba(29,41,57,0.08)',
+                border: '1px solid rgba(29, 41, 57, 0.16)',
+                boxShadow: 'none',
                 overflow: 'hidden',
                 transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
               }}

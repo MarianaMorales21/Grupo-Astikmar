@@ -183,12 +183,39 @@ export default function InfoServicios({ service, setCurrentPage }) {
         {/* ══════════ HERO: título + imagen + boceto lateral ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '48px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <div style={{ marginBottom: '12px' }}>
-              <SectionBadge variant="light">{service.category || 'Servicio Especializado'}</SectionBadge>
-            </div>
-            <h1 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em', fontFamily: 'var(--font-heading)' }}>
-              {service.title}
-            </h1>
+            {(() => {
+              const text = service.title || '';
+              const words = text.trim().split(' ');
+              const midIndex = Math.ceil(words.length / 2);
+
+              const firstHalf = words.slice(0, midIndex).join(' ');
+              const secondHalf = words.slice(midIndex).join(' ');
+
+              return (
+                <h1
+                  style={{
+                    fontSize: 'clamp(28px, 4vw, 42px)',
+                    fontWeight: 900,
+                    color: '#1D2939', // Primera mitad en tono oscuro
+                    lineHeight: 1.1,
+                    letterSpacing: '-0.01em',
+                    fontFamily: 'var(--font-heading)',
+                  }}
+                >
+                  {firstHalf}{' '}
+                  {secondHalf && (
+                    <span
+                      style={{
+                        color: '#F97316', // Segunda mitad en naranja
+                        fontStyle: 'italic',
+                      }}
+                    >
+                      {secondHalf}
+                    </span>
+                  )}
+                </h1>
+              );
+            })()}
             <p style={{ fontSize: '18px', fontWeight: 600, color: '#334e68', marginTop: '8px' }}>
               Soluciones <span style={{ color: '#F97316', fontStyle: 'italic' }}>a la medida</span>, construidas para durar
             </p>
@@ -210,7 +237,25 @@ export default function InfoServicios({ service, setCurrentPage }) {
 
         {/* ══════════ NUESTRO SERVICIO INCLUYE ══════════ */}
         <div style={{ marginBottom: '48px' }}>
-          <SectionBadge variant="light" withDivider>Nuestro Servicio Incluye</SectionBadge>
+          <h6
+            style={{
+              fontSize: 'clamp(12px, 1.5vw, 16px)',
+              fontWeight: 900,                      // Grosor máximo (Black/ExtraBold)
+              color: '#000000',
+              letterSpacing: '0.08em',              // Un poco más de separación para que no se peguen las letras gruesas
+              lineHeight: 1.2,
+              marginBottom: '15px',
+              fontFamily: 'var(--font-heading)',
+              textTransform: 'uppercase',
+              WebkitFontSmoothing: 'antialiased',   // Suavizado para renderizado ultra nítido
+              WebkitTextStroke: '0.3px #000000',    // Truco técnico para añadir un extra de grosor visual
+            }}
+          >
+            Nuestro Servicio{' '}
+            <span style={{ color: '#F97316', fontStyle: 'italic', WebkitTextStroke: '0.3px #F97316' }}>
+              Incluye
+            </span>{' '}
+          </h6>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
             {incluye.map((item, i) => (
               <motion.div
@@ -248,9 +293,44 @@ export default function InfoServicios({ service, setCurrentPage }) {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
-                <SectionBadge variant="light">
-                  {service.galleryTitle || `Tipos de Embarcaciones que Reparamos`}
-                </SectionBadge>
+                {(() => {
+                  const text = service.galleryTitle || 'Tipos de Embarcaciones que Reparamos';
+                  const words = text.trim().split(' ');
+                  const midIndex = Math.ceil(words.length / 2);
+
+                  const firstHalf = words.slice(0, midIndex).join(' ');
+                  const secondHalf = words.slice(midIndex).join(' ');
+
+                  return (
+                    <h6
+                      style={{
+                        fontSize: 'clamp(12px, 1.5vw, 16px)',
+                        fontWeight: 900,
+                        color: '#1D2939', // Primera mitad en tono oscuro
+                        letterSpacing: '0.08em',
+                        lineHeight: 1.2,
+                        marginBottom: '8px',
+                        fontFamily: 'var(--font-heading)',
+                        textTransform: 'uppercase',
+                        WebkitFontSmoothing: 'antialiased',
+                        WebkitTextStroke: '0.3px #1D2939',
+                      }}
+                    >
+                      {firstHalf}{' '}
+                      {secondHalf && (
+                        <span
+                          style={{
+                            color: '#F97316', // Segunda mitad en naranja
+                            fontStyle: 'italic',
+                            WebkitTextStroke: '0.3px #F97316',
+                          }}
+                        >
+                          {secondHalf}
+                        </span>
+                      )}
+                    </h6>
+                  );
+                })()}
                 <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
               </div>
               <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
@@ -298,7 +378,20 @@ export default function InfoServicios({ service, setCurrentPage }) {
 
           {/* Características destacadas + sello de calidad */}
           <div>
-            <SectionBadge variant="light" withDivider>Características Destacadas</SectionBadge>
+            <h2
+              style={{
+                fontSize: 'clamp(24px, 4vw, 42px)',
+                fontWeight: 900,
+                color: '#000000ff',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.1,
+                marginBottom: '12px',
+                fontFamily: 'var(--font-heading)',
+              }}
+            >
+              Características{' '}
+              <span style={{ color: '#F97316', fontStyle: 'italic' }}>Destacadas</span>
+            </h2>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
               {destacadas.map((d, i) => (
                 <motion.li

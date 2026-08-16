@@ -43,7 +43,7 @@ export default function SectionBadge({
   }
 
   const dividerGradient = variant === 'dark'
-    ? 'linear-gradient(90deg, rgba(0, 240, 255, 0.4), transparent)'
+    ? 'linear-gradient(90deg, rgba(249, 115, 22, 0.4), transparent)'
     : 'linear-gradient(90deg, rgba(29, 41, 57, 0.2), transparent)'
 
   return (

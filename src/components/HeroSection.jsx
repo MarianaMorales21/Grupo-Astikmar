@@ -24,14 +24,14 @@ export default function HeroSection({ setCurrentPage }) {
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
-        paddingTop: '28px',
+        paddingTop: '72px',
         /* Sin paddingBottom ni marginBottom para que la ola de Servicios se una sin costura */
         paddingBottom: 0,
         marginBottom: 0,
       }}
     >
       {/* ── TOP RULER ── */}
-      <div className="blueprint-ruler-top">
+      <div className="blueprint-ruler-top" style={{ top: 0 }}>
         {["-30'", "-20'", "-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'"].map((m, idx) => (
           <span key={idx}>{m}</span>
         ))}
@@ -39,7 +39,7 @@ export default function HeroSection({ setCurrentPage }) {
 
       {/* ── LEFT VERTICAL RULER — oculto en móvil vía CSS ── */}
       <div style={{
-        position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
+        position: 'absolute', left: 0, top: '28px', bottom: 0, width: '26px',
         background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
         zIndex: 10, padding: '10px 0',
@@ -53,7 +53,7 @@ export default function HeroSection({ setCurrentPage }) {
 
       {/* ── RIGHT VERTICAL RULER — oculto en móvil vía CSS ── */}
       <div style={{
-        position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
+        position: 'absolute', right: 0, top: '28px', bottom: 0, width: '26px',
         background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
         zIndex: 10, padding: '10px 0',
@@ -63,6 +63,14 @@ export default function HeroSection({ setCurrentPage }) {
             {m}
           </span>
         ))}
+      </div>
+
+      {/* Marcas de esquina / Orillos técnicos */}
+      <div style={{ position: 'absolute', top: '36px', left: '36px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 10 }}>
+        + SEC-00 [HERO_INGENIERIA_NAVAL]
+      </div>
+      <div style={{ position: 'absolute', top: '36px', right: '36px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 10 }}>
+        STAFF-CAD: 1440x900 +
       </div>
 
       {/* ── CONTENEDOR CENTRADO CON MAX-WIDTH ── */}
