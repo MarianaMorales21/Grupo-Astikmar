@@ -74,21 +74,11 @@ export default function Navbar({ currentPage, setCurrentPage }) {
             {/* Logo */}
             <button onClick={() => handleNavClick('inicio')} className="nav-logo flex-shrink-0 border-0 bg-transparent text-left cursor-pointer focus:outline-none">
               <div className="flex items-center gap-3">
-                <div className="nav-logo-icon">
-                  <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
-                    <rect width="40" height="40" rx="8" fill="#1D2939" />
-                    <polygon points="20,6 34,30 6,30" fill="none" stroke="#F97316" strokeWidth="2.5" />
-                    <circle cx="20" cy="20" r="4" fill="#F97316" />
-                    <line x1="20" y1="6" x2="20" y2="16" stroke="#F97316" strokeWidth="1.5" />
-                    <circle cx="20" cy="6" r="2" fill="white" />
-                    <circle cx="6" cy="30" r="2" fill="white" />
-                    <circle cx="34" cy="30" r="2" fill="white" />
-                  </svg>
-                </div>
-                <div className="nav-logo-text">
-                  <span className="brand-name" style={{ color: '#1D2939', fontSize: '16px' }}>GRUPO</span>
-                  <span className="brand-sub" style={{ color: '#F97316', fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.1em' }}>ASTIKMAR</span>
-                </div>
+                <img
+                  src="/favicon.png"
+                  alt="Grupo Astikmar"
+                  style={{ height: '60px', width: 'auto', objectFit: 'contain' }}
+                />
               </div>
             </button>
 

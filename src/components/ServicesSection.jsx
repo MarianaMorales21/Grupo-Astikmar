@@ -1,64 +1,28 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, ChevronLeft, ChevronRight, Wrench, ShieldCheck, FileSearch, Anchor, Zap, Layers } from 'lucide-react'
+import {
+  ArrowRight, ChevronLeft, ChevronRight, Wrench, ShieldCheck,
+  FileSearch, Anchor, Zap, Layers, Hammer, Droplets, Sparkles
+} from 'lucide-react'
 import WaveTop from './WaveTop'
 import SectionBadge from './SectionBadge'
 import MarineEngineBlueprint from './Icons/MarineEngineBlueprint'
 import SideProfileBlueprint from './Icons/SideprofileBlueprint'
 import ConceptBlueprint from './Icons/ConceptBlueprint'
 import ShipTanksBlueprint from './Icons/ShipTanksBlueprint'
+import { allServices } from '../data/servicesData'
 
-// ── Datos de servicios ───────────────────────────────────────────────────────
-const services = [
-  {
-    num: '01',
-    title: 'Reparación Naval',
-    desc: 'Soluciones técnicas integrales en muelle y dique para mantener su embarcación 100% operativa. Sandblasting, pintura de grado marino y reparación de propulsión.',
-    image: '/service-reparacion.png',
-    icon: Wrench,
-    badge: 'Muelle & Dique',
-  },
-  {
-    num: '02',
-    title: 'Mantenimiento Preventivo',
-    desc: 'Programas de mantenimiento continuo orientados a prevenir fallas y maximizar el tiempo en mar. Overhaul a cero horas de motores y generadores navales.',
-    image: '/service-motores.png',
-    icon: ShieldCheck,
-    badge: 'Flotas & Ferries',
-  },
-  {
-    num: '03',
-    title: 'Ingeniería & Ultrasonido',
-    desc: 'Medición de espesores de lámina mediante ultrasonido NDT y emisión de reportes para clasificadoras internacionales. Documentación técnica para aseguradoras.',
-    image: '/service-ultrasonido.png',
-    icon: FileSearch,
-    badge: 'Certificado NDT',
-  },
-  {
-    num: '04',
-    title: 'Diseño & Construcción Naval',
-    desc: 'Diseño asistido por CAD y construcción de embarcaciones de carga y pasajeros. Ingeniería de alto nivel con certificación por clasificadoras internacionales.',
-    image: '/service-reparacion.png',
-    icon: Anchor,
-    badge: 'CAD & Clasificación',
-  },
-  {
-    num: '05',
-    title: 'Sistemas Eléctricos Navales',
-    desc: 'Instalación, diagnóstico y reparación de sistemas eléctricos navales. Tableros de distribución, automatización y sistemas de navegación.',
-    image: '/service-motores.png',
-    icon: Zap,
-    badge: 'Electricidad Naval',
-  },
-  {
-    num: '06',
-    title: 'Equipos de Cubierta & Grúas',
-    desc: 'Mantenimiento e instalación de grúas, molinetes, escotillas y sistemas de amarre. Equipos de salvamento y seguridad certificados.',
-    image: '/service-ultrasonido.png',
-    icon: Layers,
-    badge: 'Cubierta & Grúas',
-  },
-]
+const iconMap = {
+  Wrench,
+  ShieldCheck,
+  FileSearch,
+  Anchor,
+  Zap,
+  Layers,
+  Hammer,
+  Droplets,
+  Sparkles,
+}
 
 const GAP = 24       // px de separación entre tarjetas
 
@@ -79,14 +43,26 @@ function useVisibleCards() {
 }
 
 // ── Componente tarjeta ───────────────────────────────────────────────────────
-function ServiceCard({ svc, setCurrentPage }) {
-  const Icon = svc.icon
+function ServiceCard({ svc, index, setCurrentPage, setSelectedService }) {
+  const Icon = iconMap[svc.iconName] || Wrench
   const [hovered, setHovered] = useState(false)
+  const num = String(index + 1).padStart(2, '0')
+
+  const handleOpenService = () => {
+    if (setSelectedService) {
+      setSelectedService(svc)
+    }
+    if (setCurrentPage) {
+      setCurrentPage('info-servicio')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   return (
     <motion.div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={handleOpenService}
       animate={{
         y: hovered ? -6 : 0,
         boxShadow: hovered
@@ -105,7 +81,7 @@ function ServiceCard({ svc, setCurrentPage }) {
         height: '100%',
         backdropFilter: 'blur(12px)',
         transition: 'border-color 0.3s',
-        cursor: 'default',
+        cursor: 'pointer',
       }}
     >
       {/* Número decorativo en esquina */}
@@ -125,7 +101,7 @@ function ServiceCard({ svc, setCurrentPage }) {
           userSelect: 'none',
         }}
       >
-        {svc.num}
+        {num}
       </div>
 
       {/* Contenido de texto */}
@@ -163,7 +139,7 @@ function ServiceCard({ svc, setCurrentPage }) {
               whiteSpace: 'nowrap',
             }}
           >
-            {svc.badge}
+            {svc.badge || svc.category}
           </span>
         </div>
 
@@ -203,7 +179,7 @@ function ServiceCard({ svc, setCurrentPage }) {
         }}
       >
         <img
-          src={svc.image}
+          src={svc.image || '/service-reparacion.png'}
           alt={svc.title}
           style={{
             width: '100%',
@@ -234,7 +210,10 @@ function ServiceCard({ svc, setCurrentPage }) {
         }}
       >
         <motion.button
-          onClick={() => setCurrentPage?.('servicios')}
+          onClick={(e) => {
+            e.stopPropagation()
+            handleOpenService()
+          }}
           whileHover={{ scale: 1.04, background: 'rgba(249,115,22,0.18)', borderColor: 'rgba(249,115,22,0.7)' }}
           whileTap={{ scale: 0.97 }}
           style={{
@@ -260,14 +239,14 @@ function ServiceCard({ svc, setCurrentPage }) {
 }
 
 // ── Componente principal ─────────────────────────────────────────────────────
-export default function ServicesSection({ setCurrentPage }) {
+export default function ServicesSection({ setCurrentPage, setSelectedService }) {
   const VISIBLE = useVisibleCards()
   const [current, setCurrent] = useState(0)
   const [cardWidth, setCardWidth] = useState(0)
   const viewportRef = useRef(null)
   const trackRef = useRef(null)
 
-  const maxIndex = Math.max(0, services.length - VISIBLE)
+  const maxIndex = Math.max(0, allServices.length - VISIBLE)
 
   // Calcula el ancho de una tarjeta en píxeles al montar y al redimensionar
   const computeCardWidth = useCallback(() => {
@@ -512,9 +491,9 @@ export default function ServicesSection({ setCurrentPage }) {
                 gap: `${GAP}px`,
               }}
             >
-              {services.map((svc, i) => (
+              {allServices.map((svc, i) => (
                 <div
-                  key={svc.num}
+                  key={svc.id}
                   style={{
                     flex: '0 0 auto',
                     width: cardWidth > 0 ? `${cardWidth}px` : `calc((100% - ${(VISIBLE - 1) * GAP}px) / ${VISIBLE})`,
@@ -522,7 +501,9 @@ export default function ServicesSection({ setCurrentPage }) {
                 >
                   <ServiceCard
                     svc={svc}
+                    index={i}
                     setCurrentPage={setCurrentPage}
+                    setSelectedService={setSelectedService}
                   />
                 </div>
               ))}

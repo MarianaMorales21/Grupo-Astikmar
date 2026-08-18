@@ -28,203 +28,9 @@ const fieldIconMap = {
   Droplet: <Droplet size={16} className="text-orange-500" />,
 }
 
-// ── DATA: cada proyecto trae su propia info específica (título, descripción,
-// campos de ficha técnica y detalle completo para la página individual) ──
-export const allProjects = [
-  {
-    id: 1,
-    slug: 'buque-carga-multiproposito',
-    category: 'Diseño y Construcción Naval',
-    title: 'Buque de Carga Multipropósito',
-    desc: 'Diseño y construcción integral de buque de carga multipropósito de 4,500 DWT, optimizado para el transporte de carga general y contenedores.',
-    location: 'Astillero Río Ozama, Santo Domingo, R.D.',
-    duration: '14 meses',
-    year: '2023',
-    fields: [
-      { icon: 'ClipboardList', label: 'Alcance del proyecto', value: 'Diseño conceptual, ingeniería básica y de detalle, construcción y pruebas de mar.' },
-      { icon: 'Ship', label: 'Características principales', value: 'Eslora: 89.6 m · Manga: 15.2 m · Capacidad: 4,500 DWT · Propulsión diésel-eléctrica.' },
-      { icon: 'MapPin', label: 'Ubicación', value: 'Astillero Río Ozama, Santo Domingo, R.D.' },
-      { icon: 'Calendar', label: 'Año de entrega', value: '2023' },
-    ],
-    detail: {
-      fullDescription: 'El proyecto consistió en el diseño y construcción integral de un buque de carga multipropósito de 4,500 DWT, concebido para operar tanto con carga general como con contenedores en rutas regionales del Caribe. El desarrollo abarcó desde la ingeniería conceptual hasta la entrega operativa del buque, cumpliendo con los requisitos de la sociedad clasificadora en cada etapa.',
-      scope: [
-        'Ingeniería conceptual, básica y de detalle',
-        'Construcción de casco y superestructura en astillero propio',
-        'Instalación de sistema de propulsión diésel-eléctrica',
-        'Pruebas de mar y puesta en marcha',
-        'Certificación ante sociedad de clasificación',
-      ],
-      specs: [
-        'Eslora total: 89.6 m',
-        'Manga: 15.2 m',
-        'Capacidad: 4,500 DWT',
-        'Propulsión: diésel-eléctrica',
-      ],
-      gallery: ['Construcción de casco', 'Superestructura', 'Sala de máquinas', 'Pruebas de mar'],
-    },
-  },
-  {
-    id: 2,
-    slug: 'overhaul-motor-principal',
-    category: 'Mantenimiento de Motores',
-    title: 'Overhaul Mayor de Motor Principal',
-    desc: 'Mantenimiento mayor y puesta a punto de motor principal WÄRTSILÄ 6L32, mejorando su rendimiento y eficiencia operativa.',
-    location: 'Santo Domingo, R.D.',
-    duration: '21 días',
-    year: '2024',
-    fields: [
-      { icon: 'ClipboardList', label: 'Alcance del proyecto', value: 'Desarme completo, inspección, rectificación de componentes, reemplazo de piezas críticas y pruebas de rendimiento.' },
-      { icon: 'Settings', label: 'Motor', value: 'WÄRTSILÄ 6L32 · Potencia: 4,320 kW a 750 rpm' },
-      { icon: 'TrendingUp', label: 'Beneficios', value: 'Mejora del rendimiento en un 18% y reducción del consumo de combustible.' },
-      { icon: 'Calendar', label: 'Año de finalización', value: '2024' },
-    ],
-    detail: {
-      fullDescription: 'Se ejecutó un overhaul mayor sobre el motor principal WÄRTSILÄ 6L32 de la embarcación, con desarme completo del bloque, inspección dimensional de componentes críticos y sustitución de piezas de desgaste. El objetivo fue restituir el rendimiento original del motor y reducir el consumo específico de combustible.',
-      scope: [
-        'Desarme completo del motor principal',
-        'Inspección y rectificación de camisas, pistones y cojinetes',
-        'Reemplazo de piezas críticas de desgaste',
-        'Calibración de sistema de inyección',
-        'Pruebas de rendimiento bajo carga',
-      ],
-      specs: [
-        'Modelo: WÄRTSILÄ 6L32',
-        'Potencia: 4,320 kW a 750 rpm',
-        'Mejora de rendimiento: 18%',
-      ],
-      gallery: ['Desarme del motor', 'Rectificación de componentes', 'Reensamble', 'Pruebas bajo carga'],
-    },
-  },
-  {
-    id: 3,
-    slug: 'sustitucion-planchas-casco',
-    category: 'Reparaciones Estructurales',
-    title: 'Sustitución de Planchas de Casco — M/V Caribbean Star',
-    desc: 'Remoción de incrustaciones, granallado a metal blanco y sustitución de acero corroído en casco y mamparos de lastre bajo supervisión de sociedad clasificadora.',
-    location: 'Puerto La Cruz, Venezuela',
-    duration: '35 días',
-    year: '2024',
-    fields: [
-      { icon: 'ClipboardList', label: 'Alcance del proyecto', value: 'Sandblasting a metal blanco, corte y sustitución de planchas, soldadura homologada y pintura de esquema certificado.' },
-      { icon: 'Layers', label: 'Material sustituido', value: 'Más de 12 toneladas de acero naval en casco y mamparos de lastre.' },
-      { icon: 'MapPin', label: 'Ubicación', value: 'Puerto La Cruz, Venezuela' },
-      { icon: 'Calendar', label: 'Año de finalización', value: '2024' },
-    ],
-    detail: {
-      fullDescription: 'El M/V Caribbean Star, buque de carga general de 85 metros, presentaba corrosión avanzada en secciones del casco y mamparos de tanques de lastre. Se ejecutó la remoción completa de incrustaciones, granallado a metal blanco y sustitución de las planchas afectadas, todo bajo supervisión directa de la sociedad clasificadora.',
-      scope: [
-        'Granallado (sandblasting) a metal blanco',
-        'Corte y remoción de planchas corroídas',
-        'Soldadura estructural homologada AWS / Lloyd\'s',
-        'Ensayos no destructivos de soldadura',
-        'Aplicación de esquema de pintura certificado',
-      ],
-      specs: [
-        'Embarcación: Buque de carga general de 85 m',
-        'Acero sustituido: +12 toneladas',
-        'Supervisión: Lloyd\'s Register',
-      ],
-      gallery: ['Sandblasting', 'Corte de planchas', 'Soldadura estructural', 'Esquema de pintura'],
-    },
-  },
-  {
-    id: 4,
-    slug: 'instalacion-grua-cubierta',
-    category: 'Cubierta y Grúas',
-    title: 'Instalación y Certificación de Grúa de Cubierta',
-    desc: 'Suministro e instalación de grúa hidráulica de cubierta para buque de carga general, incluyendo pruebas de carga y certificación ante sociedad clasificadora.',
-    location: 'Puerto Cabello, Venezuela',
-    duration: '18 días',
-    year: '2023',
-    fields: [
-      { icon: 'ClipboardList', label: 'Alcance del proyecto', value: 'Instalación estructural, conexión hidráulica, pruebas de carga estática y dinámica, y certificación final.' },
-      { icon: 'Anchor', label: 'Capacidad de izado', value: 'Grúa hidráulica de 15 toneladas a 12 metros de alcance.' },
-      { icon: 'MapPin', label: 'Ubicación', value: 'Puerto Cabello, Venezuela' },
-      { icon: 'Calendar', label: 'Año de entrega', value: '2023' },
-    ],
-    detail: {
-      fullDescription: 'Suministro, instalación y puesta en marcha de una grúa hidráulica de cubierta destinada al manejo de carga general a bordo. El proyecto incluyó el refuerzo estructural de la base de instalación, la conexión del sistema hidráulico y las pruebas de carga requeridas para la certificación final.',
-      scope: [
-        'Refuerzo estructural de la base de instalación',
-        'Montaje e izado de la grúa',
-        'Conexión e integración del sistema hidráulico',
-        'Pruebas de carga estática y dinámica',
-        'Certificación ante sociedad de clasificación',
-      ],
-      specs: [
-        'Capacidad: 15 toneladas',
-        'Alcance: 12 metros',
-        'Tipo: grúa hidráulica de cubierta',
-      ],
-      gallery: ['Refuerzo estructural', 'Montaje de la grúa', 'Conexión hidráulica', 'Pruebas de carga'],
-    },
-  },
-  {
-    id: 5,
-    slug: 'rehabilitacion-tanques-lastre',
-    category: 'Tanques y Sistemas',
-    title: 'Rehabilitación de Tanques de Lastre y Sistemas Hidráulicos',
-    desc: 'Limpieza, reparación estructural y recubrimiento de tanques de lastre, junto con la puesta a punto de los sistemas hidráulicos asociados.',
-    location: 'Santo Domingo, R.D.',
-    duration: '26 días',
-    year: '2022',
-    fields: [
-      { icon: 'ClipboardList', label: 'Alcance del proyecto', value: 'Desgasificación, reparación de refuerzos internos, recubrimiento epóxico y prueba hidrostática de tanques.' },
-      { icon: 'Droplet', label: 'Sistemas intervenidos', value: '4 tanques de lastre y sistema hidráulico de válvulas de control.' },
-      { icon: 'MapPin', label: 'Ubicación', value: 'Santo Domingo, R.D.' },
-      { icon: 'Calendar', label: 'Año de finalización', value: '2022' },
-    ],
-    detail: {
-      fullDescription: 'Rehabilitación integral de cuatro tanques de lastre que presentaban corrosión interna y fallas en el sistema hidráulico de válvulas de control. El trabajo incluyó desgasificación, reparación de refuerzos estructurales, recubrimiento epóxico y prueba hidrostática final antes de la puesta en servicio.',
-      scope: [
-        'Desgasificación y certificación de espacio seguro',
-        'Reparación de refuerzos y mamparos internos',
-        'Recubrimiento epóxico de alta resistencia',
-        'Puesta a punto del sistema hidráulico de válvulas',
-        'Prueba hidrostática final',
-      ],
-      specs: [
-        'Tanques intervenidos: 4 tanques de lastre',
-        'Recubrimiento: epóxico de alta resistencia',
-        'Sistema: válvulas hidráulicas de control',
-      ],
-      gallery: ['Desgasificación', 'Reparación interna', 'Recubrimiento epóxico', 'Prueba hidrostática'],
-    },
-  },
-  {
-    id: 6,
-    slug: 'overhaul-remolcador-astikmar-i',
-    category: 'Diseño y Construcción Naval',
-    title: 'Overhaul Completo del Remolcador "Astikmar I"',
-    desc: 'Reconstrucción completa de la propulsión y restauración estructural del casco en un plazo estricto de 45 días en dique seco.',
-    location: 'Santo Domingo, R.D.',
-    duration: '45 días',
-    year: '2024',
-    fields: [
-      { icon: 'ClipboardList', label: 'Alcance del proyecto', value: 'Desmontaje de propulsión, reparación estructural de casco, pintura de esquema completo y puesta en marcha.' },
-      { icon: 'Ship', label: 'Embarcación', value: 'Remolcador portuario de alta potencia' },
-      { icon: 'MapPin', label: 'Ubicación', value: 'Santo Domingo, R.D.' },
-      { icon: 'Calendar', label: 'Año de finalización', value: '2024' },
-    ],
-    detail: {
-      fullDescription: 'Overhaul completo de un remolcador portuario de alta potencia, que incluyó la reconstrucción total del sistema de propulsión y la restauración estructural del casco, ejecutado en dique seco bajo un plazo estricto de 45 días para minimizar el impacto en la operación comercial del cliente.',
-      scope: [
-        'Desmontaje completo del sistema de propulsión',
-        'Reparación estructural de casco en dique seco',
-        'Reconstrucción y alineación de ejes y hélices',
-        'Esquema de pintura anticorrosiva completo',
-        'Pruebas de mar y puesta en marcha',
-      ],
-      specs: [
-        'Tipo: remolcador portuario de alta potencia',
-        'Plazo de ejecución: 45 días',
-        'Modalidad: dique seco',
-      ],
-      gallery: ['Dique seco', 'Reparación de casco', 'Sistema de propulsión', 'Pruebas de mar'],
-    },
-  },
-]
+import { allProjects } from '../data/projectsData'
+
+export { allProjects }
 
 const tabs = [
   'Todos los proyectos',
@@ -443,8 +249,16 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
                 }}
               >
                 {/* Imagen */}
-                <div style={{ width: '100%', minHeight: '200px', maxHeight: '240px', borderRadius: '10px', overflow: 'hidden' }}>
-                  <ImagePlaceholder style={{ borderRadius: '10px' }} />
+                <div style={{ width: '100%', minHeight: '200px', maxHeight: '240px', borderRadius: '10px', overflow: 'hidden', border: '1px solid rgba(29,41,57,0.1)' }}>
+                  {proj.image ? (
+                    <img
+                      src={proj.image}
+                      alt={proj.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                  ) : (
+                    <ImagePlaceholder style={{ borderRadius: '10px' }} />
+                  )}
                 </div>
 
                 {/* Contenido */}

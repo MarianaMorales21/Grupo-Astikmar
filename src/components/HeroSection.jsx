@@ -253,15 +253,15 @@ export default function HeroSection({ setCurrentPage }) {
 
             {/* Imagen del buque */}
             <img
-              src=""
-              alt="Buque Astikmar Horizontal Cutaway Blueprint"
+              src="/Astikmar.png"
+              alt="Buque Grupo Astikmar"
               style={{
                 position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
+                inset: '-5%',
+                width: '110%',
+                height: '110%',
                 objectFit: 'contain',
-                filter: 'drop-shadow(0 10px 25px rgba(29,41,57,0.12))',
+                filter: 'drop-shadow(0 14px 28px rgba(29,41,57,0.16))',
                 animation: 'float 6s ease-in-out infinite',
                 zIndex: 3,
               }}

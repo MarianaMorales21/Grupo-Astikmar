@@ -28,9 +28,9 @@ const interestServices = [
 ]
 
 const contactInfo = [
-  { icon: MapPin, label: 'UBICACIÓN', lines: ['Puerto La Cruz, Anzoátegui,', 'Venezuela'] },
-  { icon: Phone, label: 'TELÉFONO', lines: ['+1 (809) 123-4567'] },
-  { icon: Mail, label: 'CORREO ELECTRÓNICO', lines: ['info@grupoastikmar.com'] },
+  { icon: MapPin, label: 'UBICACIÓN', lines: ['Av. López de Vega No. 13, Plaza Progreso, Piso 8, Naco, Santo Domingo,', 'República Dominicana'] },
+  { icon: Phone, label: 'TELÉFONO', lines: ['+1 849 513 9090'] },
+  { icon: Mail, label: 'CORREO ELECTRÓNICO', lines: ['carlos.m@grupoastikmar.com'] },
   { icon: Clock, label: 'HORARIO DE ATENCIÓN', lines: ['Lunes a Viernes', '8:00 a.m. - 5:00 p.m.'] },
 ]
 

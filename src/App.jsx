@@ -101,7 +101,7 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'inicio':
-        return <Home setCurrentPage={setCurrentPage} />
+        return <Home setCurrentPage={setCurrentPage} setSelectedService={setSelectedService} setSelectedProject={setSelectedProject} />
       case 'nosotros':
         return <Nosotros setCurrentPage={setCurrentPage} />
       case 'servicios':
@@ -117,7 +117,7 @@ export default function App() {
       case 'contacto':
         return <Contacto contactService={contactService} setContactService={setContactService} setCurrentPage={setCurrentPage} />
       default:
-        return <Home setCurrentPage={setCurrentPage} />
+        return <Home setCurrentPage={setCurrentPage} setSelectedService={setSelectedService} setSelectedProject={setSelectedProject} />
     }
   }
 

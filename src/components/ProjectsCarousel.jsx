@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Sparkles, Eye } from 'lucide-react'
+import { MapPin, Sparkles, Eye, ArrowRight } from 'lucide-react'
 
 // Import de los 5 planos/iconos técnicos de la carpeta src/components/Icons
 import FrontBlueprint from './Icons/FrontBlueprint'
@@ -8,66 +8,14 @@ import ConceptBlueprint from './Icons/ConceptBlueprint'
 import SideProfileBlueprint from './Icons/SideprofileBlueprint'
 import ShipTanksBlueprint from './Icons/ShipTanksBlueprint'
 import MarineEngineBlueprint from './Icons/MarineEngineBlueprint'
+import { allProjects } from '../data/projectsData'
 
 import './ProjectsCarousel.css'
 
-const projectsData = [
-  {
-    id: 1,
-    tag: 'Construcción Naval',
-    title: 'Remolcador "Astikmar I"',
-    desc: 'Diseño integral y construcción en acero naval con propulsión azimutal de 3,200 HP y certificación Lloyd\'s Register.',
-    specs: ['Eslora: 28.5m', 'Potencia: 3,200 HP', 'Bollard Pull: 45 Toneladas'],
-    year: '2024',
-    location: 'Santo Domingo, R.D.',
-    image: '/service-reparacion.png',
-  },
-  {
-    id: 2,
-    tag: 'Reparación Mayor',
-    title: 'M/V Caribbean Star — Dique Seco',
-    desc: 'Granallado hidro-cinético Sa 2.5, pintado marino anticorrosivo y sustitución de 18 toneladas de planchaje de acero.',
-    specs: ['Área de casco: 4,500 m²', 'Acero reemplazado: 18 Ton', 'Pruebas NDT: 100%'],
-    year: '2024',
-    location: 'Puerto La Cruz, Ven.',
-    image: '/service-motores.png',
-  },
-  {
-    id: 3,
-    tag: 'Ingeniería NDT',
-    title: 'Medición Ultrasonido — Flota Tanquera',
-    desc: 'Inspección de espesores de lámina en 8 buques tanqueros con modelado 3D de corrosión para la sociedad clasificadora.',
-    specs: ['Buques inspeccionados: 8', 'Puntos NDT: +12,000', 'Clasificadora: ABS'],
-    year: '2023',
-    location: 'Región Caribe',
-    image: '/service-ultrasonido.png',
-  },
-  {
-    id: 4,
-    tag: 'Mantenimiento Preventivo',
-    title: 'Plan Integral — Expresos del Mar',
-    desc: 'Programa continuo 24/7 de mantenimiento preventivo y predictivo en motores marinos y cascos para flota de 5 ferrys.',
-    specs: ['Flota: 5 Ferries', 'Disponibilidad: 99.4%', 'Atención de emergencias: < 2h'],
-    year: '2023',
-    location: 'Santo Domingo',
-    image: '/ship-cutaway.png',
-  },
-  {
-    id: 5,
-    tag: 'Overhaul Motores',
-    title: 'Motor Principal MAN B&W 8,400 HP',
-    desc: 'Overhaul a cero horas de motor propulsor de 2 tiempos, recambio de camisas y pruebas de mar con dinamómetro.',
-    specs: ['Modelo: MAN B&W 6S50MC', 'Potencia: 8,400 HP', 'Pruebas de mar: 100% Carga'],
-    year: '2023',
-    location: 'Puerto La Cruz',
-    image: '/service-motores.png',
-  },
-]
-
 // Duplicamos el array para lograr un recorrido infinito sin pausas
-const duplicatedProjects = [...projectsData, ...projectsData]
+const duplicatedProjects = [...allProjects, ...allProjects]
 
-export default function ProjectsCarousel({ setCurrentPage }) {
+export default function ProjectsCarousel({ setCurrentPage, setSelectedProject }) {
   const [activeProject, setActiveProject] = useState(null)
   const [isPaused, setIsPaused] = useState(false)
 
@@ -353,6 +301,7 @@ export default function ProjectsCarousel({ setCurrentPage }) {
           project={activeProject}
           onClose={() => setActiveProject(null)}
           setCurrentPage={setCurrentPage}
+          setSelectedProject={setSelectedProject}
         />
       )}
     </section>
@@ -536,7 +485,18 @@ function ProjectCard({ project, onSelect }) {
 }
 
 // ── Modal de Detalle de Proyecto ──────────────────────────────────────────────
-function ProjectModal({ project, onClose, setCurrentPage }) {
+function ProjectModal({ project, onClose, setCurrentPage, setSelectedProject }) {
+  const handleOpenDetail = () => {
+    if (setSelectedProject) {
+      setSelectedProject(project)
+    }
+    onClose()
+    if (setCurrentPage) {
+      setCurrentPage('info-proyecto')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   return (
     <div
       onClick={onClose}
@@ -586,7 +546,7 @@ function ProjectModal({ project, onClose, setCurrentPage }) {
         {/* Contenido */}
         <div style={{ padding: '24px 32px 32px' }}>
           <span style={{ fontSize: '11px', fontWeight: 800, color: '#ffffff', background: '#F97316', padding: '4px 12px', borderRadius: '12px' }}>
-            {project.tag}
+            {project.tag || project.category}
           </span>
           <h3 style={{ fontSize: '24px', fontWeight: 900, color: '#1D2939', marginTop: '10px', marginBottom: '8px' }}>
             {project.title}
@@ -600,7 +560,7 @@ function ProjectModal({ project, onClose, setCurrentPage }) {
               Especificaciones Técnicas:
             </span>
             <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
-              {project.specs.map((s, i) => (
+              {project.specs?.map((s, i) => (
                 <li key={i} style={{ fontSize: '12.5px', color: '#334155', display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <span style={{ width: '5px', height: '5px', background: '#F97316', borderRadius: '50%' }} />
                   {s}
@@ -609,16 +569,28 @@ function ProjectModal({ project, onClose, setCurrentPage }) {
             </ul>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <button
               onClick={onClose}
               style={{
                 background: 'transparent', border: '1px solid #cbd5e1',
-                color: '#475569', padding: '10px 20px', borderRadius: '10px', fontSize: '13px', cursor: 'pointer'
+                color: '#475569', padding: '10px 18px', borderRadius: '10px', fontSize: '13px', cursor: 'pointer'
               }}
             >
               Cerrar
             </button>
+            {setCurrentPage && (
+              <button
+                onClick={handleOpenDetail}
+                style={{
+                  background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.3)',
+                  color: '#F97316', padding: '10px 18px', borderRadius: '10px', fontSize: '13px', fontWeight: 700, cursor: 'pointer',
+                  display: 'inline-flex', alignItems: 'center', gap: '6px'
+                }}
+              >
+                Ver Ficha Completa <ArrowRight size={14} />
+              </button>
+            )}
             {setCurrentPage && (
               <button
                 onClick={() => { onClose(); setCurrentPage('contacto') }}
@@ -627,7 +599,7 @@ function ProjectModal({ project, onClose, setCurrentPage }) {
                   padding: '10px 20px', borderRadius: '10px', fontSize: '13px', fontWeight: 700, cursor: 'pointer'
                 }}
               >
-                Solicitar Cotización Similar
+                Solicitar Cotización
               </button>
             )}
           </div>

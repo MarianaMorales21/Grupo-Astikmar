@@ -228,10 +228,17 @@ export default function InfoServicios({ service, setCurrentPage }) {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px', minHeight: '220px' }}
+            style={{ width: '100%', minHeight: '260px', maxHeight: '360px', borderRadius: '16px', overflow: 'hidden', position: 'relative', border: '1px solid rgba(29,41,57,0.12)', boxShadow: '0 8px 30px rgba(29,41,57,0.08)' }}
           >
-            <ImagePlaceholder label="Foto del servicio en ejecución" />
-            <ImagePlaceholder label="Boceto / plano de referencia" />
+            {service.image ? (
+              <img
+                src={service.image}
+                alt={service.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            ) : (
+              <ImagePlaceholder label="Foto del servicio en ejecución" />
+            )}
           </motion.div>
         </div>
 
