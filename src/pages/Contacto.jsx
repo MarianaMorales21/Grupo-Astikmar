@@ -197,16 +197,7 @@ export default function Contacto({ contactService, setContactService, setCurrent
       </motion.div>
 
       {/* Contenedor principal responsive */}
-      <div
-        className="container-astikmar"
-        style={{
-          paddingLeft: 'clamp(16px, 4vw, 48px)',
-          paddingRight: 'clamp(16px, 4vw, 48px)',
-          paddingTop: 'clamp(88px, 12vw, 112px)',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: 'clamp(124px, 14vw, 144px)', position: 'relative', zIndex: 1 }}>
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage?.('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>

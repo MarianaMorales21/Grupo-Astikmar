@@ -24,7 +24,7 @@ export default function HeroSection({ setCurrentPage }) {
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
-        paddingTop: '72px',
+        paddingTop: 0,
         /* Sin paddingBottom ni marginBottom para que la ola de Servicios se una sin costura */
         paddingBottom: 0,
         marginBottom: 0,
@@ -72,21 +72,21 @@ export default function HeroSection({ setCurrentPage }) {
       </div>
 
       {/* Marcas de esquina / Orillos técnicos */}
-      <div className="cad-corner-marker" style={{ position: 'absolute', top: '36px', left: '36px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 10 }}>
+      <div className="cad-corner-marker" style={{ position: 'absolute', top: '100px', left: '36px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 10 }}>
         + SEC-00 [HERO_INGENIERIA_NAVAL]
       </div>
-      <div className="cad-corner-marker" style={{ position: 'absolute', top: '36px', right: '36px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 10 }}>
+      <div className="cad-corner-marker" style={{ position: 'absolute', top: '100px', right: '36px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 10 }}>
         STAFF-CAD: 1440x900 +
       </div>
 
-      {/* ── CONTENEDOR CENTRADO CON MAX-WIDTH ── */}
+      {/* ── CONTENEDOR CENTRADO CON MAX-WIDTH (Espacio respetado para navbar flotante) ── */}
       <div style={{
         width: '100%',
         maxWidth: '1440px',
         margin: '0 auto',
         paddingLeft: 'clamp(16px, 5vw, 80px)',
         paddingRight: 'clamp(16px, 5vw, 80px)',
-        paddingTop: 'clamp(60px, 8vw, 96px)',
+        paddingTop: 'clamp(120px, 14vw, 144px)',
         paddingBottom: 'clamp(20px, 4vw, 40px)',
         position: 'relative',
         zIndex: 5,

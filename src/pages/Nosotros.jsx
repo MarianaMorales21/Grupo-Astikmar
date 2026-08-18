@@ -224,8 +224,8 @@ export default function Nosotros({ setCurrentPage }) {
         <ShipTanksBlueprint />
       </motion.div>
 
-      {/* paddingTop unificado con el resto de páginas */}
-      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
+      {/* paddingTop unificado con el resto de páginas (respeta espacio de navbar flotante) */}
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: 'clamp(124px, 14vw, 144px)', position: 'relative', zIndex: 1 }}>
 
         {/* ══════════ HERO: título + imagen grande ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '64px' }}>
