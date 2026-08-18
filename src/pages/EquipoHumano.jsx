@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ShieldCheck, Award, Wrench, CheckCircle2, UserCheck } from 'lucide-react'
+import { ShieldCheck, Award, Wrench, CheckCircle2, UserCheck, Users, Cpu } from 'lucide-react'
 
 // Import de los 5 planos/iconos técnicos de la carpeta src/components/Icons
 import FrontBlueprint from '../components/Icons/FrontBlueprint'
@@ -7,36 +7,6 @@ import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
 import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
-
-const teamMembers = [
-  {
-    id: 1,
-    name: 'Ing. Carlos Mendoza',
-    role: 'Director General & Ingeniero Naval Senior',
-    desc: 'Más de 20 años de trayectoria liderando proyectos de ingeniería naval, conversiones de cascos y certificación de dique seco en el Caribe. Especialista homologado por sociedades clasificadoras internacionales.',
-    image: '/team-1.png',
-    badge: 'Dirección Técnica',
-    skills: ['Cálculos de Estabilidad & CAD', 'Certificación Lloyd\'s / ABS', 'Supervisión en Dique Seco'],
-  },
-  {
-    id: 2,
-    name: 'Ing. Alejandro Torres',
-    role: 'Jefe de Operaciones & Propulsión',
-    desc: 'Especialista en overhaul a cero horas de motores diésel de alta potencia, turbocargadores y sistemas de transmisión marina. Coordinación integral de equipos multidisciplinarios a bordo.',
-    image: '/team-2.png',
-    badge: 'Operaciones Navales',
-    skills: ['Overhaul a Cero Horas', 'Sistemas Eléctricos Navales', 'Ensayos No Destructivos NDT'],
-  },
-  {
-    id: 3,
-    name: 'Ing. Alejandro Torres',
-    role: 'Jefe de Operaciones & Propulsión',
-    desc: 'Especialista en overhaul a cero horas de motores diésel de alta potencia, turbocargadores y sistemas de transmisión marina. Coordinación integral de equipos multidisciplinarios a bordo.',
-    image: '/team-2.png',
-    badge: 'Operaciones Navales',
-    skills: ['Overhaul a Cero Horas', 'Sistemas Eléctricos Navales', 'Ensayos No Destructivos NDT'],
-  },
-]
 
 export default function EquipoHumano({ isSection = false }) {
   return (
@@ -93,110 +63,66 @@ export default function EquipoHumano({ isSection = false }) {
         ⊕ STAFF_CAPACITY: 100% HOMOLOGADO
       </div>
 
-      {/* ════════════════════════════════════════════════════════════════════════
-         TODOS LOS PLANOS Y DIBUJOS DE LA CARPETA ICONS CON MAYOR OPACIDAD (MÁS OSCUROS)
-         ════════════════════════════════════════════════════════════════════════ */}
-
-      {/* 1. SideProfileBlueprint - Esquina superior derecha */}
+      {/* Planos decorativos */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: -20 }}
         whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.8, ease: 'out' }}
-        style={{
-          position: 'absolute',
-          top: '4%',
-          right: '-2%',
-          width: '310px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
+        style={{ position: 'absolute', top: '4%', right: '-2%', width: '310px', pointerEvents: 'none', zIndex: 0 }}
       >
         <SideProfileBlueprint />
       </motion.div>
 
-      {/* 2. FrontBlueprint - Esquina superior izquierda */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: -30 }}
         whileInView={{ opacity: 0.70, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
-        style={{
-          position: 'absolute',
-          top: '6%',
-          left: '-1%',
-          width: '270px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
+        style={{ position: 'absolute', top: '6%', left: '-1%', width: '270px', pointerEvents: 'none', zIndex: 0 }}
       >
         <FrontBlueprint />
       </motion.div>
 
-      {/* 3. ConceptBlueprint - Espacio medio izquierdo */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: -30 }}
         whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.9, ease: 'out', delay: 0.15 }}
-        style={{
-          position: 'absolute',
-          top: '42%',
-          left: '-2%',
-          width: '260px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
+        style={{ position: 'absolute', top: '42%', left: '-2%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
       >
         <ConceptBlueprint />
       </motion.div>
 
-      {/* 4. MarineEngineBlueprint - Espacio medio derecho */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: 30 }}
         whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.9, ease: 'out', delay: 0.2 }}
-        style={{
-          position: 'absolute',
-          top: '45%',
-          right: '-2%',
-          width: '330px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
+        style={{ position: 'absolute', top: '45%', right: '-2%', width: '330px', pointerEvents: 'none', zIndex: 0 }}
       >
         <MarineEngineBlueprint />
       </motion.div>
 
-      {/* 5. ShipTanksBlueprint - Esquina inferior izquierda */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: 30 }}
         whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
-        style={{
-          position: 'absolute',
-          bottom: '2%',
-          left: '2%',
-          width: '360px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
+        style={{ position: 'absolute', bottom: '2%', left: '2%', width: '360px', pointerEvents: 'none', zIndex: 0 }}
       >
         <ShipTanksBlueprint />
       </motion.div>
 
-
       {/* Contenido principal */}
       <div className="container-astikmar" style={{ maxWidth: '1140px', margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 1 }}>
-        {/* Encabezado centrado con animación de aparición progresiva */}
+        {/* Encabezado centrado */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '56px' }}
+          style={{ textAlign: 'center', marginBottom: '44px' }}
         >
           <span
             style={{
@@ -216,17 +142,17 @@ export default function EquipoHumano({ isSection = false }) {
             }}
           >
             <UserCheck size={14} />
-            Liderazgo Técnico Certificado
+            Liderazgo Técnico & Especialistas Navales
           </span>
 
           <h2
             style={{
-              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontSize: 'clamp(28px, 4vw, 42px)',
               fontWeight: 900,
               color: '#1D2939',
               letterSpacing: '-0.02em',
               lineHeight: 1.15,
-              marginBottom: '12px',
+              marginBottom: '14px',
             }}
           >
             Nuestro <span style={{ color: '#F97316' }}>Equipo Humano</span>
@@ -234,200 +160,189 @@ export default function EquipoHumano({ isSection = false }) {
 
           <p
             style={{
-              fontSize: '15px',
-              color: '#6b7280',
-              maxWidth: '580px',
-              margin: '0 auto',
-              lineHeight: 1.65,
+              fontSize: '18px',
+              fontWeight: 600,
+              color: '#334e68',
+              maxWidth: '750px',
+              margin: '0 auto 8px',
+              lineHeight: 1.4,
             }}
           >
-            Profesionales altamente calificados y certificados para afrontar los desafíos técnicos más exigentes en la industria marítima.
+            Los mejores especialistas multidisciplinarios, unidos por la excelencia y la pasión naval.
           </p>
         </motion.div>
 
-        {/* Las 3 columnas de Equipo en una misma fila — foto arriba (ancho completo), texto abajo */}
-        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '28px', alignItems: 'stretch' }}>
-          {teamMembers.map((member, index) => (
-            <motion.div
-              key={member.id}
-              initial={{ opacity: 0, y: 45, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{
-                type: 'spring',
-                stiffness: 180,
-                damping: 20,
-                delay: index * 0.18,
-              }}
-              whileHover={{ y: -4 }}
+        {/* Bloque de dos columnas: Texto + Espacio para Imagen */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', gap: '36px 48px', alignItems: 'center' }}>
+          {/* Columna Izquierda: Texto Atrapante y Áreas de Especialidad */}
+          <motion.div
+            initial={{ opacity: 0, x: -25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.65 }}
+          >
+            <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.75, marginBottom: '16px' }}>
+              En <strong style={{ color: '#101c2c' }}>Grupo Astikmar</strong> nos enorgullece contar con el capital humano más calificado, apasionado y experimentado del sector naval. Integramos a los mejores profesionales en cada una de las disciplinas clave de la industria marítima, combinando décadas de trayectoria en dique seco, ingeniería aplicada y operaciones portuarias.
+            </p>
+
+            <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, marginBottom: '28px' }}>
+              Desde cálculos estructurales de máxima precisión y conversiones de cascos, hasta el overhaul a cero horas de motores de alta potencia y maniobras críticas; nuestro equipo multidisciplinario trabaja en perfecta sincronía para garantizar que cada proyecto supere los más altos estándares internacionales de seguridad y eficiencia.
+            </p>
+
+            {/* 4 Especialidades Clave */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: '14px' }}>
+              <div style={{
+                background: 'rgba(29,41,57,0.02)',
+                border: '1px solid rgba(29,41,57,0.1)',
+                borderRadius: '12px',
+                padding: '16px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <Award size={16} color="#F97316" />
+                  <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Ingeniería & Diseño</h4>
+                </div>
+                <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                  Cálculos de estabilidad, arquitectura naval y certificación ante casas clasificadoras.
+                </p>
+              </div>
+
+              <div style={{
+                background: 'rgba(29,41,57,0.02)',
+                border: '1px solid rgba(29,41,57,0.1)',
+                borderRadius: '12px',
+                padding: '16px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <Wrench size={16} color="#F97316" />
+                  <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Mecánica & Propulsión</h4>
+                </div>
+                <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                  Overhaul de motores diésel marinos, turbocompresores y sistemas de transmisión.
+                </p>
+              </div>
+
+              <div style={{
+                background: 'rgba(29,41,57,0.02)',
+                border: '1px solid rgba(29,41,57,0.1)',
+                borderRadius: '12px',
+                padding: '16px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <ShieldCheck size={16} color="#F97316" />
+                  <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Soldadura Homologada</h4>
+                </div>
+                <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                  Especialistas certificados bajo normas AWS D1.1, Lloyd's Register y ABS.
+                </p>
+              </div>
+
+              <div style={{
+                background: 'rgba(29,41,57,0.02)',
+                border: '1px solid rgba(29,41,57,0.1)',
+                borderRadius: '12px',
+                padding: '16px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <Cpu size={16} color="#F97316" />
+                  <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Sistemas & Control</h4>
+                </div>
+                <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                  Ensayos no destructivos (NDT), electricidad de potencia, gobierno e hidráulica naval.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Columna Derecha: Espacio para Imagen Representativa del Equipo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            style={{
+              position: 'relative',
+              width: '100%',
+              minHeight: '380px',
+              borderRadius: '20px',
+              border: '1.5px dashed rgba(249, 115, 22, 0.4)',
+              background: 'linear-gradient(135deg, rgba(29, 41, 57, 0.04) 0%, rgba(249, 115, 22, 0.05) 100%)',
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Cuadrícula de plano sutil de fondo */}
+            <div
+              aria-hidden="true"
               style={{
-                display: 'flex',
-                flexDirection: 'column',    // 👈 foto arriba, texto abajo
-                flex: '1 1 320px',          // 👈 3 columnas por fila (ajusta según ancho del contenedor)
-                minWidth: '300px',
-                maxWidth: 'calc(33.333% - 19px)',  // 👈 fuerza máximo 3 por fila
-                background: 'transparent',
-                borderRadius: '20px',
-                border: '1px solid rgba(29, 41, 57, 0.16)',
-                boxShadow: 'none',
-                overflow: 'hidden',
-                transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
+                position: 'absolute',
+                inset: 0,
+                backgroundImage:
+                  'linear-gradient(rgba(29,41,57,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(29,41,57,0.06) 1px, transparent 1px)',
+                backgroundSize: '24px 24px',
+                pointerEvents: 'none',
               }}
-            >
-              {/* Foto arriba — ocupa todo el ancho de la carta */}
-              <div
-                style={{
-                  width: '100%',
-                  height: '260px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  background: '#0f172a',
-                }}
-              >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'center top',
-                    display: 'block',
-                    transition: 'transform 0.5s ease',
-                  }}
-                />
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(180deg, rgba(15,23,42,0) 55%, rgba(15,23,42,0.55) 100%)',
-                  }}
-                />
-                <span
-                  style={{
-                    position: 'absolute',
-                    bottom: '16px',
-                    left: '16px',
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    color: '#ffffff',
-                    background: 'rgba(15,23,42,0.75)',
-                    backdropFilter: 'blur(8px)',
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                  }}
-                >
-                  {member.experience}
-                </span>
-              </div>
+            />
 
-              {/* Título y descripción abajo */}
+            {/* Marcas técnicas CAD de esquina */}
+            <div style={{ position: 'absolute', top: '12px', left: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
+              + REF: ASTIKMAR_TEAM_2025
+            </div>
+            <div style={{ position: 'absolute', bottom: '12px', right: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(249,115,22,0.7)', fontFamily: 'monospace' }}>
+              [STAFF_MULTIDISCIPLINARIO] +
+            </div>
+
+            {/* Contenedor central representativo */}
+            <div style={{ position: 'relative', zIndex: 1, maxWidth: '340px' }}>
               <div
                 style={{
-                  flex: '1 1 auto',
-                  padding: '26px 26px 28px',
+                  width: '74px',
+                  height: '74px',
+                  borderRadius: '50%',
+                  background: 'rgba(249,115,22,0.12)',
+                  border: '2px solid rgba(249,115,22,0.35)',
                   display: 'flex',
-                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 16px',
+                  color: '#F97316',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                  <span
-                    style={{
-                      fontSize: '10px',
-                      fontWeight: 800,
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      color: '#F97316',
-                      background: 'rgba(249,115,22,0.1)',
-                      border: '1px solid rgba(249,115,22,0.25)',
-                      borderRadius: '12px',
-                      padding: '3px 10px',
-                    }}
-                  >
-                    {member.badge}
-                  </span>
-                </div>
-
-                <h3
-                  style={{
-                    fontSize: '24px',
-                    fontWeight: 800,
-                    color: '#1D2939',
-                    marginBottom: '4px',
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {member.name}
-                </h3>
-
-                <p
-                  style={{
-                    fontSize: '13.5px',
-                    fontWeight: 700,
-                    color: '#F97316',
-                    marginBottom: '16px',
-                  }}
-                >
-                  {member.role}
-                </p>
-
-                <p
-                  style={{
-                    fontSize: '14px',
-                    color: '#4b5563',
-                    lineHeight: 1.65,
-                    marginBottom: '20px',
-                  }}
-                >
-                  {member.desc}
-                </p>
-
-                {/* Habilidades / Funciones clave */}
-                <div
-                  style={{
-                    background: '#f8fafc',
-                    borderRadius: '12px',
-                    padding: '14px 18px',
-                    border: '1px solid #f1f5f9',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: '11px',
-                      fontWeight: 700,
-                      color: '#1D2939',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      display: 'block',
-                      marginBottom: '8px',
-                    }}
-                  >
-                    Especialidades Destacadas:
-                  </span>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-                    {member.skills.map((skill, idx) => (
-                      <span
-                        key={idx}
-                        style={{
-                          fontSize: '12px',
-                          color: '#334155',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          fontWeight: 500,
-                        }}
-                      >
-                        <CheckCircle2 size={13} color="#F97316" />
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <Users size={34} />
               </div>
-            </motion.div>
-          ))}
+
+              <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#101c2c', marginBottom: '8px' }}>
+                Espacio para Imagen Representativa
+              </h3>
+
+              <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.6, marginBottom: '14px' }}>
+                Fotografía grupal o panorámica de nuestro equipo técnico, ingenieros y especialistas en operaciones de campo y astillero.
+              </p>
+
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  color: '#F97316',
+                  background: '#ffffff',
+                  border: '1px solid rgba(249,115,22,0.3)',
+                  borderRadius: '16px',
+                  padding: '4px 12px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                }}
+              >
+                <CheckCircle2 size={12} color="#F97316" />
+                100% Personal Homologado
+              </span>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

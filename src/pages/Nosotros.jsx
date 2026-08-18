@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Shield, Users, Award, HeartHandshake, CheckCircle2, Cpu, Leaf, UserCheck } from 'lucide-react'
+import { Shield, Users, Award, HeartHandshake, CheckCircle2, Cpu, Leaf, UserCheck, Wrench, Anchor, Sparkles, ShieldCheck, Camera } from 'lucide-react'
 import FrontBlueprint from '../components/Icons/FrontBlueprint'
 import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
@@ -57,38 +57,6 @@ const compromisos = [
   },
 ]
 
-// Equipo humano — antes vivía en su propia página; como no hay ruta aparte,
-// se integra aquí como una lista simple (sin cartas/cajas).
-const teamMembers = [
-  {
-    id: 1,
-    name: 'Ing. Carlos Mendoza',
-    role: 'Director General & Ingeniero Naval Senior',
-    desc: 'Más de 20 años de trayectoria liderando proyectos de ingeniería naval, conversiones de cascos y certificación de dique seco en el Caribe. Especialista homologado por sociedades clasificadoras internacionales.',
-    image: '/team-1.png',
-    badge: 'Dirección Técnica',
-    skills: ['Cálculos de Estabilidad & CAD', "Certificación Lloyd's / ABS", 'Supervisión en Dique Seco'],
-  },
-  {
-    id: 2,
-    name: 'Ing. Alejandro Torres',
-    role: 'Jefe de Operaciones & Propulsión',
-    desc: 'Especialista en overhaul a cero horas de motores diésel de alta potencia, turbocargadores y sistemas de transmisión marina. Coordinación integral de equipos multidisciplinarios a bordo.',
-    image: '/team-2.png',
-    badge: 'Operaciones Navales',
-    skills: ['Overhaul a Cero Horas', 'Sistemas Eléctricos Navales', 'Ensayos No Destructivos NDT'],
-  },
-  {
-    id: 3,
-    name: 'Ing. Alejandro Torres',
-    role: 'Jefe de Operaciones & Propulsión',
-    desc: 'Especialista en overhaul a cero horas de motores diésel de alta potencia, turbocargadores y sistemas de transmisión marina. Coordinación integral de equipos multidisciplinarios a bordo.',
-    image: '/team-2.png',
-    badge: 'Operaciones Navales',
-    skills: ['Overhaul a Cero Horas', 'Sistemas Eléctricos Navales', 'Ensayos No Destructivos NDT'],
-  },
-]
-
 // Placeholder de imagen — con variante clara ("light") para usarse sobre el panel oscuro.
 function ImagePlaceholder({ radius = '10px', light = false, style = {} }) {
   return (
@@ -107,83 +75,6 @@ function ImagePlaceholder({ radius = '10px', light = false, style = {} }) {
         <line x1="100%" y1="0" x2="0" y2="100%" stroke={light ? 'rgba(255,255,255,0.18)' : 'rgba(29,41,57,0.15)'} strokeWidth="1" />
       </svg>
     </div>
-  )
-}
-
-// Título de sección estilo "plano" — con variante clara para fondo oscuro
-function SectionTitleLeft({ children, light = false }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '28px' }}>
-      <span style={{
-        fontSize: '13px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase',
-        color: light ? 'rgba(255,255,255,0.8)' : '#334e68', whiteSpace: 'nowrap',
-      }}>
-        {children}
-      </span>
-      <span style={{
-        flex: 1, height: '1px',
-        background: light
-          ? 'linear-gradient(90deg, rgba(255,255,255,0.3), transparent)'
-          : 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)',
-      }} />
-    </div>
-  )
-}
-
-// Fila de un miembro del equipo — responsivo y compacto lado a lado
-function TeamRow({ member, index }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '20px',
-        alignItems: 'flex-start',
-        padding: '20px',
-        background: 'transparent',
-        borderRadius: '16px',
-        border: '1px solid rgba(29, 41, 57, 0.16)',
-        boxShadow: 'none',
-      }}
-    >
-      <div style={{ width: '130px', height: '150px', borderRadius: '10px', overflow: 'hidden', background: '#0f172a', flexShrink: 0 }}>
-        <img
-          src={member.image}
-          alt={member.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
-        />
-      </div>
-
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <h3 style={{ fontSize: '19px', fontWeight: 800, color: '#1D2939', marginBottom: '2px', lineHeight: 1.2 }}>
-          {member.name}
-        </h3>
-
-        <p style={{ fontSize: '13px', fontWeight: 700, color: '#F97316', marginBottom: '8px' }}>
-          {member.role}
-        </p>
-
-        <p style={{ fontSize: '13px', color: '#4b5563', lineHeight: 1.5, marginBottom: '12px' }}>
-          {member.desc}
-        </p>
-
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 14px' }}>
-          {member.skills.map((skill, idx) => (
-            <span key={idx} style={{
-              fontSize: '11.5px', color: '#334155', display: 'inline-flex',
-              alignItems: 'center', gap: '5px', fontWeight: 600,
-            }}>
-              <CheckCircle2 size={12} color="#F97316" />
-              {skill}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
   )
 }
 
@@ -591,7 +482,7 @@ export default function Nosotros({ setCurrentPage }) {
       </section>
 
       {/* ══════════ EQUIPO HUMANO ══════════ */}
-      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1, marginTop: '20px' }}>
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', position: 'relative', zIndex: 1, marginTop: '30px' }}>
         <div style={{ position: 'relative', marginBottom: '40px' }}>
           {/* Concept sketch decorativo */}
           <motion.div
@@ -605,12 +496,13 @@ export default function Nosotros({ setCurrentPage }) {
           </motion.div>
 
           <div style={{ position: 'relative', zIndex: 1 }}>
+            {/* Encabezado */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              style={{ marginBottom: '30px' }}
+              style={{ marginBottom: '36px' }}
             >
 
               <h2
@@ -620,23 +512,148 @@ export default function Nosotros({ setCurrentPage }) {
                   color: '#101c2c',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.1,
-                  marginBottom: '15px',
+                  marginBottom: '14px',
                   fontFamily: 'var(--font-heading)',
                 }}
               >
                 Nuestro{' '}
-                <span style={{ color: '#F97316', fontStyle: 'italic' }}>Equipo Humano</span>{' '}
+                <span style={{ color: '#F97316', fontStyle: 'italic' }}>Equipo Humano</span>
               </h2>
 
-              <p style={{ fontSize: '14px', color: '#6b7280', maxWidth: '580px', lineHeight: 1.65 }}>
-                Profesionales altamente calificados y certificados para afrontar los desafíos técnicos más exigentes en la industria marítima.
+              <p style={{ fontSize: '18px', fontWeight: 600, color: '#334e68', maxWidth: '750px', lineHeight: 1.4, marginBottom: '8px' }}>
+                Los mejores especialistas multidisciplinarios, unidos por la excelencia y la pasión naval.
               </p>
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 450px), 1fr))', gap: '20px' }}>
-              {teamMembers.map((member, index) => (
-                <TeamRow key={member.id} member={member} index={index} />
-              ))}
+            {/* Cuadrícula principal: Texto descriptivo + Cuadrícula de especialidades & Espacio para imagen representativa */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', gap: '36px 48px', alignItems: 'center' }}>
+              
+              {/* Columna Izquierda: Texto Atrapante y Áreas de Especialidad */}
+              <motion.div
+                initial={{ opacity: 0, x: -25 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.65 }}
+              >
+                <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.75, marginBottom: '16px' }}>
+                  En <strong style={{ color: '#101c2c' }}>Grupo Astikmar</strong> nos enorgullece contar con el capital humano más calificado, apasionado y experimentado del sector naval. Integramos a los mejores profesionales en cada una de las disciplinas clave de la industria marítima, combinando décadas de trayectoria en dique seco, ingeniería aplicada y operaciones portuarias.
+                </p>
+
+                <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, marginBottom: '28px' }}>
+                  Desde cálculos estructurales de máxima precisión y conversiones de cascos, hasta el overhaul a cero horas de motores de alta potencia y maniobras críticas; nuestro equipo multidisciplinario trabaja en perfecta sincronía para garantizar que cada proyecto supere los más altos estándares internacionales de seguridad y eficiencia.
+                </p>
+
+                {/* 4 Especialidades Clave */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: '14px' }}>
+                  <div style={{
+                    background: 'rgba(29,41,57,0.02)',
+                    border: '1px solid rgba(29,41,57,0.1)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    transition: 'all 0.3s ease',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <Award size={16} color="#F97316" />
+                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Ingeniería y Diseño</h4>
+                    </div>
+                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                      Cálculos de estabilidad, arquitectura naval y certificación ante casas clasificadoras.
+                    </p>
+                  </div>
+
+                  <div style={{
+                    background: 'rgba(29,41,57,0.02)',
+                    border: '1px solid rgba(29,41,57,0.1)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    transition: 'all 0.3s ease',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <Wrench size={16} color="#F97316" />
+                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Mecánica y Propulsión</h4>
+                    </div>
+                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                      Overhaul de motores diésel marinos, turbocompresores y sistemas de transmisión.
+                    </p>
+                  </div>
+
+                  <div style={{
+                    background: 'rgba(29,41,57,0.02)',
+                    border: '1px solid rgba(29,41,57,0.1)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    transition: 'all 0.3s ease',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <ShieldCheck size={16} color="#F97316" />
+                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Soldadura Homologada</h4>
+                    </div>
+                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                      Especialistas certificados bajo normas AWS D1.1, Lloyd's Register y ABS.
+                    </p>
+                  </div>
+
+                  <div style={{
+                    background: 'rgba(29,41,57,0.02)',
+                    border: '1px solid rgba(29,41,57,0.1)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    transition: 'all 0.3s ease',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <Cpu size={16} color="#F97316" />
+                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Sistemas y Control</h4>
+                    </div>
+                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                      Ensayos no destructivos (NDT), electricidad de potencia, gobierno e hidráulica naval.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Columna Derecha: Espacio para Imagen Representativa del Equipo */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  minHeight: '380px',
+                  borderRadius: '20px',
+                  border: '1.5px dashed rgba(126, 111, 111, 0.4)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Cuadrícula de plano sutil de fondo */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage:
+                      'linear-gradient(rgba(29,41,57,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(29,41,57,0.06) 1px, transparent 1px)',
+                    backgroundSize: '24px 24px',
+                    pointerEvents: 'none',
+                  }}
+                />
+
+                {/* Marcas técnicas CAD de esquina */}
+                <div style={{ position: 'absolute', top: '12px', left: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
+                  + REF: ASTIKMAR_TEAM_2025
+                </div>
+                <div style={{ position: 'absolute', bottom: '12px', right: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(249,115,22,0.7)', fontFamily: 'monospace' }}>
+                  [STAFF_MULTIDISCIPLINARIO] +
+                </div>
+
+              </motion.div>
+
             </div>
           </div>
         </div>
