@@ -120,24 +120,30 @@ export default function Contacto({ contactService, setContactService, setCurrent
       </div>
 
       {/* ── LEFT VERTICAL RULER ── */}
-      <div style={{
-        position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
-        background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-        zIndex: 10, padding: '10px 0',
-      }}>
+      <div
+        className="blueprint-ruler-vertical"
+        style={{
+          position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
+          background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 10, padding: '10px 0',
+        }}
+      >
         {["50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
       </div>
 
       {/* ── RIGHT VERTICAL RULER ── */}
-      <div style={{
-        position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
-        background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-        zIndex: 10, padding: '10px 0',
-      }}>
+      <div
+        className="blueprint-ruler-vertical"
+        style={{
+          position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
+          background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 10, padding: '10px 0',
+        }}
+      >
         {["50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
@@ -146,53 +152,61 @@ export default function Contacto({ contactService, setContactService, setCurrent
       {/* Bocetos de plano decorativos de fondo */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: -20 }}
-        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
+        whileInView={{ opacity: 0.4, scale: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.8, ease: 'out' }}
-        style={{ position: 'absolute', top: '3%', right: '1%', width: '310px', pointerEvents: 'none', zIndex: 0 }}
+        style={{ position: 'absolute', top: '3%', right: '1%', width: 'min(310px, 40vw)', pointerEvents: 'none', zIndex: 0 }}
       >
         <SideProfileBlueprint />
       </motion.div>
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
+        whileInView={{ opacity: 0.4, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
-        style={{ position: 'absolute', top: '5%', left: '1%', width: '270px', pointerEvents: 'none', zIndex: 0 }}
+        style={{ position: 'absolute', top: '5%', left: '1%', width: 'min(270px, 35vw)', pointerEvents: 'none', zIndex: 0 }}
       >
         <FrontBlueprint />
       </motion.div>
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.6, scale: 1, x: 0 }}
+        whileInView={{ opacity: 0.35, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.85, delay: 0.1 }}
-        style={{ position: 'absolute', top: '45%', left: '-2%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
+        style={{ position: 'absolute', top: '45%', left: '-2%', width: 'min(260px, 35vw)', pointerEvents: 'none', zIndex: 0 }}
       >
         <ConceptBlueprint />
       </motion.div>
       <motion.div
         initial={{ opacity: 0, scale: 0.85, x: 30 }}
-        whileInView={{ opacity: 0.6, scale: 1, x: 0 }}
+        whileInView={{ opacity: 0.35, scale: 1, x: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.9, delay: 0.15 }}
-        style={{ position: 'absolute', bottom: '4%', right: '-2%', width: '300px', pointerEvents: 'none', zIndex: 0 }}
+        style={{ position: 'absolute', bottom: '4%', right: '-2%', width: 'min(300px, 38vw)', pointerEvents: 'none', zIndex: 0 }}
       >
         <MarineEngineBlueprint />
       </motion.div>
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: 30 }}
-        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
+        whileInView={{ opacity: 0.4, scale: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
-        style={{ position: 'absolute', bottom: '2%', left: '1%', width: '340px', pointerEvents: 'none', zIndex: 0 }}
+        style={{ position: 'absolute', bottom: '2%', left: '1%', width: 'min(340px, 40vw)', pointerEvents: 'none', zIndex: 0 }}
       >
         <ShipTanksBlueprint />
       </motion.div>
 
-      {/* paddingTop unificado para alineación visual exacta */}
-      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '108px', position: 'relative', zIndex: 1 }}>
-
+      {/* Contenedor principal responsive */}
+      <div
+        className="container-astikmar"
+        style={{
+          paddingLeft: 'clamp(16px, 4vw, 48px)',
+          paddingRight: 'clamp(16px, 4vw, 48px)',
+          paddingTop: 'clamp(88px, 12vw, 112px)',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage?.('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
@@ -200,31 +214,32 @@ export default function Contacto({ contactService, setContactService, setCurrent
           <span style={{ color: '#F97316', fontWeight: 600 }}>Solicitar servicio</span>
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(420px, 1.2fr) 1fr', gap: '48px', alignItems: 'start' }}>
+        {/* Layout principal responsive: 2 columnas en desktop, 1 columna fluida en móvil */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 'clamp(28px, 4vw, 48px)', alignItems: 'start' }}>
 
-          {/* ══════════ COLUMNA IZQUIERDA ══════════ */}
+          {/* ══════════ COLUMNA IZQUIERDA: INFORMACIÓN Y BENEFICIOS ══════════ */}
           <div>
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-              <h1 style={{ fontSize: 'clamp(28px, 4vw, 38px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.1, letterSpacing: '-0.01em', fontFamily: 'var(--font-heading)' }}>
+            <motion.div initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
+              <h1 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.15, letterSpacing: '-0.01em', fontFamily: 'var(--font-heading)' }}>
                 Solicita nuestro <span style={{ color: '#F97316', fontStyle: 'italic' }}>servicio</span>
               </h1>
-              <p style={{ fontSize: '19px', fontWeight: 600, color: '#334e68', marginTop: '6px' }}>
+              <p style={{ fontSize: 'clamp(16px, 2.5vw, 19px)', fontWeight: 600, color: '#334e68', marginTop: '6px' }}>
                 Estamos listos para <span style={{ color: '#F97316', fontStyle: 'italic' }}>ayudarte</span>
               </p>
-              <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '14px', maxWidth: '460px' }}>
-                Cuéntanos sobre tu proyecto o requerimiento y nuestro equipo se pondrá en contacto contigo para ofrecerte la mejor solución marítima integral.
+              <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.7, marginTop: '12px', maxWidth: '480px' }}>
+                Cuéntanos sobre tu proyecto o requerimiento y nuestro equipo de ingenieros se pondrá en contacto contigo para ofrecerte la mejor solución marítima integral.
               </p>
             </motion.div>
 
-            <div style={{ height: '1px', background: 'rgba(29,41,57,0.1)', margin: '28px 0 36px' }} />
+            <div style={{ height: '1px', background: 'rgba(29,41,57,0.1)', margin: '22px 0 28px' }} />
 
             {/* Información de contacto + ¿Por qué elegirnos? */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '36px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: '28px' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                   <h6
                     style={{
-                      fontSize: 'clamp(12px, 1.5vw, 15px)',
+                      fontSize: 'clamp(12px, 1.5vw, 14px)',
                       fontWeight: 900,
                       color: '#000000',
                       letterSpacing: '0.08em',
@@ -232,43 +247,39 @@ export default function Contacto({ contactService, setContactService, setCurrent
                       fontFamily: 'var(--font-heading)',
                       textTransform: 'uppercase',
                       WebkitFontSmoothing: 'antialiased',
-                      WebkitTextStroke: '0.3px #000000',
                     }}
                   >
                     Información{' '}
-                    <span style={{ color: '#F97316', fontStyle: 'italic', WebkitTextStroke: '0.3px #F97316' }}>
+                    <span style={{ color: '#F97316', fontStyle: 'italic' }}>
                       de Contacto
                     </span>
                   </h6>
                   <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {contactInfo.map((item, i) => (
-                    <motion.div
+                    <div
                       key={item.label}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: i * 0.06 }}
                       style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}
                     >
                       <div style={{
-                        width: '38px', height: '38px', borderRadius: '50%', flexShrink: 0,
+                        width: '36px', height: '36px', borderRadius: '50%', flexShrink: 0,
                         border: '1.5px solid rgba(29,41,57,0.12)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
-                        <item.icon size={16} className="text-orange-500" />
+                        <item.icon size={15} className="text-orange-500" />
                       </div>
                       <div>
-                        <span style={{ fontSize: '10.5px', fontWeight: 700, color: '#9ca3af', letterSpacing: '0.06em', display: 'block' }}>
+                        <span style={{ fontSize: '10px', fontWeight: 700, color: '#9ca3af', letterSpacing: '0.06em', display: 'block' }}>
                           {item.label}
                         </span>
                         {item.lines.map((line, li) => (
-                          <span key={li} style={{ fontSize: '13.5px', fontWeight: 700, color: '#1D2939', display: 'block', lineHeight: 1.4 }}>
+                          <span key={li} style={{ fontSize: '13px', fontWeight: 700, color: '#1D2939', display: 'block', lineHeight: 1.35 }}>
                             {line}
                           </span>
                         ))}
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -277,7 +288,7 @@ export default function Contacto({ contactService, setContactService, setCurrent
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                   <h6
                     style={{
-                      fontSize: 'clamp(12px, 1.5vw, 15px)',
+                      fontSize: 'clamp(12px, 1.5vw, 14px)',
                       fontWeight: 900,
                       color: '#000000',
                       letterSpacing: '0.08em',
@@ -285,82 +296,82 @@ export default function Contacto({ contactService, setContactService, setCurrent
                       fontFamily: 'var(--font-heading)',
                       textTransform: 'uppercase',
                       WebkitFontSmoothing: 'antialiased',
-                      WebkitTextStroke: '0.3px #000000',
                     }}
                   >
                     ¿Por Qué{' '}
-                    <span style={{ color: '#F97316', fontStyle: 'italic', WebkitTextStroke: '0.3px #F97316' }}>
+                    <span style={{ color: '#F97316', fontStyle: 'italic' }}>
                       Elegirnos?
                     </span>
                   </h6>
                   <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {whyUs.map((item, i) => (
-                    <motion.div
+                    <div
                       key={item.title}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: i * 0.06 }}
                       style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}
                     >
                       <div style={{
-                        width: '38px', height: '38px', borderRadius: '10px', flexShrink: 0,
+                        width: '36px', height: '36px', borderRadius: '10px', flexShrink: 0,
                         background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.18)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
-                        <item.icon size={16} className="text-orange-500" />
+                        <item.icon size={15} className="text-orange-500" />
                       </div>
                       <div>
-                        <h5 style={{ fontSize: '13.5px', fontWeight: 700, color: '#1D2939', marginBottom: '3px' }}>{item.title}</h5>
-                        <p style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.55 }}>{item.desc}</p>
+                        <h5 style={{ fontSize: '13px', fontWeight: 700, color: '#1D2939', marginBottom: '2px' }}>{item.title}</h5>
+                        <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5 }}>{item.desc}</p>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Aviso de emergencia — mismo lenguaje visual plano, con acento naranja */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            {/* Aviso de emergencia */}
+            <div
               style={{
                 display: 'flex', gap: '14px', alignItems: 'flex-start',
                 border: '1px solid rgba(249,115,22,0.25)', borderRadius: '12px',
-                background: 'rgba(249,115,22,0.05)', padding: '18px 20px', marginTop: '40px',
+                background: 'rgba(249,115,22,0.05)', padding: '16px 18px', marginTop: '28px',
               }}
             >
               <div style={{
-                width: '38px', height: '38px', borderRadius: '10px', flexShrink: 0,
+                width: '36px', height: '36px', borderRadius: '10px', flexShrink: 0,
                 background: '#F97316', display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <MessageSquare size={17} color="white" />
+                <MessageSquare size={16} color="white" />
               </div>
               <div>
-                <h4 style={{ fontSize: '13.5px', fontWeight: 800, color: '#1D2939' }}>¿Emergencia en alta mar?</h4>
-                <p style={{ fontSize: '12.5px', color: '#4b5563', lineHeight: 1.6, marginTop: '4px' }}>
+                <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#1D2939' }}>¿Emergencia en alta mar?</h4>
+                <p style={{ fontSize: '12px', color: '#4b5563', lineHeight: 1.55, marginTop: '3px' }}>
                   Nuestro equipo de respuesta rápida y salvamento está operativo las 24 horas del día. Llame directamente a soporte.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
 
-          {/* ══════════ COLUMNA DERECHA: FORMULARIO (mismo estilo plano del resto del sitio) ══════════ */}
+          {/* ══════════ COLUMNA DERECHA: FORMULARIO RESPONSIVE ══════════ */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            style={{ border: '1px solid rgba(29,41,57,0.08)', borderRadius: '16px', background: 'white', padding: '32px' }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            style={{
+              border: '1px solid rgba(29,41,57,0.1)',
+              borderRadius: '16px',
+              background: 'white',
+              padding: 'clamp(20px, 4vw, 32px)',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.05)',
+              width: '100%',
+            }}
           >
             <SectionTitleLeft>Envíanos tu Solicitud</SectionTitleLeft>
-            <p style={{ fontSize: '13px', color: '#6b7280', marginTop: '-8px', marginBottom: '24px' }}>
+            <p style={{ fontSize: '13px', color: '#6b7280', marginTop: '-10px', marginBottom: '20px' }}>
               Completa el formulario y nos pondremos en contacto contigo a la brevedad.
             </p>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 190px), 1fr))', gap: '14px' }}>
                 <Field label="Nombre Completo" required icon={User}>
                   <input className="calc-input" placeholder="Escribe tu nombre completo" value={nombre} onChange={e => setNombre(e.target.value)} required />
                 </Field>
@@ -369,7 +380,7 @@ export default function Contacto({ contactService, setContactService, setCurrent
                 </Field>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 190px), 1fr))', gap: '14px' }}>
                 <Field label="Correo Electrónico" required icon={Mail}>
                   <input className="calc-input" type="email" placeholder="ejemplo@empresa.com" value={correo} onChange={e => setCorreo(e.target.value)} required />
                 </Field>
@@ -388,7 +399,7 @@ export default function Contacto({ contactService, setContactService, setCurrent
               <Field label="Descripción del Servicio o Proyecto" required>
                 <textarea
                   className="calc-input"
-                  style={{ minHeight: '110px', resize: 'vertical' }}
+                  style={{ minHeight: '100px', resize: 'vertical' }}
                   placeholder="Cuéntanos sobre tu proyecto, requerimientos, alcance, fecha estimada, etc."
                   value={mensaje}
                   onChange={e => setMensaje(e.target.value)}
@@ -396,22 +407,22 @@ export default function Contacto({ contactService, setContactService, setCurrent
                 />
               </Field>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 190px), 1fr))', gap: '14px' }}>
                 <Field label="Adjuntar Archivos (opcional)">
                   <label
                     htmlFor="contacto-archivo"
                     style={{
                       border: '1.5px dashed rgba(29,41,57,0.22)', borderRadius: '10px',
-                      padding: '14px 12px', textAlign: 'center', cursor: 'pointer',
+                      padding: '12px 10px', textAlign: 'center', cursor: 'pointer',
                       background: 'rgba(29,41,57,0.015)', display: 'flex', flexDirection: 'column',
-                      alignItems: 'center', gap: '4px', minHeight: '78px', justifyContent: 'center',
+                      alignItems: 'center', gap: '4px', minHeight: '74px', justifyContent: 'center',
                     }}
                   >
-                    <Upload size={16} className="text-orange-500" />
-                    <span style={{ fontSize: '11.5px', fontWeight: 600, color: '#334e68' }}>
+                    <Upload size={15} className="text-orange-500" />
+                    <span style={{ fontSize: '11px', fontWeight: 600, color: '#334e68' }}>
                       {archivo ? archivo.name : 'Arrastra tus archivos o selecciona'}
                     </span>
-                    <span style={{ fontSize: '10px', color: '#9ca3af' }}>PDF, DOC, JPG, PNG (Máx. 10MB)</span>
+                    <span style={{ fontSize: '9.5px', color: '#9ca3af' }}>PDF, DOC, JPG, PNG (Máx. 10MB)</span>
                     <input id="contacto-archivo" type="file" style={{ display: 'none' }} onChange={e => setArchivo(e.target.files?.[0] || null)} />
                   </label>
                 </Field>
@@ -421,19 +432,19 @@ export default function Contacto({ contactService, setContactService, setCurrent
                 </Field>
               </div>
 
-              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12.5px', color: '#4b5563', cursor: 'pointer' }}>
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12px', color: '#4b5563', cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={aceptaPolitica}
                   onChange={e => setAceptaPolitica(e.target.checked)}
-                  style={{ marginTop: '3px' }}
+                  style={{ marginTop: '2px' }}
                 />
-                Acepto la Política de Privacidad y los Términos y Condiciones.
+                <span>Acepto la Política de Privacidad y los Términos y Condiciones.</span>
               </label>
 
               {status && (
                 <div style={{
-                  padding: '14px 16px', borderRadius: '10px', fontSize: '13px', fontWeight: 600,
+                  padding: '12px 14px', borderRadius: '10px', fontSize: '12.5px', fontWeight: 600,
                   border: '1px solid',
                   ...(status.type === 'success'
                     ? { background: 'rgba(16,185,129,0.08)', color: '#047857', borderColor: 'rgba(16,185,129,0.25)' }
@@ -445,12 +456,12 @@ export default function Contacto({ contactService, setContactService, setCurrent
                 </div>
               )}
 
-              <button type="submit" className="btn-calc" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                <Send size={16} />
+              <button type="submit" className="btn-calc" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '8px' }}>
+                <Send size={15} />
                 Enviar solicitud
               </button>
 
-              <p style={{ fontSize: '11.5px', color: '#9ca3af' }}>* Campos obligatorios</p>
+              <p style={{ fontSize: '11px', color: '#9ca3af', margin: 0 }}>* Campos obligatorios</p>
             </form>
           </motion.div>
         </div>

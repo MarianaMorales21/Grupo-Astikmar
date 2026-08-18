@@ -137,39 +137,45 @@ export default function FlotaEquipos({ setCurrentPage }) {
       </div>
 
       {/* ── LEFT VERTICAL RULER ── */}
-      <div style={{
-        position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
-        background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-        zIndex: 10, padding: '10px 0',
-      }}>
+      <div
+        className="blueprint-ruler-vertical"
+        style={{
+          position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
+          background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 10, padding: '10px 0',
+        }}
+      >
         {["50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
       </div>
 
       {/* ── RIGHT VERTICAL RULER ── */}
-      <div style={{
-        position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
-        background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-        zIndex: 10, padding: '10px 0',
-      }}>
+      <div
+        className="blueprint-ruler-vertical"
+        style={{
+          position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
+          background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 10, padding: '10px 0',
+        }}
+      >
         {["50'", "40'", "30'", "20'", "10'", "0'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
       </div>
 
       {/* Marcas de esquina / Orillos técnicos */}
-      <div style={{ position: 'absolute', top: '10px', left: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
+      <div className="cad-corner-marker" style={{ position: 'absolute', top: '10px', left: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
         + SEC-04 [CAPACIDAD_TECNICA]
       </div>
-      <div style={{ position: 'absolute', top: '10px', right: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
+      <div className="cad-corner-marker" style={{ position: 'absolute', top: '10px', right: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
         STAFF-CAD: 1440x600 +
       </div>
 
       {/* Inscripción sutil dispersa */}
-      <div style={{ position: 'absolute', top: '22%', right: '4%', fontSize: '11px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(29,41,57,0.55)', pointerEvents: 'none' }}>
+      <div className="cad-coord-annotation" style={{ position: 'absolute', top: '22%', right: '4%', fontSize: '11px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(29,41,57,0.55)', pointerEvents: 'none' }}>
         ⊕ EQUIP_REF: ISO_9001 / DNV-GL
       </div>
 

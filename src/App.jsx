@@ -95,7 +95,7 @@ export default function App() {
 
   // Resetea el scroll arriba al instante al cambiar de página para evitar que parezca pegado
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [currentPage])
 
   const renderPage = () => {
@@ -122,7 +122,7 @@ export default function App() {
   }
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh' }}>
+    <div style={{ position: 'relative', minHeight: '100vh', overflowX: 'hidden' }}>
       {/* Cursor interactivo CAD con coordenadas X/Y en tiempo real */}
       <CadCursor />
       {/* Iconos flotantes blueprint — capa de fondo global, position:fixed */}
@@ -131,13 +131,13 @@ export default function App() {
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
         <main style={{ minHeight: 'calc(100vh - 72px - 280px)' }}>
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={currentPage}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
             >
               {renderPage()}
             </motion.div>

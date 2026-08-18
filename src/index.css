@@ -1357,41 +1357,71 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
   }
 
+  /* Ocultar reglas verticales e inscripciones CAD que obstruyen el espacio en móvil */
+  .blueprint-ruler-vertical,
+  .cad-corner-marker,
+  .cad-coord-annotation {
+    display: none !important;
+  }
+
   .metric-item {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .floating-icon-item {
-    opacity: 0.45 !important;
+    opacity: 0.25 !important;
+    animation: none !important; /* Desactivar animación pesada continua en móvil para 60 FPS */
   }
 
   /* Reducir tamaño de iconos flotantes en tablet */
   .floating-icon-item > div {
-    transform: scale(0.75);
+    transform: scale(0.65);
     transform-origin: center center;
+  }
+
+  /* Reducir espaciados exagerados en mobile para que no se vea gigante */
+  .calc-card {
+    padding: 22px 18px !important;
   }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
   .section-badge {
-    font-size: 9.5px;
-    letter-spacing: 0.16em;
-    padding: 5px 12px 5px 10px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    padding: 4px 10px 4px 8px;
+    margin-bottom: 10px;
+  }
+
+  .floating-icons-overlay {
+    opacity: 0.35;
   }
 
   .floating-icon-item {
-    opacity: 0.40 !important;
+    opacity: 0.20 !important;
+    animation: none !important;
   }
 
-  /* Iconos adaptados en mobile para complementar el diseño sin obstruir */
   .floating-icon-item > div {
-    transform: scale(0.60);
+    transform: scale(0.50);
     transform-origin: center center;
   }
 
   .container-astikmar {
-    padding: 0 16px;
+    padding: 0 16px !important;
+  }
+
+  /* Inputs y selects adaptados para móvil sin desbordes */
+  .calc-input,
+  .calc-select {
+    padding: 10px 14px;
+    font-size: 13.5px;
+  }
+
+  .btn-calc {
+    padding: 12px 16px;
+    font-size: 14px;
   }
 }

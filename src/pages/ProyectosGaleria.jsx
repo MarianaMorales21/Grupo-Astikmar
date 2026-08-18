@@ -96,24 +96,30 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
       </div>
 
       {/* ── LEFT VERTICAL RULER ── */}
-      <div style={{
-        position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
-        background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-        zIndex: 10, padding: '10px 0',
-      }}>
+      <div
+        className="blueprint-ruler-vertical"
+        style={{
+          position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
+          background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 10, padding: '10px 0',
+        }}
+      >
         {["40'", "8", "-20'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
       </div>
 
       {/* ── RIGHT VERTICAL RULER ── */}
-      <div style={{
-        position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
-        background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-        zIndex: 10, padding: '10px 0',
-      }}>
+      <div
+        className="blueprint-ruler-vertical"
+        style={{
+          position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
+          background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+          zIndex: 10, padding: '10px 0',
+        }}
+      >
         {["40'", "-20'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
