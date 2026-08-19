@@ -1,188 +1,83 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  ArrowRight, MapPin, Calendar, ClipboardList, Ship, Settings,
-  TrendingUp, Layers, Anchor, Droplet, Video, Users, Award, Briefcase,
-} from 'lucide-react'
-import SideProfileBlueprint from '../components/Icons/SideprofileBlueprint'
-import FrontBlueprint from '../components/Icons/FrontBlueprint'
-import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
-import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
-import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
-import MarinePropellerBlueprint from '../components/Icons/MarinePropellerBlueprint'
-import MarineRudderBlueprint from '../components/Icons/MarineRudderBlueprint'
-import MarineLiftingHookBlueprint from '../components/Icons/MarineLiftingHookBlueprint'
-import SectionBadge from '../components/SectionBadge'
+import { X, ChevronLeft, ChevronRight, Ship, Users, Award, Anchor } from 'lucide-react'
 
-// Mapa de iconos: cada campo de proyecto guarda el nombre del icono (string),
-// aquí se resuelve al componente real — así cada proyecto puede traer sus propios campos.
-const fieldIconMap = {
-  ClipboardList: <ClipboardList size={16} className="text-orange-500" />,
-  Ship: <Ship size={16} className="text-orange-500" />,
-  MapPin: <MapPin size={16} className="text-orange-500" />,
-  Calendar: <Calendar size={16} className="text-orange-500" />,
-  Settings: <Settings size={16} className="text-orange-500" />,
-  TrendingUp: <TrendingUp size={16} className="text-orange-500" />,
-  Layers: <Layers size={16} className="text-orange-500" />,
-  Anchor: <Anchor size={16} className="text-orange-500" />,
-  Droplet: <Droplet size={16} className="text-orange-500" />,
-}
-
-import { allProjects } from '../data/projectsData'
-
-export { allProjects }
-
-const tabs = [
-  'Todos los proyectos',
-  'Diseño y Construcción Naval',
-  'Mantenimiento de Motores',
-  'Reparaciones Estructurales',
-  'Cubierta y Grúas',
-  'Tanques y Sistemas',
-]
-
-const quickLinks = [
-  { label: 'Vista 360°', icon: <Video size={18} className="text-orange-500" />, category: 'Todos los proyectos' },
-  { label: 'Motores', icon: <Settings size={18} className="text-orange-500" />, category: 'Mantenimiento de Motores' },
-  { label: 'Tanques', icon: <Droplet size={18} className="text-orange-500" />, category: 'Tanques y Sistemas' },
-  { label: 'Cubierta y Grúas', icon: <Anchor size={18} className="text-orange-500" />, category: 'Cubierta y Grúas' },
+const galleryImages = [
+  { src: '/petrolero.jpg', alt: 'Buque de carga en construcción naval', category: 'Construcción Naval' },
+  { src: '/WhatsApp Image 2026-07-22 at 12.28.31 PM (3).jpeg', alt: 'Overhaul de motor marino principal', category: 'Mantenimiento' },
+  { src: '/obra muerta.jpg', alt: 'Reparación estructural de casco', category: 'Reparaciones' },
+  { src: '/2a8893e76c6c41dd2a89da66fcf07ea1.jpg', alt: 'Instalación de grúa de cubierta', category: 'Cubierta y Grúas' },
+  { src: '/eliminacion de gases.jpeg', alt: 'Rehabilitación de tanques de lastre', category: 'Tanques y Sistemas' },
+  { src: '/tug.jpg', alt: 'Remolcador portuario', category: 'Construcción Naval' },
+  { src: '/compact-Oil-Tanker-with-a-high-load-capacity.jpg', alt: 'Diseño de petrolero compacto', category: 'Diseño Naval' },
+  { src: '/images.jpg', alt: 'Operaciones marítimas', category: 'Servicios Integrales' },
+  { src: '/remolcadores.jpg', alt: 'Flota de remolcadores', category: 'Construcción Naval' },
+  { src: '/small-tanker-port-bergen-norway-61367570.webp', alt: 'Tanquero en puerto', category: 'Transporte Marítimo' },
+  { src: '/push-or-pull-to-move-ships-1743598323.jpg', alt: 'Asistencia portuaria', category: 'Servicios Integrales' },
+  { src: '/salvamento 1.jpg', alt: 'Operaciones de salvamento marítimo', category: 'Salvamento' },
+  { src: '/salvamento 2.jpg', alt: 'Salvamento y rescate naval', category: 'Salvamento' },
+  { src: '/ultra sonido.jpg', alt: 'Inspección por ultrasonido', category: 'Inspección' },
+  { src: '/ultra sonido 2.jpg', alt: 'Ensayos no destructivos', category: 'Inspección' },
+  { src: '/33234ac7b9097192ee286b4cb636ab33.jpg', alt: 'Trabajo naval en dique seco', category: 'Reparaciones' },
+  { src: '/WhatsApp Image 2026-07-22 at 12.27.15 PM.jpeg', alt: 'Mantenimiento de motores marinos', category: 'Mantenimiento' },
 ]
 
 const stats = [
-  { icon: <Ship size={22} color="white" />, value: '20+', label: 'Años de experiencia' },
-  { icon: <Users size={22} color="white" />, value: '120+', label: 'Proyectos realizados' },
-  { icon: <Briefcase size={22} color="white" />, value: '85+', label: 'Profesionales especializados' },
+  { icon: <Ship size={22} color="white" />, value: '47+', label: 'Proyectos completados' },
+  { icon: <Users size={22} color="white" />, value: '20+', label: 'Años de experiencia' },
+  { icon: <Award size={22} color="white" />, value: '100%', label: 'Calidad garantizada' },
   { icon: <Anchor size={22} color="white" />, value: '15+', label: 'Embarcaciones construidas' },
-  { icon: <Award size={22} color="white" />, value: '100%', label: 'Comprometidos con la calidad' },
 ]
 
-// Placeholder de imagen — reemplaza por <img src="..." /> cuando tengas la foto real del proyecto.
-function ImagePlaceholder({ style = {} }) {
-  return (
-    <div style={{
-      width: '100%', height: '100%', border: '1.5px dashed rgba(29,41,57,0.22)',
-      borderRadius: '10px', position: 'relative', overflow: 'hidden',
-      background: 'rgba(29,41,57,0.02)', ...style,
-    }}>
-      <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }} preserveAspectRatio="none">
-        <line x1="0" y1="0" x2="100%" y2="100%" stroke="rgba(29,41,57,0.14)" strokeWidth="1" />
-        <line x1="100%" y1="0" x2="0" y2="100%" stroke="rgba(29,41,57,0.14)" strokeWidth="1" />
-      </svg>
-    </div>
-  )
-}
+const categories = ['Todas', 'Construcción Naval', 'Reparaciones', 'Mantenimiento', 'Servicios Integrales', 'Inspección', 'Salvamento', 'Diseño Naval']
 
-// setSelectedProject: eleva el proyecto elegido hacia App para que InfoProyecto pueda leerlo.
-export default function ProyectosGaleria({ setCurrentPage, setSelectedProject }) {
-  const [activeCat, setActiveCat] = useState('Todos los proyectos')
+export default function ProyectosGaleria({ setCurrentPage }) {
+  const [activeFilter, setActiveFilter] = useState('Todas')
+  const [lightbox, setLightbox] = useState(null)
 
-  const filtered = allProjects.filter(p => activeCat === 'Todos los proyectos' || p.category === activeCat)
+  const filtered = activeFilter === 'Todas'
+    ? galleryImages
+    : galleryImages.filter(img => img.category === activeFilter)
 
-  const handleOpenProject = (proj) => {
-    if (setSelectedProject) {
-      setSelectedProject(proj)
-    }
-    setCurrentPage('info-proyecto')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  const openLightbox = (index) => setLightbox(index)
+  const closeLightbox = () => setLightbox(null)
+  const prevImage = () => setLightbox((prev) => (prev > 0 ? prev - 1 : filtered.length - 1))
+  const nextImage = () => setLightbox((prev) => (prev < filtered.length - 1 ? prev + 1 : 0))
 
   return (
-    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative' }}>
-      {/* Regla pegada al borde superior real de la página */}
+    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative', paddingTop: '110px' }}>
+      {/* Regla superior */}
       <div className="blueprint-ruler-top">
         {["-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'"].map(m => (
           <span key={m}>{m}</span>
         ))}
       </div>
 
-      {/* ── LEFT VERTICAL RULER ── */}
-      <div
-        className="blueprint-ruler-vertical"
-        style={{
-          position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
-          background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-          zIndex: 10, padding: '10px 0',
-        }}
-      >
-        {["40'", "8", "-20'"].map((m, idx) => (
+      {/* Reglas laterales */}
+      <div className="blueprint-ruler-vertical" style={{
+        position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
+        background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+        zIndex: 10, padding: '10px 0',
+      }}>
+        {["40'", "20'", "0'", "-20'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
       </div>
 
-      {/* ── RIGHT VERTICAL RULER ── */}
-      <div
-        className="blueprint-ruler-vertical"
-        style={{
-          position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
-          background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
-          zIndex: 10, padding: '10px 0',
-        }}
-      >
-        {["40'", "-20'"].map((m, idx) => (
+      <div className="blueprint-ruler-vertical" style={{
+        position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
+        background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
+        zIndex: 10, padding: '10px 0',
+      }}>
+        {["40'", "20'", "0'", "-20'"].map((m, idx) => (
           <span key={idx} style={{ fontSize: '8.5px', color: 'rgba(29,41,57,0.45)', fontFamily: 'Rajdhani', fontWeight: 600 }}>{m}</span>
         ))}
       </div>
 
-      {/* 1. SideProfileBlueprint - Esquina superior derecha */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: -20 }}
-        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.8, ease: 'out' }}
-        style={{ position: 'absolute', top: '3%', right: '1%', width: '310px', pointerEvents: 'none', zIndex: 0 }}
-      >
-        <SideProfileBlueprint />
-      </motion.div>
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '30px', position: 'relative', zIndex: 1 }}>
 
-      {/* 2. FrontBlueprint - Esquina superior izquierda */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
-        style={{ position: 'absolute', top: '5%', left: '1%', width: '270px', pointerEvents: 'none', zIndex: 0 }}
-      >
-        <FrontBlueprint />
-      </motion.div>
-
-      {/* 3. ConceptBlueprint - Espacio medio izquierdo */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.60, scale: 1, x: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.9, ease: 'out', delay: 0.15 }}
-        style={{ position: 'absolute', top: '38%', left: '0%', width: '260px', pointerEvents: 'none', zIndex: 0 }}
-      >
-        <ConceptBlueprint />
-      </motion.div>
-
-      {/* 4. MarineEngineBlueprint - Espacio medio derecho */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, x: 30 }}
-        whileInView={{ opacity: 0.60, scale: 1, x: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.9, ease: 'out', delay: 0.2 }}
-        style={{ position: 'absolute', top: '42%', right: '0%', width: '320px', pointerEvents: 'none', zIndex: 0 }}
-      >
-        <MarineEngineBlueprint />
-      </motion.div>
-
-      {/* 5. ShipTanksBlueprint - Esquina inferior izquierda */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: 30 }}
-        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
-        style={{ position: 'absolute', bottom: '2%', left: '1%', width: '350px', pointerEvents: 'none', zIndex: 0 }}
-      >
-        <ShipTanksBlueprint />
-      </motion.div>
-
-
-      {/* paddingTop unificado para alineación visual exacta */}
-            <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: 'clamp(124px, 14vw, 144px)', position: 'relative', zIndex: 1 }}>
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
@@ -190,9 +85,14 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
           <span style={{ color: '#F97316', fontWeight: 600 }}>Proyectos</span>
         </p>
 
-        {/* ══════════ HERO ══════════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '24px 32px', alignItems: 'start', marginBottom: '40px' }}>
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+        {/* ══════════ HERO: Texto + Métricas lado a lado ══════════ */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '32px', alignItems: 'start', marginBottom: '48px' }}>
+          {/* Columna izquierda: Texto */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <h1
               style={{
                 fontSize: 'clamp(28px, 4vw, 42px)',
@@ -203,113 +103,333 @@ export default function ProyectosGaleria({ setCurrentPage, setSelectedProject })
                 fontFamily: 'var(--font-heading)',
               }}
             >
-              Nuestros{' '}
-              <span style={{ color: '#F97316', fontStyle: 'italic' }}>Proyectos</span>{' '}
+              Nuestros <span style={{ color: '#F97316', fontStyle: 'italic' }}>Proyectos</span>
             </h1>
-            <p style={{ fontSize: 'clamp(16px, 2.2vw, 20px)', fontWeight: 600, color: '#334e68', marginTop: '4px' }}>
-              Ingeniería, experiencia y compromiso<br />
-              en <span style={{ color: '#F97316', fontStyle: 'italic' }}>cada proyecto.</span>
+            <p style={{ fontSize: 'clamp(16px, 2.2vw, 20px)', fontWeight: 600, color: '#334e68', marginTop: '8px' }}>
+              Ingeniería, experiencia y compromiso en cada proyecto.
+            </p>
+            <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '12px', maxWidth: '520px' }}>
+              Hemos participado en proyectos marítimos de gran envergadura a lo largo de toda la región caribeña y latinoamericana. Desde la construcción integral de buques hasta reparaciones estructurales complejas, cada proyecto refleja nuestro compromiso con la excelencia y los más altos estándares de calidad.
             </p>
           </motion.div>
-          <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '6px' }}>
-            Hemos participado en proyectos marítimos de gran envergadura, entregando soluciones personalizadas que cumplen con los más altos estándares de calidad, seguridad y eficiencia.
-          </p>
+
+          {/* Columna derecha: Métricas */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}
+          >
+            {stats.map((stat, i) => (
+              <div
+                key={i}
+                style={{
+                  background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+                  borderRadius: '14px',
+                  padding: '18px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  border: '1px solid rgba(249,115,22,0.15)',
+                }}
+              >
+                <div style={{
+                  width: '40px', height: '40px', borderRadius: '10px',
+                  background: 'rgba(249,115,22,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  {stat.icon}
+                </div>
+                <div>
+                  <p style={{ fontSize: '22px', fontWeight: 900, color: '#F97316', lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                    {stat.value}
+                  </p>
+                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', marginTop: '2px' }}>
+                    {stat.label}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* ══════════ TABS ══════════ */}
-        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', borderBottom: '1px solid rgba(29,41,57,0.1)', marginBottom: '16px' }}>
-          {tabs.map(tab => (
+        {/* ══════════ TIPOS DE PROYECTOS ══════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{
+            marginBottom: '40px',
+            padding: '32px',
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            borderRadius: '20px',
+            border: '1px solid rgba(249,115,22,0.15)',
+          }}
+        >
+          <h2 style={{
+            fontSize: 'clamp(18px, 2.5vw, 24px)',
+            fontWeight: 900,
+            color: '#ffffff',
+            marginBottom: '16px',
+            fontFamily: 'var(--font-heading)',
+          }}>
+            ¿Qué tipo de <span style={{ color: '#F97316' }}>proyectos</span> desarrollamos?
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '18px' }}>
+            {[
+              { title: 'Construcción Naval', desc: 'Diseño y construcción integral de buques de carga, petroleros, remolcadores y embarcaciones especiales desde cero.' },
+              { title: 'Reparaciones Estructurales', desc: 'Sustitución de planchas de casco, reparación de mamparos, granallado y soldadura estructural certificada.' },
+              { title: 'Mantenimiento de Motores', desc: 'Overhaul mayor y menor de motores principales y auxiliares, calibración y pruebas de rendimiento.' },
+              { title: 'Servicios Integrales', desc: 'Asistencia portuaria, salvamento marítimo, inspecciones por ultrasonido y consultoría naval.' },
+            ].map((item, i) => (
+              <div key={i}>
+                <h3 style={{ fontSize: '14px', fontWeight: 700, color: '#F97316', marginBottom: '5px' }}>
+                  {item.title}
+                </h3>
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ══════════ FILTROS ══════════ */}
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
+          {categories.map(cat => (
             <button
-              key={tab}
-              onClick={() => setActiveCat(tab)}
+              key={cat}
+              onClick={() => setActiveFilter(cat)}
               style={{
-                background: 'none', border: 0, cursor: 'pointer',
-                padding: '0 0 12px 0', fontSize: '13px',
-                fontWeight: activeCat === tab ? 700 : 600,
-                color: activeCat === tab ? '#F97316' : '#4b5563',
-                borderBottom: activeCat === tab ? '2px solid #F97316' : '2px solid transparent',
-                marginBottom: '-1px', whiteSpace: 'nowrap',
-                transition: 'all 0.2s ease',
+                background: activeFilter === cat
+                  ? 'linear-gradient(135deg, #F97316, #ea580c)'
+                  : 'rgba(255,255,255,0.7)',
+                color: activeFilter === cat ? '#ffffff' : '#4b5563',
+                border: activeFilter === cat ? '1px solid #F97316' : '1px solid rgba(29,41,57,0.12)',
+                borderRadius: '100px',
+                padding: '8px 18px',
+                fontSize: '12.5px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                whiteSpace: 'nowrap',
+                backdropFilter: 'blur(8px)',
               }}
             >
-              {tab}
+              {cat}
             </button>
           ))}
         </div>
 
-        {/* ══════════ LISTA DE PROYECTOS ══════════ */}
-        <div>
+        {/* ══════════ GALERÍA ══════════ */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
+          gap: '16px',
+        }}>
           <AnimatePresence mode="popLayout">
-            {filtered.map((proj) => (
+            {filtered.map((img, idx) => (
               <motion.div
-                key={proj.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35 }}
+                key={img.src}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
                 layout
+                onClick={() => openLightbox(idx)}
                 style={{
-                  display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px 32px',
-                  alignItems: 'start', padding: '32px 0', borderTop: '1px solid rgba(29,41,57,0.08)',
+                  position: 'relative',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  aspectRatio: '4 / 3',
+                  border: '1px solid rgba(29,41,57,0.08)',
                 }}
               >
-                {/* Imagen */}
-                <div style={{ width: '100%', minHeight: '200px', maxHeight: '240px', borderRadius: '10px', overflow: 'hidden', border: '1px solid rgba(29,41,57,0.1)' }}>
-                  {proj.image ? (
-                    <img
-                      src={proj.image}
-                      alt={proj.title}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    />
-                  ) : (
-                    <ImagePlaceholder style={{ borderRadius: '10px' }} />
-                  )}
-                </div>
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.5s ease',
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.06)'}
+                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
 
-                {/* Contenido */}
-                <div>
-                  <span style={{ fontSize: '10.5px', fontWeight: 700, color: '#F97316', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                    {proj.category}
-                  </span>
-                  <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#1D2939', margin: '6px 0 8px' }}>
-                    {proj.title}
-                  </h3>
-                  <p style={{ fontSize: '13.5px', color: '#4b5563', lineHeight: 1.65, marginBottom: '18px', maxWidth: '620px' }}>
-                    {proj.desc}
-                  </p>
+                {/* Overlay gradiente */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, transparent 50%, rgba(15,23,42,0.8) 100%)',
+                  opacity: 0,
+                  transition: 'opacity 0.35s ease',
+                  pointerEvents: 'none',
+                }}
+                  className="gallery-overlay"
+                />
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))', gap: '14px 24px', marginBottom: '16px' }}>
-                    {proj.fields.map((f, i) => (
-                      <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                        <div style={{ marginTop: '2px', flexShrink: 0 }}>{fieldIconMap[f.icon]}</div>
-                        <div>
-                          <p style={{ fontSize: '12.5px', fontWeight: 700, color: '#1D2939', marginBottom: '2px' }}>{f.label}</p>
-                          <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5 }}>{f.value}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                {/* Badge de categoría */}
+                <span style={{
+                  position: 'absolute',
+                  top: '12px',
+                  left: '12px',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#ffffff',
+                  background: '#F97316',
+                  padding: '4px 10px',
+                  borderRadius: '20px',
+                  boxShadow: '0 2px 8px rgba(249,115,22,0.4)',
+                  opacity: 0,
+                  transition: 'opacity 0.35s ease',
+                  pointerEvents: 'none',
+                }}
+                  className="gallery-badge"
+                >
+                  {img.category}
+                </span>
 
-                  <button
-                    className="card-more border-0 bg-transparent cursor-pointer"
-                    style={{ marginTop: '6px' }}
-                    onClick={(e) => { e.stopPropagation(); handleOpenProject(proj) }}
-                  >
-                    Ver más <ArrowRight size={12} />
-                  </button>
-                </div>
+                {/* Descripción abajo */}
+                <p style={{
+                  position: 'absolute',
+                  bottom: '12px',
+                  left: '14px',
+                  right: '14px',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: '#ffffff',
+                  textShadow: '0 2px 6px rgba(0,0,0,0.5)',
+                  opacity: 0,
+                  transition: 'opacity 0.35s ease',
+                  pointerEvents: 'none',
+                }}
+                  className="gallery-text"
+                >
+                  {img.alt}
+                </p>
               </motion.div>
             ))}
           </AnimatePresence>
-
-          {filtered.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '60px 24px', border: '1.5px dashed rgba(29,41,57,0.15)', borderRadius: '12px', marginTop: '24px' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1D2939' }}>No hay proyectos en esta categoría</h3>
-              <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>Prueba con otra categoría del filtro superior.</p>
-            </div>
-          )}
         </div>
+
+        {filtered.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '60px 24px', border: '1.5px dashed rgba(29,41,57,0.15)', borderRadius: '12px', marginTop: '24px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1D2939' }}>No hay imágenes en esta categoría</h3>
+            <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>Prueba con otro filtro.</p>
+          </div>
+        )}
       </div>
-    </div >
+
+      {/* ══════════ LIGHTBOX ══════════ */}
+      <AnimatePresence>
+        {lightbox !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeLightbox}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(15,23,42,0.92)',
+              backdropFilter: 'blur(8px)',
+              zIndex: 99999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '24px',
+            }}
+          >
+            {/* Botón cerrar */}
+            <button
+              onClick={closeLightbox}
+              style={{
+                position: 'absolute', top: '20px', right: '20px',
+                background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '50%', width: '44px', height: '44px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', color: '#ffffff', zIndex: 10,
+              }}
+            >
+              <X size={22} />
+            </button>
+
+            {/* Flecha izquierda */}
+            <button
+              onClick={(e) => { e.stopPropagation(); prevImage() }}
+              style={{
+                position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)',
+                background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '50%', width: '48px', height: '48px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', color: '#ffffff', zIndex: 10,
+              }}
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            {/* Flecha derecha */}
+            <button
+              onClick={(e) => { e.stopPropagation(); nextImage() }}
+              style={{
+                position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)',
+                background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '50%', width: '48px', height: '48px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', color: '#ffffff', zIndex: 10,
+              }}
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            {/* Imagen */}
+            <motion.div
+              key={lightbox}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{ maxWidth: '900px', width: '100%', textAlign: 'center' }}
+            >
+              <img
+                src={filtered[lightbox].src}
+                alt={filtered[lightbox].alt}
+                style={{
+                  width: '100%',
+                  maxHeight: '80vh',
+                  objectFit: 'contain',
+                  borderRadius: '12px',
+                }}
+              />
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', marginTop: '14px' }}>
+                {filtered[lightbox].alt}
+              </p>
+              <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '4px' }}>
+                {lightbox + 1} / {filtered.length}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Estilos hover para la galería */}
+      <style>{`
+        .gallery-overlay { opacity: 0 !important; }
+        .gallery-badge { opacity: 0 !important; }
+        .gallery-text { opacity: 0 !important; }
+        div:hover > .gallery-overlay { opacity: 1 !important; }
+        div:hover > .gallery-badge { opacity: 1 !important; }
+        div:hover > .gallery-text { opacity: 1 !important; }
+      `}</style>
+    </div>
   )
 }

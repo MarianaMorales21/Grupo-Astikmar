@@ -111,7 +111,7 @@ export default function Contacto({ contactService, setContactService, setCurrent
   }
 
   return (
-    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative' }}>
+    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative', paddingTop: '110px' }}>
       {/* Regla pegada al borde superior real de la página */}
       <div className="blueprint-ruler-top">
         {["-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'"].map(m => (
@@ -197,7 +197,7 @@ export default function Contacto({ contactService, setContactService, setCurrent
       </motion.div>
 
       {/* Contenedor principal responsive */}
-      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: 'clamp(124px, 14vw, 144px)', position: 'relative', zIndex: 1 }}>
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '20px', position: 'relative', zIndex: 1 }}>
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage?.('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>

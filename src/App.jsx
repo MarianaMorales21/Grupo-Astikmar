@@ -111,7 +111,7 @@ export default function App() {
       case 'capacidad':
         return <FlotaEquipos />
       case 'proyectos':
-        return <ProyectosGaleria setCurrentPage={setCurrentPage} setSelectedProject={setSelectedProject} />
+        return <ProyectosGaleria setCurrentPage={setCurrentPage} />
       case 'info-proyecto':
         return <InfoProyecto project={selectedProject} setCurrentPage={setCurrentPage} />
       case 'contacto':

@@ -80,7 +80,7 @@ function ImagePlaceholder({ radius = '10px', light = false, style = {} }) {
 
 export default function Nosotros({ setCurrentPage }) {
   return (
-    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative' }}>
+    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative', paddingTop: '110px' }}>
       {/* Regla pegada al borde superior real de la página */}
       <div className="blueprint-ruler-top">
         {["-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'"].map(m => (
@@ -225,7 +225,7 @@ export default function Nosotros({ setCurrentPage }) {
       </motion.div>
 
       {/* paddingTop unificado con el resto de páginas (respeta espacio de navbar flotante) */}
-      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: 'clamp(124px, 14vw, 144px)', position: 'relative', zIndex: 1 }}>
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '20px', position: 'relative', zIndex: 1 }}>
 
         {/* ══════════ HERO: título + imagen grande ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '64px' }}>

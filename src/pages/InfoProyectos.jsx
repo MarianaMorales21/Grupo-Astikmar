@@ -55,7 +55,7 @@ export default function InfoProyecto({ project, setCurrentPage }) {
   // Fallback por si se navega aquí sin un proyecto seleccionado.
   if (!project) {
     return (
-      <div className="blueprint-bg min-h-screen pb-16" style={{ paddingTop: '132px', textAlign: 'center' }}>
+      <div className="blueprint-bg min-h-screen pb-16" style={{ paddingTop: '110px', textAlign: 'center' }}>
         <p style={{ color: '#6b7280' }}>No se seleccionó ningún proyecto.</p>
         <button onClick={() => setCurrentPage('proyectos')} className="btn-solicitar border-0" style={{ marginTop: '16px' }}>
           Volver a Proyectos
@@ -76,7 +76,7 @@ export default function InfoProyecto({ project, setCurrentPage }) {
   const specs = detail.specs && detail.specs.length > 0 ? detail.specs : []
 
   return (
-    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative' }}>
+    <div className="blueprint-bg min-h-screen pb-16" style={{ position: 'relative', paddingTop: '110px' }}>
       {/* Regla pegada al borde superior real de la página */}
       <div className="blueprint-ruler-top">
         {["-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'"].map(m => (
@@ -162,7 +162,7 @@ export default function InfoProyecto({ project, setCurrentPage }) {
       </motion.div>
 
       {/* paddingTop unificado para alineación visual exacta */}
-           <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: 'clamp(124px, 14vw, 144px)', position: 'relative', zIndex: 1 }}>
+           <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '20px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>

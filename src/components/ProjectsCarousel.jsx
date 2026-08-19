@@ -1,22 +1,62 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { MapPin, Sparkles, Eye, ArrowRight } from 'lucide-react'
-
-// Import de los 5 planos/iconos técnicos de la carpeta src/components/Icons
-import FrontBlueprint from './Icons/FrontBlueprint'
-import ConceptBlueprint from './Icons/ConceptBlueprint'
-import SideProfileBlueprint from './Icons/SideprofileBlueprint'
-import ShipTanksBlueprint from './Icons/ShipTanksBlueprint'
-import MarineEngineBlueprint from './Icons/MarineEngineBlueprint'
-import { allProjects } from '../data/projectsData'
+import { useState, useEffect, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { Award, ArrowRight } from 'lucide-react'
 
 import './ProjectsCarousel.css'
 
-// Duplicamos el array para lograr un recorrido infinito sin pausas
-const duplicatedProjects = [...allProjects, ...allProjects]
+const carouselImages = [
+  { src: '/petrolero.jpg', alt: 'Construcción naval de buque de carga', category: 'Construcción Naval' },
+  { src: '/WhatsApp Image 2026-07-22 at 12.28.31 PM (3).jpeg', alt: 'Overhaul de motor marino principal', category: 'Mantenimiento de Motores' },
+  { src: '/obra muerta.jpg', alt: 'Reparación estructural de casco', category: 'Reparaciones Estructurales' },
+  { src: '/2a8893e76c6c41dd2a89da66fcf07ea1.jpg', alt: 'Instalación de grúa de cubierta', category: 'Cubierta y Grúas' },
+  { src: '/eliminacion de gases.jpeg', alt: 'Rehabilitación de tanques de lastre', category: 'Tanques y Sistemas' },
+  { src: '/tug.jpg', alt: 'Overhaul completo de remolcador', category: 'Construcción y Overhaul' },
+  { src: '/compact-Oil-Tanker-with-a-high-load-capacity.jpg', alt: 'Diseño de petrolero compacto', category: 'Diseño Naval' },
+  { src: '/images.jpg', alt: 'Servicios marítimos integrales', category: 'Servicios Integrales' },
+  { src: '/remolcadores.jpg', alt: 'Flota de remolcadores portuarios', category: 'Remolcadores' },
+  { src: '/small-tanker-port-bergen-norway-61367570.webp', alt: 'Tanquero en puerto', category: 'Transporte Marítimo' },
+  { src: '/push-or-pull-to-move-ships-1743598323.jpg', alt: 'Asistencia portuaria', category: 'Asistencia Portuaria' },
+  { src: '/salvamento 1.jpg', alt: 'Operaciones de salvamento', category: 'Salvamento Marítimo' },
+]
 
-export default function ProjectsCarousel({ setCurrentPage, setSelectedProject }) {
-  const [activeProject, setActiveProject] = useState(null)
+const duplicated = [...carouselImages, ...carouselImages]
+
+const TOTAL_PROJECTS = 47
+
+function AnimatedCounter({ target }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  useEffect(() => {
+    if (!isInView) return
+    let start = 0
+    const duration = 2000
+    const stepTime = 30
+    const steps = duration / stepTime
+    const increment = target / steps
+
+    const timer = setInterval(() => {
+      start += increment
+      if (start >= target) {
+        setCount(target)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(start))
+      }
+    }, stepTime)
+
+    return () => clearInterval(timer)
+  }, [isInView, target])
+
+  return (
+    <span ref={ref} style={{ fontVariantNumeric: 'tabular-nums' }}>
+      {count}
+    </span>
+  )
+}
+
+export default function ProjectsCarousel({ setCurrentPage }) {
   const [isPaused, setIsPaused] = useState(false)
 
   return (
@@ -24,12 +64,12 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
       id="proyectos"
       className="blueprint-bg"
       style={{
-        padding: '70px 0 130px',
+        padding: '70px 0 100px',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
-      {/* ── Regla de Plano Técnico Superior (Equipo) ── */}
+      {/* ── Regla de Plano Técnico Superior ── */}
       <div className="blueprint-ruler-top">
         {["-20'", "-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'", "90'", "100'"].map((m, i) => (
           <span key={i}>{m}</span>
@@ -37,7 +77,7 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
       </div>
 
       {/* ── LEFT VERTICAL RULER ── */}
-      <div style={{
+      <div className="blueprint-ruler-vertical" style={{
         position: 'absolute', left: 0, top: 28, bottom: 0, width: '26px',
         background: 'rgba(29,41,57,0.05)', borderRight: '1px solid rgba(29,41,57,0.15)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
@@ -51,7 +91,7 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
       </div>
 
       {/* ── RIGHT VERTICAL RULER ── */}
-      <div style={{
+      <div className="blueprint-ruler-vertical" style={{
         position: 'absolute', right: 0, top: 28, bottom: 0, width: '26px',
         background: 'rgba(29,41,57,0.05)', borderLeft: '1px solid rgba(29,41,57,0.15)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around',
@@ -63,127 +103,16 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
           </span>
         ))}
       </div>
-      {/* Marcas de esquina / Orillos marcados con mira técnica (+) */}
-      <div style={{ position: 'absolute', top: '10px', left: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
+
+      {/* Marcas de esquina */}
+      <div className="cad-corner-marker" style={{ position: 'absolute', top: '10px', left: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 1 }}>
         + SEC-03 [PROYECTOS_NAVALES]
       </div>
-      <div style={{ position: 'absolute', top: '10px', right: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
+      <div className="cad-corner-marker" style={{ position: 'absolute', top: '10px', right: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 1 }}>
         CAD-REF: 1440x800 +
       </div>
 
-      {/* ── DETALLES E INSCRIPCIONES DE PLANO TÉCNICO DISPERSOS (MÁS OSCUROS) ── */}
-      <div style={{ position: 'absolute', top: '18%', left: '4%', fontSize: '11px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(29,41,57,0.55)', pointerEvents: 'none', zIndex: 1 }}>
-        ⊕ COORD: 18°28'35.2"N 69°53'14.8"W [BASE_SD]
-      </div>
-      <div style={{ position: 'absolute', top: '75%', right: '5%', fontSize: '11px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(29,41,57,0.55)', pointerEvents: 'none', zIndex: 1 }}>
-        ⊕ COORD: 10°13'12.0"N 64°41'42.0"W [DIQUE_PLC]
-      </div>
-      <div style={{ position: 'absolute', top: '45%', left: '2%', fontSize: '10px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(29,41,57,0.45)', pointerEvents: 'none', transform: 'rotate(-90deg)', transformOrigin: 'top left', zIndex: 1 }}>
-        --- DRAFT_DEPTH_MAX: 18.50m [WGS84_ZONE_19N] ---
-      </div>
-      <div style={{ position: 'absolute', top: '35%', right: '3%', fontSize: '10.5px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(29,41,57,0.5)', pointerEvents: 'none', zIndex: 1 }}>
-        + NDT_ULTRASONIC_REF: ISO_9001:2015
-      </div>
-      <div style={{ position: 'absolute', bottom: '15%', left: '48%', fontSize: '11px', fontFamily: 'Rajdhani, monospace', fontWeight: 700, color: 'rgba(249,115,22,0.6)', pointerEvents: 'none', zIndex: 1 }}>
-        📍 REF_GRID_ORIGIN [0,0,0]
-      </div>
-
-      {/* ════════════════════════════════════════════════════════════════════════
-         TODOS LOS PLANOS Y DIBUJOS DE LA CARPETA ICONS CON MAYOR OPACIDAD (MÁS OSCUROS)
-         ════════════════════════════════════════════════════════════════════════ */}
-
-      {/* 1. MarineEngineBlueprint - Esquina superior derecha */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: -20 }}
-        whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.8, ease: 'out' }}
-        style={{
-          position: 'absolute',
-          top: '5%',
-          right: '1%',
-          width: '380px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      >
-        <MarineEngineBlueprint />
-      </motion.div>
-
-      {/* 2. SideProfileBlueprint - Esquina superior izquierda */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.70, scale: 1, x: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.85, ease: 'out', delay: 0.1 }}
-        style={{
-          position: 'absolute',
-          top: '4%',
-          left: '0%',
-          width: '320px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      >
-        <SideProfileBlueprint />
-      </motion.div>
-
-      {/* 3. FrontBlueprint - Espacio medio izquierdo */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, x: -30 }}
-        whileInView={{ opacity: 0.65, scale: 1, x: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.9, ease: 'out', delay: 0.15 }}
-        style={{
-          position: 'absolute',
-          top: '45%',
-          left: '-1%',
-          width: '270px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      >
-        <FrontBlueprint />
-      </motion.div>
-
-      {/* 4. ShipTanksBlueprint - Esquina inferior izquierda */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: 30 }}
-        whileInView={{ opacity: 0.70, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.95, ease: 'out', delay: 0.2 }}
-        style={{
-          position: 'absolute',
-          bottom: '2%',
-          left: '0%',
-          width: '410px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      >
-        <ShipTanksBlueprint />
-      </motion.div>
-
-      {/* 5. ConceptBlueprint - Esquina inferior derecha */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: 30 }}
-        whileInView={{ opacity: 0.65, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.95, ease: 'out', delay: 0.25 }}
-        style={{
-          position: 'absolute',
-          bottom: '4%',
-          right: '1%',
-          width: '290px',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      >
-        <ConceptBlueprint />
-      </motion.div>
-
-
-      {/* Encabezado centrado con animación de aparición al ir bajando */}
+      {/* ═══ Encabezado + Contador ═══ */}
       <div style={{ maxWidth: '1140px', margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 2 }}>
         <motion.div
           initial={{ opacity: 0, y: 35 }}
@@ -192,6 +121,33 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
           transition={{ duration: 0.6 }}
           style={{ textAlign: 'center', marginBottom: '48px' }}
         >
+          {/* Contador de proyectos */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              background: 'linear-gradient(135deg, rgba(249,115,22,0.1), rgba(249,115,22,0.05))',
+              border: '1px solid rgba(249,115,22,0.25)',
+              borderRadius: '100px',
+              padding: '8px 20px',
+              marginBottom: '20px',
+            }}
+          >
+            <Award size={18} color="#F97316" />
+            <span style={{
+              fontSize: '13px',
+              fontWeight: 700,
+              color: '#F97316',
+              letterSpacing: '0.02em',
+            }}>
+              <AnimatedCounter target={TOTAL_PROJECTS} />+ Proyectos Completados
+            </span>
+          </motion.div>
 
           <h2
             style={{
@@ -203,7 +159,7 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
               marginBottom: '12px',
             }}
           >
-            Proyectos <span style={{ color: '#F97316' }}>Destacados</span>
+            Nuestros <span style={{ color: '#F97316' }}>Trabajos</span>
           </h2>
 
           <p
@@ -215,12 +171,12 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
               lineHeight: 1.65,
             }}
           >
-            Explora nuestra galería de trabajos recientes en construcción, mantenimiento y reparación naval.
+            Más de 47 proyectos de construcción, mantenimiento y reparación naval completados con éxito en toda la región.
           </p>
         </motion.div>
       </div>
 
-      {/* Carrusel continuo por TODO EL ANCHO de la pantalla con animación de entrada */}
+      {/* ═══ Carrusel de imágenes ═══ */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -240,7 +196,7 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
           zIndex: 2,
         }}
       >
-        {/* Degradados laterales sutiles para difuminar bordes de plano */}
+        {/* Degradados laterales */}
         <div
           aria-hidden="true"
           style={{
@@ -268,343 +224,147 @@ export default function ProjectsCarousel({ setCurrentPage, setSelectedProject })
           }}
         />
 
-        {/* Track continuo CSS */}
+        {/* Track continuo */}
         <div
           className={`projects-marquee-track ${isPaused ? 'paused' : ''}`}
           style={{
             display: 'flex',
-            gap: '24px',
+            gap: '20px',
             width: 'max-content',
-            paddingLeft: '24px',
+            paddingLeft: '20px',
           }}
         >
-          {duplicatedProjects.map((project, idx) => (
+          {duplicated.map((img, idx) => (
             <div
-              key={`${project.id}-${idx}`}
+              key={`${img.src}-${idx}`}
+              className="projects-carousel-card"
               style={{
-                width: 'clamp(280px, 85vw, 360px)',
+                width: 'clamp(300px, 70vw, 420px)',
+                height: 'clamp(260px, 50vw, 340px)',
                 flexShrink: 0,
+                borderRadius: '20px',
+                overflow: 'hidden',
+                position: 'relative',
+                cursor: 'pointer',
               }}
             >
-              <ProjectCard
-                project={project}
-                onSelect={() => setActiveProject(project)}
+              {/* Imagen */}
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  transition: 'transform 0.6s ease, filter 0.4s ease',
+                }}
               />
+
+              {/* Overlay gradiente */}
+              <div
+                className="projects-card-overlay"
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(15,23,42,0.15) 0%, rgba(15,23,42,0.25) 50%, rgba(15,23,42,0.85) 100%)',
+                  transition: 'background 0.4s ease',
+                }}
+              />
+
+              {/* Contenido */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  padding: '24px',
+                  zIndex: 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  height: '100%',
+                }}
+              >
+                {/* Badge de categoría */}
+                <span
+                  style={{
+                    fontSize: '10px',
+                    fontWeight: 800,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: '#ffffff',
+                    background: '#F97316',
+                    padding: '4px 12px',
+                    borderRadius: '20px',
+                    boxShadow: '0 2px 10px rgba(249,115,22,0.4)',
+                    alignSelf: 'flex-start',
+                    marginBottom: '10px',
+                  }}
+                >
+                  {img.category}
+                </span>
+
+                {/* Descripción */}
+                <p
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: 'rgba(255,255,255,0.9)',
+                    lineHeight: 1.5,
+                    textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  {img.alt}
+                </p>
+              </div>
             </div>
           ))}
         </div>
       </motion.div>
 
-      {/* Modal de detalles de proyecto */}
-      {activeProject && (
-        <ProjectModal
-          project={activeProject}
-          onClose={() => setActiveProject(null)}
-          setCurrentPage={setCurrentPage}
-          setSelectedProject={setSelectedProject}
-        />
-      )}
-    </section>
-  )
-}
-
-// ── Componente de Carta Individual con HOVER RESALTADO ────────────────────────
-function ProjectCard({ project, onSelect }) {
-  const [hovered, setHovered] = useState(false)
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onSelect}
-      style={{
-        position: 'relative',
-        height: '400px',
-        borderRadius: '20px',
-        overflow: 'hidden',
-        cursor: 'pointer',
-        border: hovered ? '2px solid #F97316' : '1px solid rgba(29, 41, 57, 0.15)',
-        boxShadow: hovered
-          ? '0 20px 40px rgba(249,115,22,0.3), 0 4px 15px rgba(249,115,22,0.18)'
-          : '0 8px 24px rgba(29,41,57,0.08)',
-        transition: 'all 0.35s ease',
-      }}
-    >
-      {/* LA IMAGEN OCUPA TODA LA CARTA */}
-      <img
-        src={project.image}
-        alt={project.title}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          // AL HACER HOVER LA IMAGEN SE OPACA (reduce brillo / opacidad)
-          opacity: hovered ? 0.48 : 0.88,
-          filter: hovered ? 'brightness(0.68) contrast(1.08)' : 'brightness(0.95)',
-          transform: hovered ? 'scale(1.08)' : 'scale(1.0)',
-          transition: 'all 0.5s ease',
-        }}
-      />
-
-      {/* Gradiente de superposición para legibilidad */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: hovered
-            ? 'linear-gradient(180deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.6) 50%, rgba(15,23,42,0.92) 100%)'
-            : 'linear-gradient(180deg, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.15) 40%, rgba(15,23,42,0.8) 100%)',
-          transition: 'background 0.4s ease',
-        }}
-      />
-
-      {/* ARRIBA: TÍTULO Y BADGE (SE AGRANDA Y RESALTA EN HOVER) */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          padding: '24px 24px 16px',
-          zIndex: 3,
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
-          <span
-            style={{
-              fontSize: '10px',
-              fontWeight: 800,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: '#ffffff',
-              background: '#F97316',
-              padding: '4px 12px',
-              borderRadius: '20px',
-              boxShadow: '0 2px 10px rgba(249,115,22,0.4)',
-            }}
-          >
-            {project.tag}
-          </span>
-          <span
-            style={{
-              fontSize: '11px',
-              fontWeight: 700,
-              color: 'rgba(255,255,255,0.9)',
-              background: 'rgba(0,0,0,0.45)',
-              padding: '3px 10px',
-              borderRadius: '12px',
-              backdropFilter: 'blur(4px)',
-            }}
-          >
-            {project.year}
-          </span>
-        </div>
-
-        {/* TÍTULO QUE SE AGRANDA Y RESALTA EN HOVER */}
-        <h3
-          style={{
-            fontSize: hovered ? '21px' : '18px',
-            fontWeight: 900,
-            color: hovered ? '#F97316' : '#ffffff',
-            marginTop: '14px',
-            lineHeight: 1.25,
-            textShadow: hovered ? '0 0 16px rgba(249,115,22,0.7)' : '0 2px 4px rgba(0,0,0,0.8)',
-            transform: hovered ? 'scale(1.04)' : 'scale(1)',
-            transformOrigin: 'top left',
-            transition: 'all 0.35s ease',
-          }}
-        >
-          {project.title}
-        </h3>
-      </div>
-
-      {/* ABAJO: UBICACIÓN Y BOTÓN */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '24px',
-          zIndex: 3,
-        }}
-      >
-        <p
-          style={{
-            fontSize: '13px',
-            color: 'rgba(255,255,255,0.85)',
-            lineHeight: 1.5,
-            marginBottom: '16px',
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-          }}
-        >
-          {project.desc}
-        </p>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span
-            style={{
-              fontSize: '12px',
-              color: 'rgba(255,255,255,0.75)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-            }}
-          >
-            <MapPin size={13} color="#F97316" />
-            {project.location}
-          </span>
-
-          <span
-            style={{
-              fontSize: '12px',
-              fontWeight: 700,
-              color: hovered ? '#ffffff' : '#F97316',
-              background: hovered ? '#F97316' : 'rgba(249,115,22,0.15)',
-              padding: '6px 14px',
-              borderRadius: '8px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            <Eye size={13} />
-            Ver Proyecto
-          </span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ── Modal de Detalle de Proyecto ──────────────────────────────────────────────
-function ProjectModal({ project, onClose, setCurrentPage, setSelectedProject }) {
-  const handleOpenDetail = () => {
-    if (setSelectedProject) {
-      setSelectedProject(project)
-    }
-    onClose()
-    if (setCurrentPage) {
-      setCurrentPage('info-proyecto')
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-  }
-
-  return (
-    <div
-      onClick={onClose}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(15,23,42,0.85)',
-        backdropFilter: 'blur(8px)',
-        zIndex: 99999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '24px',
-      }}
-    >
+      {/* ═══ CTA inferior ═══ */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        onClick={(e) => e.stopPropagation()}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.5 }}
         style={{
-          background: '#ffffff',
-          borderRadius: '24px',
-          maxWidth: '650px',
-          width: '100%',
-          overflow: 'hidden',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.3)',
-          border: '1px solid #eaecf0',
+          textAlign: 'center',
+          marginTop: '48px',
+          position: 'relative',
+          zIndex: 2,
         }}
       >
-        {/* Imagen superior */}
-        <div style={{ position: 'relative', height: '220px' }}>
-          <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, #ffffff 100%)' }} />
-          <button
-            onClick={onClose}
-            style={{
-              position: 'absolute', top: '16px', right: '16px', background: 'rgba(15,23,42,0.6)',
-              color: '#ffffff', border: 'none', borderRadius: '50%', width: '36px', height: '36px',
-              fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
-            }}
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Contenido */}
-        <div style={{ padding: '24px 32px 32px' }}>
-          <span style={{ fontSize: '11px', fontWeight: 800, color: '#ffffff', background: '#F97316', padding: '4px 12px', borderRadius: '12px' }}>
-            {project.tag || project.category}
-          </span>
-          <h3 style={{ fontSize: '24px', fontWeight: 900, color: '#1D2939', marginTop: '10px', marginBottom: '8px' }}>
-            {project.title}
-          </h3>
-          <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.6, marginBottom: '20px' }}>
-            {project.desc}
-          </p>
-
-          <div style={{ background: '#f8fafc', borderRadius: '12px', padding: '16px', border: '1px solid #e2e8f0', marginBottom: '24px' }}>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#F97316', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-              Especificaciones Técnicas:
-            </span>
-            <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
-              {project.specs?.map((s, i) => (
-                <li key={i} style={{ fontSize: '12.5px', color: '#334155', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ width: '5px', height: '5px', background: '#F97316', borderRadius: '50%' }} />
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <button
-              onClick={onClose}
-              style={{
-                background: 'transparent', border: '1px solid #cbd5e1',
-                color: '#475569', padding: '10px 18px', borderRadius: '10px', fontSize: '13px', cursor: 'pointer'
-              }}
-            >
-              Cerrar
-            </button>
-            {setCurrentPage && (
-              <button
-                onClick={handleOpenDetail}
-                style={{
-                  background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.3)',
-                  color: '#F97316', padding: '10px 18px', borderRadius: '10px', fontSize: '13px', fontWeight: 700, cursor: 'pointer',
-                  display: 'inline-flex', alignItems: 'center', gap: '6px'
-                }}
-              >
-                Ver Ficha Completa <ArrowRight size={14} />
-              </button>
-            )}
-            {setCurrentPage && (
-              <button
-                onClick={() => { onClose(); setCurrentPage('contacto') }}
-                style={{
-                  background: '#F97316', border: 'none', color: '#ffffff',
-                  padding: '10px 20px', borderRadius: '10px', fontSize: '13px', fontWeight: 700, cursor: 'pointer'
-                }}
-              >
-                Solicitar Cotización
-              </button>
-            )}
-          </div>
-        </div>
+        <motion.button
+          onClick={() => setCurrentPage?.('proyectos')}
+          whileHover={{ scale: 1.04, boxShadow: '0 12px 40px rgba(249,115,22,0.45)' }}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '10px',
+            background: 'linear-gradient(135deg, #F97316 0%, #ea580c 100%)',
+            color: 'white',
+            fontSize: '15px',
+            fontWeight: 700,
+            padding: '14px 32px',
+            borderRadius: '12px',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 6px 24px rgba(249,115,22,0.4)',
+            letterSpacing: '0.01em',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
+          Ver Galería Completa
+          <ArrowRight size={18} />
+        </motion.button>
       </motion.div>
-    </div>
+    </section>
   )
 }

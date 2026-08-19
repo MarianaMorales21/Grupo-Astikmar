@@ -5,13 +5,12 @@ import ProjectsCarousel from '../components/ProjectsCarousel'
 import EquipoHumano from './EquipoHumano'
 import Certificaciones from './Certificaciones'
 
-export default function Home({ setCurrentPage, setSelectedService, setSelectedProject }) {
+export default function Home({ setCurrentPage, setSelectedService }) {
   return (
     <>
       <HeroSection setCurrentPage={setCurrentPage} />
       <ServicesSection setCurrentPage={setCurrentPage} setSelectedService={setSelectedService} />
-      <ProjectsCarousel setCurrentPage={setCurrentPage} setSelectedProject={setSelectedProject} />
-      {/*<EquipoHumano isSection={true} />*/}
+      <ProjectsCarousel setCurrentPage={setCurrentPage} />
     </>
   )
 }

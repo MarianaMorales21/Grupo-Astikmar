@@ -69,7 +69,7 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
   return (
     <div
       className="blueprint-bg min-h-screen pb-16"
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', paddingTop: '110px' }}
     >
 
       {/* Foco accesible coherente con el acento naranja del sistema.
@@ -193,7 +193,7 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
       </motion.div>
 
       {/* paddingTop unificado para alineación visual exacta (respeta navbar flotante) */}
-      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: 'clamp(124px, 14vw, 144px)', position: 'relative', zIndex: 1 }}>
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '20px', position: 'relative', zIndex: 1 }}>
 
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
