@@ -11,6 +11,7 @@ import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
 import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import { contactoContent, contactInfo } from '../data/siteConfig'
+import { WEB3FORMS_ACCESS_KEY } from '../config/web3forms'
 
 const interestServices = contactoContent.interestServices
 
@@ -70,29 +71,62 @@ export default function Contacto({ contactService, setContactService, setCurrent
     }
   }, [contactService])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!nombre || !correo || !telefono || !servicio || !mensaje || !aceptaPolitica) {
       setStatus({ type: 'error', text: 'Por favor complete todos los campos obligatorios (*) y acepte la Política de Privacidad.' })
       return
     }
+
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setStatus({ type: 'error', text: 'El servicio de correo no está configurado. Por favor contacte al administrador.' })
+      return
+    }
+
     setStatus({ type: 'sending', text: 'Enviando requerimiento técnico...' })
 
-    setTimeout(() => {
-      setStatus({ type: 'success', text: '¡Requerimiento enviado con éxito! Un ingeniero de soporte se contactará a la brevedad.' })
-      setNombre('')
-      setEmpresa('')
-      setTelefono('')
-      setCorreo('')
-      setServicio('')
-      setMensaje('')
-      setFecha('')
-      setArchivo(null)
-      setAceptaPolitica(false)
-      if (setContactService) {
-        setContactService('')
+    try {
+      const formData = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `Nuevo requerimiento - ${nombre} (${servicio})`,
+        from_name: nombre,
+        from_email: correo,
+        phone: telefono,
+        company: empresa || 'No especificada',
+        service: servicio,
+        message: mensaje,
+        preferred_date: fecha || 'No especificada',
       }
-    }, 1800)
+
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await res.json()
+
+      if (data.success) {
+        setStatus({ type: 'success', text: '¡Requerimiento enviado con éxito! Un ingeniero de soporte se contactará a la brevedad.' })
+        setNombre('')
+        setEmpresa('')
+        setTelefono('')
+        setCorreo('')
+        setServicio('')
+        setMensaje('')
+        setFecha('')
+        setArchivo(null)
+        setAceptaPolitica(false)
+        if (setContactService) {
+          setContactService('')
+        }
+      } else {
+        throw new Error(data.message || 'Error al enviar')
+      }
+    } catch (err) {
+      console.error('Web3Forms error:', err)
+      setStatus({ type: 'error', text: 'Error al enviar el formulario. Por favor intente de nuevo o contáctenos directamente.' })
+    }
   }
 
   return (
