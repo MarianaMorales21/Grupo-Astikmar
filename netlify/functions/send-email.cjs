@@ -12,13 +12,21 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Faltan campos obligatorios' }) }
     }
 
+    const smtpUser = process.env.SMTP_USER
+    const smtpPass = process.env.SMTP_PASS
+
+    if (!smtpUser || !smtpPass) {
+      console.error('Missing SMTP env vars:', { SMTP_USER: !!smtpUser, SMTP_PASS: !!smtpPass })
+      return { statusCode: 500, body: JSON.stringify({ error: 'Variables SMTP no configuradas en Netlify' }) }
+    }
+
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
+      host: 'smtp.gmail.com',
+      port: 587,
       secure: false,
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: smtpUser,
+        pass: smtpPass,
       },
     })
 
@@ -69,8 +77,8 @@ exports.handler = async (event) => {
     `
 
     await transporter.sendMail({
-      from: `"Grupo Astikmar - Web" <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
+      from: `"Grupo Astikmar - Web" <${smtpUser}>`,
+      to: 'carlos.m@grupoastikmar.com',
       replyTo: correo,
       subject: `Nuevo requerimiento - ${nombre} (${servicio})`,
       html: htmlBody,
@@ -82,10 +90,10 @@ exports.handler = async (event) => {
       body: JSON.stringify({ success: true, message: 'Correo enviado correctamente' }),
     }
   } catch (err) {
-    console.error('Email send error:', err)
+    console.error('Email send error:', err.message || err)
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error al enviar el correo' }),
+      body: JSON.stringify({ error: err.message || 'Error al enviar el correo' }),
     }
   }
 }

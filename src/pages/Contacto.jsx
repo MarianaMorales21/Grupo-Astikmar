@@ -115,7 +115,8 @@ export default function Contacto({ contactService, setContactService, setCurrent
       }
     } catch (err) {
       console.error('Email send error:', err)
-      setStatus({ type: 'error', text: 'Error al enviar el formulario. Por favor intente de nuevo o contáctenos directamente.' })
+      const msg = err.message || 'Error al enviar el formulario'
+      setStatus({ type: 'error', text: `Error: ${msg}. Por favor intente de nuevo o contáctenos directamente.` })
     }
   }
 
