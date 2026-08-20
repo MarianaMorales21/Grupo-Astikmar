@@ -11,7 +11,6 @@ import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
 import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import { contactoContent, contactInfo } from '../data/siteConfig'
-import { WEB3FORMS_ACCESS_KEY } from '../config/web3forms'
 
 const interestServices = contactoContent.interestServices
 
@@ -78,30 +77,21 @@ export default function Contacto({ contactService, setContactService, setCurrent
       return
     }
 
-    if (!WEB3FORMS_ACCESS_KEY) {
-      setStatus({ type: 'error', text: 'El servicio de correo no está configurado. Por favor contacte al administrador.' })
-      return
-    }
-
     setStatus({ type: 'sending', text: 'Enviando requerimiento técnico...' })
 
     try {
-      const formData = {
-        access_key: WEB3FORMS_ACCESS_KEY,
-        subject: `Nuevo requerimiento - ${nombre} (${servicio})`,
-        from_name: nombre,
-        from_email: correo,
-        phone: telefono,
-        company: empresa || 'No especificada',
-        service: servicio,
-        message: mensaje,
-        preferred_date: fecha || 'No especificada',
-      }
-
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('/.netlify/functions/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          nombre,
+          correo,
+          telefono,
+          empresa,
+          servicio,
+          mensaje,
+          fecha,
+        }),
       })
 
       const data = await res.json()
@@ -121,10 +111,10 @@ export default function Contacto({ contactService, setContactService, setCurrent
           setContactService('')
         }
       } else {
-        throw new Error(data.message || 'Error al enviar')
+        throw new Error(data.error || 'Error al enviar')
       }
     } catch (err) {
-      console.error('Web3Forms error:', err)
+      console.error('Email send error:', err)
       setStatus({ type: 'error', text: 'Error al enviar el formulario. Por favor intente de nuevo o contáctenos directamente.' })
     }
   }
