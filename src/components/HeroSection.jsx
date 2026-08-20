@@ -5,6 +5,7 @@ import FrontBlueprint from './Icons/FrontBlueprint'
 import ConceptBlueprint from './Icons/ConceptBlueprint'
 import SideProfileBlueprint from './Icons/SideprofileBlueprint'
 import ShipTanksBlueprint from './Icons/ShipTanksBlueprint'
+import { heroContent, images } from '../data/siteConfig'
 
 /* ============================================================
    Capas de profundidad (z-index) de todo el hero:
@@ -153,9 +154,9 @@ export default function HeroSection({ setCurrentPage }) {
                 letterSpacing: '-0.02em',
                 fontFamily: 'var(--font-heading)',
               }}>
-                Soluciones<br />
-                marítimas<br />
-                <span style={{ color: '#F97316', fontStyle: 'italic', fontWeight: 800 }}>integrales,</span>
+                {heroContent.title.line1}<br />
+                {heroContent.title.line2}<br />
+                <span style={{ color: '#F97316', fontStyle: 'italic', fontWeight: 800 }}>{heroContent.title.highlight}</span>
               </h1>
 
               <p style={{
@@ -165,9 +166,7 @@ export default function HeroSection({ setCurrentPage }) {
                 marginTop: '14px',
                 lineHeight: 1.35,
                 fontFamily: 'var(--font-body)',
-              }}>
-                con la experiencia y el equipo<br />que su embarcación necesita.
-              </p>
+              }} dangerouslySetInnerHTML={{ __html: heroContent.subtitle }} />
 
               <p style={{
                 fontSize: 'clamp(12px, 1.4vw, 13.5px)',
@@ -177,7 +176,7 @@ export default function HeroSection({ setCurrentPage }) {
                 maxWidth: '400px',
                 fontFamily: 'var(--font-body)',
               }}>
-                Grupo Astikmar S.R.L. es una empresa dominicana especializada en servicios marítimos integrales. Contamos con personal técnico calificado —ingenieros, inspectores, capitanes, marineros, soldadores y pintores— y con tecnología y equipo de nivel profesional para atender cada etapa del ciclo de vida de una embarcación.
+                {heroContent.description}
               </p>
 
               <motion.button
@@ -202,7 +201,7 @@ export default function HeroSection({ setCurrentPage }) {
                   gap: '10px',
                 }}
               >
-                Ver todos los 12 servicios <ArrowRight size={16} />
+                {heroContent.ctaText} <ArrowRight size={16} />
               </motion.button>
             </motion.div>
           </div>
@@ -259,7 +258,7 @@ export default function HeroSection({ setCurrentPage }) {
 
             {/* Imagen del buque */}
             <img
-              src="/Astikmar.png"
+              src={images.hero}
               alt="Buque Grupo Astikmar"
               style={{
                 position: 'absolute',

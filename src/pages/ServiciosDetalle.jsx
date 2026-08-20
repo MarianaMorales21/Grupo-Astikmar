@@ -8,10 +8,11 @@ import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
 
 import { allServices } from '../data/servicesData'
+import { serviceCategories } from '../data/siteConfig'
 
 export { allServices }
 
-const categories = ['Todos', 'Técnico', 'Mantenimiento', 'Logística', 'Inspección', 'Combustible', 'Emergencia']
+const categories = serviceCategories
 
 // Placeholder de imagen/ilustración por servicio — reemplaza por la foto real cuando la tengas.
 // Ahora incluye una etiqueta técnica "IMG·REF" en la esquina, coherente con el resto
@@ -297,8 +298,13 @@ export default function ServiciosDetalle({ setCurrentPage, setSelectedService })
                   pointerEvents: 'none',
                 }} />
 
-                <div style={{ position: 'relative', flexShrink: 0 }}>
-                  <ServiceImagePlaceholder size={92} />
+                <div style={{ position: 'relative', flexShrink: 0, width: '92px', height: '92px', borderRadius: '10px', overflow: 'hidden' }}>
+                  <img
+                    src={svc.image}
+                    alt={svc.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,23,42,0.05) 0%, rgba(15,23,42,0.25) 100%)' }} />
                   {/* Badge tipo sello de referencia técnica en vez de círculo sólido */}
                   <span style={{
                     position: 'absolute', top: '-6px', left: '-6px',

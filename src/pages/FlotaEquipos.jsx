@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import {
   HardHat, Compass, Activity, Shield, Video, Settings, Droplet, Anchor,
-  Ship, Users, Award, Briefcase,
+  Ship, Users, Award, Briefcase, ShieldCheck, Clock, Wrench, CheckCircle2,
 } from 'lucide-react'
 import FrontBlueprint from '../components/Icons/FrontBlueprint'
 import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
@@ -11,47 +11,20 @@ import MarinePropellerBlueprint from '../components/Icons/MarinePropellerBluepri
 import MarineLiftingHookBlueprint from '../components/Icons/MarineLiftingHookBlueprint'
 import CompleteShipBlueprint from '../components/Icons/CompleteShipBlueprint'
 import SectionBadge from '../components/SectionBadge'
+import { capacidadContent, images } from '../data/siteConfig'
 
-const equipments = [
-  {
-    num: '01',
-    title: 'Equipos de Medición y Control por Ultrasonido',
-    desc: 'Realizamos escaneo y medición de espesores de láminas con equipos de ultrasonido de última generación, asegurando precisión y confiabilidad en cada inspección.',
-    icon: <Activity size={20} color="#F97316" />,
-  },
-  {
-    num: '02',
-    title: 'Maquinaria y Herramientas Avanzadas para Soldadura Naval',
-    desc: 'Contamos con equipos de soldadura MIG, TIG, SMAW y FCAW, generadores y herramientas especializadas para todo tipo de trabajos navales y estructuras metálicas.',
-    icon: <HardHat size={20} color="#F97316" />,
-  },
-  {
-    num: '03',
-    title: 'Equipos de Preparación de Superficie y Pintura Anticorrosiva',
-    desc: 'Disponemos de equipos de sandblasting, compresores y sistemas de aplicación de pinturas anticorrosivas de alto desempeño para máxima protección y durabilidad.',
-    icon: <Compass size={20} color="#F97316" />,
-  },
-  {
-    num: '04',
-    title: 'Embarcaciones y Equipo Especializado de Apoyo para Salvamento y Abastecimiento',
-    desc: 'Flota propia de embarcaciones y equipos de apoyo para operaciones de salvamento, abastecimiento, transporte de personal y logística marítima.',
-    icon: <Shield size={20} color="#F97316" />,
-  },
-]
+const iconMap = { Activity, HardHat, Compass, Shield, ShieldCheck, Clock, Wrench, CheckCircle2 }
+
+const equipments = capacidadContent.equipos.map(eq => ({
+  ...eq,
+  icon: (() => { const I = iconMap[eq.iconType]; return I ? <I size={20} color="#F97316" /> : <Activity size={20} color="#F97316" /> })(),
+}))
 
 const quickLinks = [
-  { label: 'Vista 360°', icon: <Video size={18} className="text-orange-500" /> },
+  { label: 'Vista 360\u00b0', icon: <Video size={18} className="text-orange-500" /> },
   { label: 'Motores', icon: <Settings size={18} className="text-orange-500" /> },
   { label: 'Tanques', icon: <Droplet size={18} className="text-orange-500" /> },
-  { label: 'Cubierta y Grúas', icon: <Anchor size={18} className="text-orange-500" /> },
-]
-
-const stats = [
-  { icon: <Ship size={22} color="white" />, value: '20+', label: 'Años de experiencia' },
-  { icon: <Users size={22} color="white" />, value: '120+', label: 'Proyectos realizados' },
-  { icon: <Briefcase size={22} color="white" />, value: '85+', label: 'Profesionales especializados' },
-  { icon: <Anchor size={22} color="white" />, value: '15+', label: 'Embarcaciones construidas' },
-  { icon: <Award size={22} color="white" />, value: '100%', label: 'Comprometidos con la calidad' },
+  { label: 'Cubierta y Gr\u00fas', icon: <Anchor size={18} className="text-orange-500" /> },
 ]
 
 // Placeholder de imagen — con variante clara ("light") para usarse sobre el panel oscuro.
@@ -83,6 +56,8 @@ function SectionTitleCenter({ children, light = false }) {
 // Tarjeta de equipo con hover explícito vía framer-motion (no depende de la clase CSS global,
 // que se veía mal por asumir un fondo claro alrededor — aquí puede ir sobre fondo navy o blanco).
 function EquipmentCard({ eq, index }) {
+  const cardImages = capacidadContent.equipos.map(e => e.image)
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -102,10 +77,14 @@ function EquipmentCard({ eq, index }) {
         transition: 'box-shadow 0.25s ease, border-color 0.25s ease',
       }}
       whileTap={{ scale: 0.99 }}
-      onHoverStart={(e) => {}}
     >
-      <div style={{ height: '160px' }}>
-        <ImagePlaceholder style={{ borderRadius: 0 }} />
+      <div style={{ height: '160px', overflow: 'hidden', position: 'relative' }}>
+        <img
+          src={cardImages[index]}
+          alt={eq.title}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,23,42,0.05) 0%, rgba(15,23,42,0.25) 100%)' }} />
       </div>
       <div style={{ padding: '20px' }}>
         <div style={{
@@ -214,13 +193,13 @@ export default function FlotaEquipos({ setCurrentPage }) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px 40px', alignItems: 'center', marginBottom: '48px' }}>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
             <h1 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px', fontFamily: 'var(--font-heading)' }}>
-              Capacidad <span style={{ color: '#F97316', fontStyle: 'italic' }}>Técnica</span>
+              {capacidadContent.hero.title.line1} <span style={{ color: '#F97316', fontStyle: 'italic' }}>{capacidadContent.hero.title.highlight}</span>
             </h1>
             <p style={{ fontSize: 'clamp(17px, 2.5vw, 20px)', fontWeight: 700, color: '#334e68', marginTop: '4px' }}>
-              Flota y equipos de <span style={{ color: '#F97316' }}>nivel profesional</span>
+              {capacidadContent.hero.subtitle}
             </p>
             <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
-              Contamos con herramienta y maquinaria propia de nivel profesional para ejecutar cada una de nuestras líneas de servicio sin depender de subcontratistas, garantizando eficiencia, calidad y control total en cada proyecto.
+              {capacidadContent.hero.description}
             </p>
           </motion.div>
 
@@ -228,13 +207,18 @@ export default function FlotaEquipos({ setCurrentPage }) {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ minHeight: '260px', position: 'relative' }}
+            style={{ minHeight: '260px', position: 'relative', borderRadius: '20px', overflow: 'hidden' }}
           >
-            <ImagePlaceholder />
+            <img
+              src={capacidadContent.hero.image}
+              alt="Capacidad técnica Astikmar"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.35) 100%)' }} />
             <div style={{ position: 'absolute', top: '4%', right: '2%', width: '200px', opacity: 0.7, pointerEvents: 'none' }}>
               <ConceptBlueprint />
               <p style={{
-                fontFamily: 'cursive', fontSize: '12px', color: 'rgba(29,41,57,0.5)',
+                fontFamily: 'cursive', fontSize: '12px', color: 'rgba(255,255,255,0.7)',
                 textAlign: 'right', marginTop: '-6px', fontStyle: 'italic',
               }}>
                 Equipos propios, resultados confiables
@@ -384,41 +368,44 @@ export default function FlotaEquipos({ setCurrentPage }) {
 
         <div style={{ maxWidth: '1140px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 900, color: '#101c2c', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '14px', fontFamily: 'var(--font-heading)' }}>
-            Nuestro <span style={{ color: '#F97316', fontStyle: 'italic' }}>Enfoque Operativo</span>
+            {capacidadContent.enfoqueOperativo.title.line1} <span style={{ color: '#F97316', fontStyle: 'italic' }}>{capacidadContent.enfoqueOperativo.title.highlight}</span>
           </h2>
           <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, maxWidth: '760px', marginBottom: '44px' }}>
-            Contamos con herramienta y maquinaria propia de nivel profesional para ejecutar cada una de nuestras líneas de servicio sin depender de subcontratistas. Esto nos permite un estricto control de calidad y plazos de entrega inmejorables.
+            {capacidadContent.enfoqueOperativo.description}
           </p>
 
-          {/* Stats — responsivo */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '20px', borderTop: '1px solid rgba(29,41,57,0.1)', paddingTop: '32px' }}>
-            {stats.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ duration: 0.4, delay: i * 0.06 }}
-                whileHover={{ y: -3 }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '14px', padding: '0 18px',
-                  borderLeft: i === 0 ? 'none' : '1px solid rgba(29,41,57,0.1)',
-                }}
-              >
-                <div style={{
-                  width: '44px', height: '44px', borderRadius: '10px', flexShrink: 0,
-                  background: 'linear-gradient(135deg, #F97316, #ea580c)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 4px 12px rgba(249,115,22,0.3)',
-                }}>
-                  {s.icon}
-                </div>
-                <div>
-                  <p style={{ fontSize: '20px', fontWeight: 800, color: '#1D2939', lineHeight: 1.1 }}>{s.value}</p>
-                  <p style={{ fontSize: '11.5px', color: '#6b7280', lineHeight: 1.3 }}>{s.label}</p>
-                </div>
-              </motion.div>
-            ))}
+          {/* Ventajas del enfoque operativo */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '20px', marginBottom: '48px' }}>
+            {capacidadContent.enfoqueOperativo.advantages.map((adv, i) => {
+              const AdvIcon = iconMap[adv.iconType] || ShieldCheck
+              return (
+                <motion.div
+                  key={adv.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.45, delay: i * 0.08 }}
+                  whileHover={{ y: -4 }}
+                  style={{
+                    padding: '22px 20px',
+                    background: 'rgba(249,115,22,0.04)',
+                    border: '1px solid rgba(249,115,22,0.12)',
+                    borderRadius: '14px',
+                  }}
+                >
+                  <div style={{
+                    width: '40px', height: '40px', borderRadius: '10px',
+                    background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '14px', color: '#F97316',
+                  }}>
+                    <AdvIcon size={18} />
+                  </div>
+                  <h4 style={{ fontSize: '14px', fontWeight: 800, color: '#1D2939', marginBottom: '6px' }}>{adv.title}</h4>
+                  <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.6 }}>{adv.desc}</p>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>

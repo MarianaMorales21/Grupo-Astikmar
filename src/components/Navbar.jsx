@@ -2,13 +2,9 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Send, Menu, X } from 'lucide-react'
 
-export const navLinks = [
-  { label: 'Inicio', id: 'inicio' },
-  { label: 'Nosotros', id: 'nosotros' },
-  { label: 'Servicios', id: 'servicios' },
-  { label: 'Proyectos', id: 'proyectos' },
-  { label: 'Capacidad Técnica', id: 'capacidad' },
-]
+import { navLinks as navLinksConfig } from '../data/siteConfig'
+
+export const navLinks = navLinksConfig
 
 export default function Navbar({ currentPage, setCurrentPage }) {
   const [scrolled, setScrolled] = useState(false)

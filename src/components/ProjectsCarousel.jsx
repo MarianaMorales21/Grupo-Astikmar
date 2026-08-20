@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Award, ArrowRight } from 'lucide-react'
+import { Award } from 'lucide-react'
 
 import './ProjectsCarousel.css'
 
@@ -56,7 +56,7 @@ function AnimatedCounter({ target }) {
   )
 }
 
-export default function ProjectsCarousel({ setCurrentPage }) {
+export default function ProjectsCarousel() {
   const [isPaused, setIsPaused] = useState(false)
 
   return (
@@ -69,12 +69,6 @@ export default function ProjectsCarousel({ setCurrentPage }) {
         overflow: 'hidden',
       }}
     >
-      {/* ── Regla de Plano Técnico Superior ── */}
-      <div className="blueprint-ruler-top">
-        {["-20'", "-10'", "0'", "10'", "20'", "30'", "40'", "50'", "60'", "70'", "80'", "90'", "100'"].map((m, i) => (
-          <span key={i}>{m}</span>
-        ))}
-      </div>
 
       {/* ── LEFT VERTICAL RULER ── */}
       <div className="blueprint-ruler-vertical" style={{
@@ -111,71 +105,6 @@ export default function ProjectsCarousel({ setCurrentPage }) {
       <div className="cad-corner-marker" style={{ position: 'absolute', top: '10px', right: '16px', fontSize: '11px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace', zIndex: 1 }}>
         CAD-REF: 1440x800 +
       </div>
-
-      {/* ═══ Encabezado + Contador ═══ */}
-      <div style={{ maxWidth: '1140px', margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 2 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '48px' }}
-        >
-          {/* Contador de proyectos */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              background: 'linear-gradient(135deg, rgba(249,115,22,0.1), rgba(249,115,22,0.05))',
-              border: '1px solid rgba(249,115,22,0.25)',
-              borderRadius: '100px',
-              padding: '8px 20px',
-              marginBottom: '20px',
-            }}
-          >
-            <Award size={18} color="#F97316" />
-            <span style={{
-              fontSize: '13px',
-              fontWeight: 700,
-              color: '#F97316',
-              letterSpacing: '0.02em',
-            }}>
-              <AnimatedCounter target={TOTAL_PROJECTS} />+ Proyectos Completados
-            </span>
-          </motion.div>
-
-          <h2
-            style={{
-              fontSize: 'clamp(28px, 4vw, 40px)',
-              fontWeight: 900,
-              color: '#1D2939',
-              letterSpacing: '-0.02em',
-              lineHeight: 1.15,
-              marginBottom: '12px',
-            }}
-          >
-            Nuestros <span style={{ color: '#F97316' }}>Trabajos</span>
-          </h2>
-
-          <p
-            style={{
-              fontSize: '15px',
-              color: '#6b7280',
-              maxWidth: '560px',
-              margin: '0 auto',
-              lineHeight: 1.65,
-            }}
-          >
-            Más de 47 proyectos de construcción, mantenimiento y reparación naval completados con éxito en toda la región.
-          </p>
-        </motion.div>
-      </div>
-
       {/* ═══ Carrusel de imágenes ═══ */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -327,44 +256,6 @@ export default function ProjectsCarousel({ setCurrentPage }) {
         </div>
       </motion.div>
 
-      {/* ═══ CTA inferior ═══ */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        style={{
-          textAlign: 'center',
-          marginTop: '48px',
-          position: 'relative',
-          zIndex: 2,
-        }}
-      >
-        <motion.button
-          onClick={() => setCurrentPage?.('proyectos')}
-          whileHover={{ scale: 1.04, boxShadow: '0 12px 40px rgba(249,115,22,0.45)' }}
-          whileTap={{ scale: 0.97 }}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '10px',
-            background: 'linear-gradient(135deg, #F97316 0%, #ea580c 100%)',
-            color: 'white',
-            fontSize: '15px',
-            fontWeight: 700,
-            padding: '14px 32px',
-            borderRadius: '12px',
-            border: 'none',
-            cursor: 'pointer',
-            boxShadow: '0 6px 24px rgba(249,115,22,0.4)',
-            letterSpacing: '0.01em',
-            fontFamily: 'Inter, sans-serif',
-          }}
-        >
-          Ver Galería Completa
-          <ArrowRight size={18} />
-        </motion.button>
-      </motion.div>
     </section>
   )
 }

@@ -10,10 +10,10 @@ import Home from './pages/Home'
 import Nosotros from './pages/Nosotros'
 import ServiciosDetalle from './pages/ServiciosDetalle'
 import FlotaEquipos from './pages/FlotaEquipos'
-import ProyectosGaleria from './pages/ProyectosGaleria'
 import Contacto from './pages/Contacto'
 import InfoServicios from './pages/InfoServicios'
 import InfoProyecto from './pages/InfoProyectos'
+import AdminPage from './pages/AdminPage'
 
 import './index.css'
 
@@ -86,7 +86,14 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('inicio')
+  // Soporte para ruta admin: /home/josegc2026 → panel de administración
+  const getInitialPage = () => {
+    const path = window.location.pathname
+    if (path === '/home/josegc2026') return 'admin'
+    return 'inicio'
+  }
+
+  const [currentPage, setCurrentPage] = useState(getInitialPage)
   const [contactService, setContactService] = useState('')
   // Servicio elegido en ServiciosDetalle; InfoServicios lo lee para mostrar su detalle.
   const [selectedService, setSelectedService] = useState(null)
@@ -97,6 +104,29 @@ export default function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [currentPage])
+
+  // Actualizar la URL cuando se navega al admin
+  useEffect(() => {
+    if (currentPage === 'admin' && window.location.pathname !== '/home/josegc2026') {
+      window.history.pushState({}, '', '/home/josegc2026')
+    } else if (currentPage !== 'admin' && window.location.pathname === '/home/josegc2026') {
+      window.history.pushState({}, '', '/')
+    }
+  }, [currentPage])
+
+  // Escuchar cambios de navegación del navegador (botón atrás/adelante)
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname
+      if (path === '/home/josegc2026') {
+        setCurrentPage('admin')
+      } else {
+        setCurrentPage('inicio')
+      }
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   const renderPage = () => {
     switch (currentPage) {
@@ -111,11 +141,15 @@ export default function App() {
       case 'capacidad':
         return <FlotaEquipos />
       case 'proyectos':
-        return <ProyectosGaleria setCurrentPage={setCurrentPage} />
+        return <Home setCurrentPage={setCurrentPage} setSelectedService={setSelectedService} setSelectedProject={setSelectedProject} />
       case 'info-proyecto':
         return <InfoProyecto project={selectedProject} setCurrentPage={setCurrentPage} />
       case 'contacto':
         return <Contacto contactService={contactService} setContactService={setContactService} setCurrentPage={setCurrentPage} />
+      case 'admin':
+        return <AdminPage setCurrentPage={setCurrentPage} />
+      case 'admin-metrics':
+        return <AdminPage setCurrentPage={setCurrentPage} />
       default:
         return <Home setCurrentPage={setCurrentPage} setSelectedService={setSelectedService} setSelectedProject={setSelectedProject} />
     }

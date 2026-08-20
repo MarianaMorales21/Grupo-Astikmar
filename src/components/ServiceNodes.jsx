@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, X } from 'lucide-react'
 import { createPortal } from 'react-dom'
+import { serviceNodes, serviceNodeModals } from '../data/siteConfig'
 
 // ─────────────────────────────────────────────
 // Íconos estilo "boceto de plano" (línea fina, trazo a mano, navy + acento naranja)
@@ -73,95 +74,15 @@ function IconCubierta() {
   )
 }
 
-const nodes = [
-  {
-    id: 1,
-    number: '1',
-    label: 'DISEÑO Y CONSTRUCCIÓN NAVAL',
-    desc: 'Diseño de embarcaciones de carga y pasajeros con ingeniería de alto nivel.',
-    position: { top: '18%', left: '18%' },
-    tooltipPos: 'bottom',
-    Icon: IconDiseno,
-    floatDelay: 0,
-  },
-  {
-    id: 2,
-    number: '2',
-    label: 'MANTENIMIENTO DE MOTORES',
-    desc: 'Servicio completo de motores principales y auxiliares en sala de máquinas.',
-    position: { top: '62%', left: '28%' },
-    tooltipPos: 'right',
-    Icon: IconMotores,
-    floatDelay: 0.6,
-  },
-  {
-    id: 3,
-    number: '3',
-    label: 'REPARACIONES ESTRUCTURALES',
-    desc: 'Reparación y refuerzo de cascos, mamparos y estructuras de acero naval.',
-    position: { top: '55%', left: '62%' },
-    tooltipPos: 'left',
-    Icon: IconEstructural,
-    floatDelay: 1.1,
-  },
-  {
-    id: 4,
-    number: '4',
-    label: 'EQUIPOS DE CUBIERTA Y GRÚAS',
-    desc: 'Mantenimiento, reparación e instalación de grúas y equipos de maniobra.',
-    position: { top: '12%', left: '50%' },
-    tooltipPos: 'bottom',
-    Icon: IconCubierta,
-    floatDelay: 1.6,
-  },
-]
-
-const modalData = {
-  1: {
-    title: 'Diseño y Construcción Naval',
-    icon: '⚓',
-    items: [
-      'Diseño asistido por computadora (CAD)',
-      'Construcción en acero, aluminio y FRP',
-      'Supervisión integral del proceso',
-      'Certificación por clasificadoras internacionales',
-      'Pruebas de mar y puesta en operación',
-    ],
-  },
-  2: {
-    title: 'Mantenimiento de Motores',
-    icon: '⚙️',
-    items: [
-      'Motores MAN, Caterpillar, Cummins y Wärtsilä',
-      'Overhaul completo de motores principales',
-      'Sistemas de combustible y lubricación',
-      'Motores auxiliares y generadores',
-      'Diagnóstico vibracional y análisis de aceite',
-    ],
-  },
-  3: {
-    title: 'Reparaciones Estructurales',
-    icon: '🔧',
-    items: [
-      'Corte y soldadura de casco y superestructura',
-      'Medición de espesores por ultrasonido',
-      'Reparación de mamparos y refuerzos',
-      'Arenado y pintura anticorrosiva',
-      'Certificación por inspectores navales',
-    ],
-  },
-  4: {
-    title: 'Equipos de Cubierta y Grúas',
-    icon: '🏗️',
-    items: [
-      'Mantenimiento de grúas de cubierta',
-      'Sistemas de anclas y molinetes',
-      'Equipos de salvamento y seguridad',
-      'Escotillas y tapas de bodega',
-      'Sistemas de amarre y remolque',
-    ],
-  },
+// Icon components map for service nodes
+const iconComponents = {
+  1: IconDiseno,
+  2: IconMotores,
+  3: IconEstructural,
+  4: IconCubierta,
 }
+
+// nodes and modalData are now imported from siteConfig
 
 // ─────────────────────────────────────────────
 // Modal montado via portal en document.body
@@ -169,7 +90,7 @@ const modalData = {
 // garantizar z-index y visibilidad correctos.
 // ─────────────────────────────────────────────
 function NodeModal({ modalNode, onClose }) {
-  const data = modalData[modalNode]
+  const data = serviceNodeModals[modalNode]
   if (!data) return null
 
   return createPortal(
@@ -281,9 +202,9 @@ export default function ServiceNodes() {
 
   return (
     <>
-      {nodes.map((node) => {
+      {serviceNodes.map((node) => {
         const isActive = activeNode === node.id
-        const Icon = node.Icon
+        const Icon = iconComponents[node.id]
         return (
           <motion.div
             key={node.id}

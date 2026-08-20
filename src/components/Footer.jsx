@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin } from 'lucide-react'
 import WaveTop from './WaveTop'
+import { footerContent, contactInfo, images } from '../data/siteConfig'
 
 // Social icons as SVGs
 function LinkedInIcon() {
@@ -66,30 +67,30 @@ export default function Footer({ setCurrentPage }) {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src="/favicon.png"
+                    src={images.logo}
                     alt="Grupo Astikmar"
                     style={{ height: '80px', width: 'auto', objectFit: 'contain' }}
                   />
                 </div>
               </button>
               <p className="footer-text" style={{ marginTop: '12px', maxWidth: '260px' }}>
-                Empresa dominicana especializada en servicios marítimos integrales con más de 20 años de experiencia en el Caribe.
+                {footerContent.description}
               </p>
               <p className="footer-text" style={{ marginTop: '12px', fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>
-                © 2025 Grupo Astikmar. Todos los derechos reservados.
+                {footerContent.copyright}
               </p>
             </div>
 
             {/* Contact */}
             <div>
               <div className="footer-heading">Contáctanos</div>
-              <a href="tel:+18495139090" className="footer-link">
+              <a href={`tel:${contactInfo.phoneRaw}`} className="footer-link">
                 <Phone size={14} />
-                +1 (849) 513-9090
+                {contactInfo.phone}
               </a>
-              <a href="mailto:carlos.m@grupoastikmar.com" className="footer-link">
+              <a href={`mailto:${contactInfo.email}`} className="footer-link">
                 <Mail size={14} />
-                carlos.m@grupoastikmar.com
+                {contactInfo.email}
               </a>
             </div>
 
@@ -99,9 +100,8 @@ export default function Footer({ setCurrentPage }) {
               <div className="footer-link" style={{ cursor: 'default' }}>
                 <MapPin size={14} />
                 <div>
-                  <div>Av. López de Vega No. 13, </div>
-                  <div>Plaza Progreso, Piso 8, Naco,</div>
-                  <div>Santo Domingo, República Dominicana</div>
+                  <div>{contactInfo.address.street} </div>
+                  <div>{contactInfo.address.city}</div>
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function Footer({ setCurrentPage }) {
           <div className="container-astikmar">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
               <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
-                © 2025 Grupo Astikmar. Todos los derechos reservados.
+                {footerContent.copyright}
               </span>
               <div style={{ display: 'flex', gap: '16px' }}>
                 <button onClick={() => handleNavClick('contacto')} style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', textDecoration: 'none', background: 'transparent', border: 0, cursor: 'pointer' }}>Política de Privacidad</button>
@@ -141,7 +141,7 @@ export default function Footer({ setCurrentPage }) {
 
       {/* WhatsApp floating button */}
       <a
-        href="https://wa.me/18495139090"
+        href={contactInfo.whatsapp}
         className="whatsapp-btn"
         target="_blank"
         rel="noopener noreferrer"

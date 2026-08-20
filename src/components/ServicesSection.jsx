@@ -11,6 +11,7 @@ import SideProfileBlueprint from './Icons/SideprofileBlueprint'
 import ConceptBlueprint from './Icons/ConceptBlueprint'
 import ShipTanksBlueprint from './Icons/ShipTanksBlueprint'
 import { allServices } from '../data/servicesData'
+import { servicesSectionContent } from '../data/siteConfig'
 
 const iconMap = {
   Wrench,
@@ -422,9 +423,9 @@ export default function ServicesSection({ setCurrentPage, setSelectedService }) 
               fontFamily: 'var(--font-heading)',
             }}
           >
-            Nuestros{' '}
-            <span style={{ color: '#F97316', fontStyle: 'italic' }}>Servicios</span>{' '}
-            Principales
+            {servicesSectionContent.title.line1}{' '}
+            <span style={{ color: '#F97316', fontStyle: 'italic' }}>{servicesSectionContent.title.highlight}</span>{' '}
+            {servicesSectionContent.title.line2}
           </h2>
 
           <p
@@ -437,7 +438,7 @@ export default function ServicesSection({ setCurrentPage, setSelectedService }) 
               fontFamily: 'var(--font-body)',
             }}
           >
-            Ingeniería, reparación y mantenimiento naval con estándares internacionales ISO 9001.
+            {servicesSectionContent.subtitle}
           </p>
         </motion.div>
 
@@ -626,7 +627,7 @@ export default function ServicesSection({ setCurrentPage, setSelectedService }) 
               fontFamily: 'Inter, sans-serif',
             }}
           >
-            Ver catálogo completo de servicios
+            {servicesSectionContent.ctaText}
             <ArrowRight size={18} />
           </motion.button>
         </motion.div>

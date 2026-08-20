@@ -10,52 +10,19 @@ import MarineRudderBlueprint from '../components/Icons/MarineRudderBlueprint'
 import MarineLiftingHookBlueprint from '../components/Icons/MarineLiftingHookBlueprint'
 import CompleteShipBlueprint from '../components/Icons/CompleteShipBlueprint'
 import SectionBadge from '../components/SectionBadge'
+import { nosotrosContent, images } from '../data/siteConfig'
 
-const valores = [
-  {
-    icon: <Shield size={22} />,
-    title: 'Seguridad',
-    desc: 'Priorizamos la seguridad en cada operación, protegiendo a las personas, el ambiente y los activos.',
-  },
-  {
-    icon: <Award size={22} />,
-    title: 'Calidad',
-    desc: 'Ejecutamos cada trabajo con los exigentes estándares técnicos del sector marítimo internacional.',
-  },
-  {
-    icon: <Users size={22} />,
-    title: 'Experiencia',
-    desc: 'Personal altamente calificado y formado específicamente para cada especialidad técnica.',
-  },
-  {
-    icon: <CheckCircle2 size={22} />,
-    title: 'Excelencia',
-    desc: 'Nos esforzamos por superar las expectativas con calidad, innovación y mejora continua.',
-  },
-  {
-    icon: <HeartHandshake size={22} />,
-    title: 'Compromiso',
-    desc: 'Cumplimos con rigor los tiempos acordados y las especificaciones técnicas de cada cliente.',
-  },
-]
+const iconMap = { Shield, Users, Award, HeartHandshake, CheckCircle2, Cpu, Leaf, UserCheck, Wrench, ShieldCheck }
 
-const compromisos = [
-  {
-    icon: <CheckCircle2 size={18} className="text-orange-500" />,
-    title: 'Calidad garantizada',
-    desc: 'Cumplimos con los más altos estándares internacionales.',
-  },
-  {
-    icon: <Cpu size={18} className="text-orange-500" />,
-    title: 'Tecnología avanzada',
-    desc: 'Invertimos en innovación para ofrecer soluciones eficientes.',
-  },
-  {
-    icon: <Leaf size={18} className="text-orange-500" />,
-    title: 'Sostenibilidad',
-    desc: 'Operamos de manera responsable con el ambiente y la sociedad.',
-  },
-]
+const valores = nosotrosContent.valores.items.map(v => ({
+  ...v,
+  icon: (() => { const I = iconMap[v.iconType]; return I ? <I size={22} /> : <Shield size={22} /> })(),
+}))
+
+const compromisos = nosotrosContent.compromiso.items.map(c => ({
+  ...c,
+  icon: <CheckCircle2 size={18} className="text-orange-500" />,
+}))
 
 // Placeholder de imagen — con variante clara ("light") para usarse sobre el panel oscuro.
 function ImagePlaceholder({ radius = '10px', light = false, style = {} }) {
@@ -253,14 +220,14 @@ export default function Nosotros({ setCurrentPage }) {
                 fontFamily: 'var(--font-heading)',
               }}
             >
-              Quienes{' '}
-              <span style={{ color: '#F97316', fontStyle: 'italic' }}>Somos</span>{' '}
+              {nosotrosContent.hero.title.line1}{' '}
+              <span style={{ color: '#F97316', fontStyle: 'italic' }}>{nosotrosContent.hero.title.highlight}</span>{' '}
             </h1>
             <p style={{ fontSize: '19px', fontWeight: 600, color: '#334e68', marginTop: '8px' }}>
-              Construyendo <span style={{ color: '#F97316', fontStyle: 'italic' }}>confianza</span>, impulsando el mar.
+              {nosotrosContent.hero.subtitle}
             </p>
             <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.75, marginTop: '16px' }}>
-              Somos una empresa dominicana especializada en soluciones marítimas integrales. Combinamos experiencia, tecnología y compromiso para acompañar a nuestros clientes en cada etapa del ciclo de vida de su embarcación.
+              {nosotrosContent.hero.description}
             </p>
           </motion.div>
 
@@ -268,9 +235,14 @@ export default function Nosotros({ setCurrentPage }) {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            style={{ minHeight: '260px' }}
+            style={{ minHeight: '260px', borderRadius: '20px', overflow: 'hidden', position: 'relative' }}
           >
-            <ImagePlaceholder />
+            <img
+              src={nosotrosContent.hero.image}
+              alt="Equipo Astikmar en operación"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.35) 100%)' }} />
           </motion.div>
         </div>
       </div>
@@ -290,8 +262,8 @@ export default function Nosotros({ setCurrentPage }) {
                 fontFamily: 'var(--font-heading)',
               }}
             >
-              Nuestro{' '}
-              <span style={{ color: '#F97316', fontStyle: 'italic' }}>Compromiso</span>{' '}
+              {nosotrosContent.compromiso.title.line1}{' '}
+              <span style={{ color: '#F97316', fontStyle: 'italic' }}>{nosotrosContent.compromiso.title.highlight}</span>{' '}
             </h2>
             <motion.p
               initial={{ opacity: 0, x: -20 }}
@@ -300,7 +272,7 @@ export default function Nosotros({ setCurrentPage }) {
               transition={{ duration: 0.5 }}
               style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, marginTop: '0' }}
             >
-              En Grupo Astikmar, estamos comprometidos con el desarrollo sostenible del sector marítimo, implementando prácticas responsables que generan valor para nuestros clientes, colaboradores y la comunidad.
+              {nosotrosContent.compromiso.description}
             </motion.p>
           </div>
 
@@ -438,8 +410,8 @@ export default function Nosotros({ setCurrentPage }) {
               fontFamily: 'var(--font-heading)',
             }}
           >
-            Nuestros{' '}
-            <span style={{ color: '#F97316', fontStyle: 'italic' }}>Valores</span>{' '}
+            {nosotrosContent.valores.title.line1}{' '}
+            <span style={{ color: '#F97316', fontStyle: 'italic' }}>{nosotrosContent.valores.title.highlight}</span>{' '}
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '40px', alignItems: 'start' }}>
 
@@ -471,15 +443,21 @@ export default function Nosotros({ setCurrentPage }) {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 120px), 1fr))', gap: '16px', minHeight: '200px' }}>
-              {[0, 1, 2].map(i => (
+              {nosotrosContent.valores.images.map((img, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
+                  style={{ borderRadius: '12px', overflow: 'hidden', position: 'relative', minHeight: '160px' }}
                 >
-                  <ImagePlaceholder light />
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,23,42,0.05) 0%, rgba(15,23,42,0.5) 100%)' }} />
                 </motion.div>
               ))}
             </div>
@@ -522,12 +500,12 @@ export default function Nosotros({ setCurrentPage }) {
                   fontFamily: 'var(--font-heading)',
                 }}
               >
-                Nuestro{' '}
-                <span style={{ color: '#F97316', fontStyle: 'italic' }}>Equipo Humano</span>
+                {nosotrosContent.equipo.title.line1}{' '}
+                <span style={{ color: '#F97316', fontStyle: 'italic' }}>{nosotrosContent.equipo.title.highlight}</span>
               </h2>
 
               <p style={{ fontSize: '18px', fontWeight: 600, color: '#334e68', maxWidth: '750px', lineHeight: 1.4, marginBottom: '8px' }}>
-                Los mejores especialistas multidisciplinarios, unidos por la excelencia y la pasión naval.
+                {nosotrosContent.equipo.subtitle}
               </p>
             </motion.div>
 
@@ -542,82 +520,39 @@ export default function Nosotros({ setCurrentPage }) {
                 transition={{ duration: 0.65 }}
               >
                 <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.75, marginBottom: '16px' }}>
-                  En <strong style={{ color: '#101c2c' }}>Grupo Astikmar</strong> nos enorgullece contar con el capital humano más calificado, apasionado y experimentado del sector naval. Integramos a los mejores profesionales en cada una de las disciplinas clave de la industria marítima, combinando décadas de trayectoria en dique seco, ingeniería aplicada y operaciones portuarias.
+                  {nosotrosContent.equipo.description1}
                 </p>
 
                 <p style={{ fontSize: '14.5px', color: '#4b5563', lineHeight: 1.75, marginBottom: '28px' }}>
-                  Desde cálculos estructurales de máxima precisión y conversiones de cascos, hasta el overhaul a cero horas de motores de alta potencia y maniobras críticas; nuestro equipo multidisciplinario trabaja en perfecta sincronía para garantizar que cada proyecto supere los más altos estándares internacionales de seguridad y eficiencia.
+                  {nosotrosContent.equipo.description2}
                 </p>
 
                 {/* 4 Especialidades Clave */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: '14px' }}>
-                  <div style={{
-                    background: 'rgba(29,41,57,0.02)',
-                    border: '1px solid rgba(29,41,57,0.1)',
-                    borderRadius: '12px',
-                    padding: '16px',
-                    transition: 'all 0.3s ease',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                      <Award size={16} color="#F97316" />
-                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Ingeniería y Diseño</h4>
-                    </div>
-                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
-                      Cálculos de estabilidad, arquitectura naval y certificación ante casas clasificadoras.
-                    </p>
-                  </div>
-
-                  <div style={{
-                    background: 'rgba(29,41,57,0.02)',
-                    border: '1px solid rgba(29,41,57,0.1)',
-                    borderRadius: '12px',
-                    padding: '16px',
-                    transition: 'all 0.3s ease',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                      <Wrench size={16} color="#F97316" />
-                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Mecánica y Propulsión</h4>
-                    </div>
-                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
-                      Overhaul de motores diésel marinos, turbocompresores y sistemas de transmisión.
-                    </p>
-                  </div>
-
-                  <div style={{
-                    background: 'rgba(29,41,57,0.02)',
-                    border: '1px solid rgba(29,41,57,0.1)',
-                    borderRadius: '12px',
-                    padding: '16px',
-                    transition: 'all 0.3s ease',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                      <ShieldCheck size={16} color="#F97316" />
-                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Soldadura Homologada</h4>
-                    </div>
-                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
-                      Especialistas certificados bajo normas AWS D1.1, Lloyd's Register y ABS.
-                    </p>
-                  </div>
-
-                  <div style={{
-                    background: 'rgba(29,41,57,0.02)',
-                    border: '1px solid rgba(29,41,57,0.1)',
-                    borderRadius: '12px',
-                    padding: '16px',
-                    transition: 'all 0.3s ease',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                      <Cpu size={16} color="#F97316" />
-                      <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>Sistemas y Control</h4>
-                    </div>
-                    <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
-                      Ensayos no destructivos (NDT), electricidad de potencia, gobierno e hidráulica naval.
-                    </p>
-                  </div>
+                  {nosotrosContent.equipo.specialities.map((spec, i) => {
+                    const SpecIcon = iconMap[spec.iconType] || Award
+                    return (
+                      <div key={i} style={{
+                        background: 'rgba(29,41,57,0.02)',
+                        border: '1px solid rgba(29,41,57,0.1)',
+                        borderRadius: '12px',
+                        padding: '16px',
+                        transition: 'all 0.3s ease',
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <SpecIcon size={16} color="#F97316" />
+                          <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#101c2c' }}>{spec.title}</h4>
+                        </div>
+                        <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5, margin: 0 }}>
+                          {spec.desc}
+                        </p>
+                      </div>
+                    )
+                  })}
                 </div>
               </motion.div>
 
-              {/* Columna Derecha: Espacio para Imagen Representativa del Equipo */}
+              {/* Columna Derecha: Imagen Representativa del Equipo */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -628,36 +563,22 @@ export default function Nosotros({ setCurrentPage }) {
                   width: '100%',
                   minHeight: '380px',
                   borderRadius: '20px',
-                  border: '1.5px dashed rgba(126, 111, 111, 0.4)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  textAlign: 'center',
                   overflow: 'hidden',
                 }}
               >
-                {/* Cuadrícula de plano sutil de fondo */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage:
-                      'linear-gradient(rgba(29,41,57,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(29,41,57,0.06) 1px, transparent 1px)',
-                    backgroundSize: '24px 24px',
-                    pointerEvents: 'none',
-                  }}
+                <img
+                  src={nosotrosContent.equipo.image}
+                  alt="Equipo técnico de Astikmar"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }}
                 />
-
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.4) 100%)' }} />
                 {/* Marcas técnicas CAD de esquina */}
-                <div style={{ position: 'absolute', top: '12px', left: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(29,41,57,0.45)', fontFamily: 'monospace' }}>
+                <div style={{ position: 'absolute', top: '12px', left: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(255,255,255,0.7)', fontFamily: 'monospace' }}>
                   + REF: ASTIKMAR_TEAM_2025
                 </div>
-                <div style={{ position: 'absolute', bottom: '12px', right: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(249,115,22,0.7)', fontFamily: 'monospace' }}>
+                <div style={{ position: 'absolute', bottom: '12px', right: '16px', fontSize: '10px', fontWeight: 800, color: 'rgba(249,115,22,0.9)', fontFamily: 'monospace' }}>
                   [STAFF_MULTIDISCIPLINARIO] +
                 </div>
-
               </motion.div>
 
             </div>

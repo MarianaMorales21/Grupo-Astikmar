@@ -175,7 +175,7 @@ export default function InfoServicios({ service, setCurrentPage }) {
       </motion.div>
 
       {/* paddingTop unificado para alineación visual exacta */}
-            <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '20px', position: 'relative', zIndex: 1 }}>
+      <div className="container-astikmar" style={{ paddingLeft: 'clamp(20px, 4vw, 52px)', paddingRight: 'clamp(20px, 4vw, 52px)', paddingTop: '20px', position: 'relative', zIndex: 1 }}>
         {/* Breadcrumb */}
         <p style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button onClick={() => setCurrentPage('inicio')} style={{ background: 'none', border: 0, cursor: 'pointer', color: '#9ca3af', fontSize: '13px', padding: 0 }}>Inicio</button>
@@ -301,92 +301,6 @@ export default function InfoServicios({ service, setCurrentPage }) {
         {/* ══════════ GALERÍA + CARACTERÍSTICAS DESTACADAS ══════════ */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '40px', marginBottom: '56px', alignItems: 'start' }}>
 
-          {/* Carrusel */}
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
-                {(() => {
-                  const text = service.galleryTitle || 'Tipos de Embarcaciones que Reparamos';
-                  const words = text.trim().split(' ');
-                  const midIndex = Math.ceil(words.length / 2);
-
-                  const firstHalf = words.slice(0, midIndex).join(' ');
-                  const secondHalf = words.slice(midIndex).join(' ');
-
-                  return (
-                    <h6
-                      style={{
-                        fontSize: 'clamp(12px, 1.5vw, 16px)',
-                        fontWeight: 900,
-                        color: '#1D2939', // Primera mitad en tono oscuro
-                        letterSpacing: '0.08em',
-                        lineHeight: 1.2,
-                        marginBottom: '8px',
-                        fontFamily: 'var(--font-heading)',
-                        textTransform: 'uppercase',
-                        WebkitFontSmoothing: 'antialiased',
-                        WebkitTextStroke: '0.3px #1D2939',
-                      }}
-                    >
-                      {firstHalf}{' '}
-                      {secondHalf && (
-                        <span
-                          style={{
-                            color: '#F97316', // Segunda mitad en naranja
-                            fontStyle: 'italic',
-                            WebkitTextStroke: '0.3px #F97316',
-                          }}
-                        >
-                          {secondHalf}
-                        </span>
-                      )}
-                    </h6>
-                  );
-                })()}
-                <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
-              </div>
-              <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
-                <button
-                  onClick={() => setGalleryPage(p => (p - 1 + totalPages) % totalPages)}
-                  style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid rgba(29,41,57,0.15)', background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <ChevronLeft size={16} color="#1D2939" />
-                </button>
-                <button
-                  onClick={() => setGalleryPage(p => (p + 1) % totalPages)}
-                  style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid rgba(29,41,57,0.15)', background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <ChevronRight size={16} color="#1D2939" />
-                </button>
-              </div>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '16px' }}>
-              {visibleGallery.map((label, i) => (
-                <motion.div key={label + i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-                  <div style={{ height: '130px', marginBottom: '8px' }}>
-                    <ImagePlaceholder />
-                  </div>
-                  <p style={{ fontSize: '12px', fontWeight: 700, color: '#1D2939', textAlign: 'center', lineHeight: 1.3 }}>{label}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            {totalPages > 1 && (
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginTop: '16px' }}>
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <span
-                    key={i}
-                    onClick={() => setGalleryPage(i)}
-                    style={{
-                      width: '7px', height: '7px', borderRadius: '50%', cursor: 'pointer',
-                      background: i === galleryPage ? '#F97316' : 'rgba(29,41,57,0.15)',
-                    }}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
 
           {/* Características destacadas + sello de calidad */}
           <div>
@@ -420,19 +334,20 @@ export default function InfoServicios({ service, setCurrentPage }) {
               ))}
             </ul>
 
-            <div style={{ border: '1px solid rgba(29,41,57,0.1)', borderRadius: '12px', padding: '20px' }}>
-              <div style={{
-                width: '40px', height: '40px', borderRadius: '50%',
-                background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px',
-              }}>
-                <Award size={20} className="text-orange-500" />
-              </div>
-              <h5 style={{ fontSize: '14px', fontWeight: 800, color: '#1D2939', marginBottom: '6px' }}>Calidad certificada</h5>
-              <p style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.6, marginBottom: '10px' }}>
-                Garantizamos nuestros trabajos bajo los más altos estándares de calidad y seguridad.
-              </p>
+
+          </div>
+          <div style={{ border: '1px solid rgba(29,41,57,0.1)', borderRadius: '12px', padding: '20px' }}>
+            <div style={{
+              width: '40px', height: '40px', borderRadius: '50%',
+              background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px',
+            }}>
+              <Award size={20} className="text-orange-500" />
             </div>
+            <h5 style={{ fontSize: '14px', fontWeight: 800, color: '#1D2939', marginBottom: '6px' }}>Calidad certificada</h5>
+            <p style={{ fontSize: '12.5px', color: '#6b7280', lineHeight: 1.6, marginBottom: '10px' }}>
+              Garantizamos nuestros trabajos bajo los más altos estándares de calidad y seguridad.
+            </p>
           </div>
         </div>
 

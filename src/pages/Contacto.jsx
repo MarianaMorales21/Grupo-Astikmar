@@ -10,36 +10,21 @@ import FrontBlueprint from '../components/Icons/FrontBlueprint'
 import ConceptBlueprint from '../components/Icons/ConceptBlueprint'
 import MarineEngineBlueprint from '../components/Icons/MarineEngineBlueprint'
 import ShipTanksBlueprint from '../components/Icons/ShipTanksBlueprint'
+import { contactoContent, contactInfo } from '../data/siteConfig'
 
-const interestServices = [
-  'Reparación Naval',
-  'Mantenimiento',
-  'Pintura Naval',
-  'Flete Marítimo',
-  'Salvamento',
-  'Limpieza',
-  'Soldadura',
-  'Reconstrucción',
-  'Escaneo de Láminas (Ultrasonido)',
-  'Provisionamiento en Alta Mar',
-  'Bunkering (Reabastecimiento)',
-  'Compra y Venta de Combustible',
-  'Servicios Integrales a Medida',
+const interestServices = contactoContent.interestServices
+
+const contactInfoList = [
+  { icon: MapPin, label: 'UBICACIÓN', lines: [contactInfo.address.street, contactInfo.address.city] },
+  { icon: Phone, label: 'TELÉFONO', lines: [contactInfo.phone] },
+  { icon: Mail, label: 'CORREO ELECTRÓNICO', lines: [contactInfo.email] },
+  { icon: Clock, label: 'HORARIO DE ATENCIÓN', lines: [contactInfo.hours.days, contactInfo.hours.time] },
 ]
 
-const contactInfo = [
-  { icon: MapPin, label: 'UBICACIÓN', lines: ['Av. López de Vega No. 13, Plaza Progreso, Piso 8, Naco, Santo Domingo,', 'República Dominicana'] },
-  { icon: Phone, label: 'TELÉFONO', lines: ['+1 849 513 9090'] },
-  { icon: Mail, label: 'CORREO ELECTRÓNICO', lines: ['carlos.m@grupoastikmar.com'] },
-  { icon: Clock, label: 'HORARIO DE ATENCIÓN', lines: ['Lunes a Viernes', '8:00 a.m. - 5:00 p.m.'] },
-]
-
-const whyUs = [
-  { icon: ShieldCheck, title: 'Experiencia comprobada', desc: 'Más de 20 años ofreciendo soluciones marítimas integrales.' },
-  { icon: UserCheck, title: 'Equipo especializado', desc: 'Profesionales altamente capacitados y comprometidos con cada proyecto.' },
-  { icon: Cpu, title: 'Tecnología avanzada', desc: 'Contamos con equipos y herramientas de última generación.' },
-  { icon: Award, title: 'Compromiso total', desc: 'Cumplimos con los más altos estándares de seguridad, calidad y puntualidad.' },
-]
+const whyUs = contactoContent.whyUs.map(item => {
+  const iconMap = { ShieldCheck, UserCheck, Cpu, Award }
+  return { ...item, icon: iconMap[item.iconType] || ShieldCheck }
+})
 
 // Título de sección estilo "plano" alineado a la izquierda con línea divisoria a la derecha
 function SectionTitleLeft({ children }) {
@@ -212,13 +197,13 @@ export default function Contacto({ contactService, setContactService, setCurrent
           <div>
             <motion.div initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
               <h1 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 900, color: '#1D2939', lineHeight: 1.15, letterSpacing: '-0.01em', fontFamily: 'var(--font-heading)' }}>
-                Solicita nuestro <span style={{ color: '#F97316', fontStyle: 'italic' }}>servicio</span>
+                {contactoContent.title.line1} <span style={{ color: '#F97316', fontStyle: 'italic' }}>{contactoContent.title.highlight}</span>
               </h1>
               <p style={{ fontSize: 'clamp(16px, 2.5vw, 19px)', fontWeight: 600, color: '#334e68', marginTop: '6px' }}>
-                Estamos listos para <span style={{ color: '#F97316', fontStyle: 'italic' }}>ayudarte</span>
+                {contactoContent.subtitle}
               </p>
               <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.7, marginTop: '12px', maxWidth: '480px' }}>
-                Cuéntanos sobre tu proyecto o requerimiento y nuestro equipo de ingenieros se pondrá en contacto contigo para ofrecerte la mejor solución marítima integral.
+                {contactoContent.description}
               </p>
             </motion.div>
 
@@ -248,7 +233,7 @@ export default function Contacto({ contactService, setContactService, setCurrent
                   <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(29,41,57,0.2), transparent)' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {contactInfo.map((item, i) => (
+                  {contactInfoList.map((item, i) => (
                     <div
                       key={item.label}
                       style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}
@@ -334,9 +319,9 @@ export default function Contacto({ contactService, setContactService, setCurrent
                 <MessageSquare size={16} color="white" />
               </div>
               <div>
-                <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#1D2939' }}>¿Emergencia en alta mar?</h4>
+                <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#1D2939' }}>{contactoContent.emergencyTitle}</h4>
                 <p style={{ fontSize: '12px', color: '#4b5563', lineHeight: 1.55, marginTop: '3px' }}>
-                  Nuestro equipo de respuesta rápida y salvamento está operativo las 24 horas del día. Llame directamente a soporte.
+                  {contactoContent.emergencyDesc}
                 </p>
               </div>
             </div>
@@ -356,9 +341,9 @@ export default function Contacto({ contactService, setContactService, setCurrent
               width: '100%',
             }}
           >
-            <SectionTitleLeft>Envíanos tu Solicitud</SectionTitleLeft>
+            <SectionTitleLeft>{contactoContent.formTitle}</SectionTitleLeft>
             <p style={{ fontSize: '13px', color: '#6b7280', marginTop: '-10px', marginBottom: '20px' }}>
-              Completa el formulario y nos pondremos en contacto contigo a la brevedad.
+              {contactoContent.formSubtitle}
             </p>
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
